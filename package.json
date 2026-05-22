@@ -1,0 +1,22 @@
+{
+  "name": "clawi-telegram-runtime",
+  "version": "1.0.0",
+  "description": "Clawi Telegram Runtime — Seif's AI builder/operator bot",
+  "main": "clawi-telegram-runtime.js",
+  "scripts": {
+    "start": "node clawi-telegram-runtime.js",
+    "dev": "node clawi-telegram-runtime.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.19.0",
+    "groq-sdk": "^0.7.0",
+    "node-cron": "^3.0.3",
+    "node-telegram-bot-api": "^0.66.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

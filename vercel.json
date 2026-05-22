@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "clawi-telegram-runtime.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/telegram/(.*)",
+      "dest": "clawi-telegram-runtime.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "clawi-telegram-runtime.js"
+    },
+    {
+      "src": "/n8n/(.*)",
+      "dest": "clawi-telegram-runtime.js"
+    },
+    {
+      "src": "/health",
+      "dest": "clawi-telegram-runtime.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "clawi-telegram-runtime.js"
+    }
+  ]
+}

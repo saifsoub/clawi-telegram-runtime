@@ -1,0 +1,2945 @@
+<!DOCTYPE html>
+<html lang="en" data-seif-portal="production-demo">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Seif Agent Portal — zero-cost-first, revenue-aware, Seif-governed AI operating portal." />
+  <title>Seif Agent Portal — Full Production HTML</title>
+
+  <style>
+    :root {
+      --bg: #06111f;
+      --bg-soft: #0b1728;
+      --bg-deep: #020617;
+      --panel: rgba(255,255,255,.075);
+      --panel-strong: rgba(255,255,255,.12);
+      --line: rgba(255,255,255,.14);
+      --line-strong: rgba(125,211,252,.45);
+      --text: #eef6ff;
+      --muted: #9fb0c8;
+      --dim: #64748b;
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --good: #34d399;
+      --warn: #fbbf24;
+      --danger: #fb7185;
+      --blue: #60a5fa;
+      --shadow: 0 24px 80px rgba(0,0,0,.45);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --drawer-width: min(520px, calc(100vw - 24px));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(125, 211, 252, .20), transparent 30%),
+        radial-gradient(circle at 86% 18%, rgba(167, 139, 250, .22), transparent 32%),
+        radial-gradient(circle at 50% 90%, rgba(52, 211, 153, .10), transparent 28%),
+        linear-gradient(135deg, #06111f 0%, #081827 42%, #111827 100%);
+      font-family: var(--font);
+      overflow-x: hidden;
+    }
+
+    button,
+    textarea,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+    }
+
+    .appShell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(6, 17, 31, .84);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 260px;
+    }
+
+    .brandMark {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 950;
+      color: #06111f;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 42px rgba(125, 211, 252, .24);
+      letter-spacing: -.04em;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: .03em;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pill,
+    .btn,
+    .chip,
+    .miniBtn,
+    .send,
+    .authorityBtn,
+    .voiceBtn,
+    .drawerBtn,
+    .tabBtn {
+      color: var(--text);
+      background: rgba(255,255,255,.085);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 14px;
+      transition: transform .16s ease, background .16s ease, border-color .16s ease, opacity .16s ease;
+      box-shadow: none;
+      user-select: none;
+    }
+
+    .btn:hover,
+    .chip:hover,
+    .miniBtn:hover,
+    .send:hover,
+    .authorityBtn:hover,
+    .voiceBtn:hover,
+    .drawerBtn:hover,
+    .tabBtn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.14);
+      border-color: var(--line-strong);
+    }
+
+    .tabBtn.active,
+    .nav .active {
+      background: linear-gradient(135deg, rgba(125,211,252,.23), rgba(167,139,250,.19));
+      border-color: rgba(125,211,252,.48);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      padding: 8px 12px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--good);
+      box-shadow: 0 0 0 5px rgba(52,211,153,.13);
+    }
+
+    body.paused .dot {
+      background: var(--warn);
+      box-shadow: 0 0 0 5px rgba(251,191,36,.13);
+    }
+
+    body.stopped .dot {
+      background: var(--danger);
+      box-shadow: 0 0 0 5px rgba(251,113,133,.13);
+    }
+
+    .page {
+      display: none;
+      flex: 1;
+      padding: 24px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .glass {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .pageGrid {
+      max-width: 1900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.32fr) minmax(360px, .68fr);
+      gap: 18px;
+    }
+
+    .heroFrame {
+      min-height: calc(100vh - 118px);
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 18px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .heroFrame:before {
+      content: "";
+      position: absolute;
+      inset: -160px -120px auto auto;
+      width: 540px;
+      height: 540px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(125,211,252,.22), transparent 66%);
+      pointer-events: none;
+    }
+
+    .heroTopFirst {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .kicker {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+    }
+
+    .heroTopFirst h2 {
+      margin-top: 10px;
+      font-size: clamp(36px, 5vw, 82px);
+      line-height: .94;
+      letter-spacing: -.065em;
+      max-width: 1050px;
+    }
+
+    .heroTopFirst p {
+      max-width: 880px;
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .doctrineBanner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      border: 1px solid rgba(52,211,153,.25);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(52,211,153,.12), rgba(125,211,252,.08));
+    }
+
+    .doctrineBanner b {
+      display: block;
+      font-size: 14px;
+    }
+
+    .doctrineBanner span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .frameMakers {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .frameCard {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.064);
+      border: 1px solid var(--line);
+      min-height: 116px;
+    }
+
+    .frameCard b {
+      display: block;
+      font-size: 14px;
+    }
+
+    .frameCard span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .chatWindow {
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .messages,
+    #mainMessages {
+      flex: 1;
+      overflow: auto;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scroll-behavior: smooth;
+    }
+
+    .msg {
+      max-width: min(880px, 92%);
+      width: fit-content;
+      padding: 13px 15px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.075);
+      line-height: 1.56;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .msg.user {
+      margin-left: auto;
+      background: linear-gradient(135deg, rgba(125,211,252,.19), rgba(167,139,250,.15));
+      border-color: rgba(125,211,252,.36);
+    }
+
+    .msg.agent {
+      margin-right: auto;
+    }
+
+    .msg.system {
+      align-self: center;
+      text-align: center;
+      max-width: 980px;
+      color: var(--muted);
+      font-size: 13px;
+      background: rgba(255,255,255,.045);
+    }
+
+    .msg.tech {
+      margin-right: auto;
+      border-color: rgba(167,139,250,.38);
+      background: rgba(167,139,250,.10);
+    }
+
+    .composerMain {
+      border-top: 1px solid var(--line);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      background: rgba(0,0,0,.12);
+    }
+
+    .inputRow {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    textarea,
+    input,
+    select {
+      color: var(--text);
+      background: rgba(0,0,0,.25);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      outline: none;
+      padding: 13px 14px;
+    }
+
+    textarea {
+      min-height: 52px;
+      max-height: 190px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    textarea:focus,
+    input:focus,
+    select:focus {
+      border-color: rgba(125,211,252,.55);
+      box-shadow: 0 0 0 4px rgba(125,211,252,.075);
+    }
+
+    .send {
+      min-width: 96px;
+      color: #06111f;
+      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.88));
+      font-weight: 950;
+    }
+
+    .authorityBtn.pause {
+      color: #111827;
+      background: rgba(251,191,36,.94);
+      font-weight: 950;
+    }
+
+    .authorityBtn.stop {
+      color: #fff;
+      background: rgba(251,113,133,.94);
+      font-weight: 950;
+    }
+
+    .hint,
+    .metaLine {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      flex-wrap: wrap;
+    }
+
+    .sideStack {
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .panelHead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panelHead h3 {
+      font-size: 16px;
+    }
+
+    .agentList {
+      display: grid;
+      gap: 10px;
+    }
+
+    .agent {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--accent);
+      background: rgba(125,211,252,.14);
+      font-weight: 950;
+    }
+
+    .agent b {
+      font-size: 13px;
+    }
+
+    .agent small {
+      display: block;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .agentState {
+      font-size: 11px;
+      color: var(--good);
+      border: 1px solid rgba(52,211,153,.25);
+      border-radius: 999px;
+      padding: 5px 8px;
+      white-space: nowrap;
+    }
+
+    body.paused .agentState {
+      color: var(--warn);
+      border-color: rgba(251,191,36,.34);
+    }
+
+    body.paused .agentState::after {
+      content: " frozen";
+    }
+
+    .voiceConsole {
+      display: grid;
+      gap: 12px;
+    }
+
+    .voiceOrb {
+      height: 132px;
+      display: grid;
+      place-items: center;
+      border-radius: 28px;
+      border: 1px solid rgba(125,211,252,.25);
+      background:
+        radial-gradient(circle at 50% 48%, rgba(125,211,252,.34), transparent 35%),
+        radial-gradient(circle at 50% 50%, rgba(167,139,250,.28), transparent 52%),
+        rgba(255,255,255,.055);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .voiceOrb:after {
+      content: "";
+      width: 76px;
+      height: 76px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 70px rgba(125,211,252,.36);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    body.paused .voiceOrb:after,
+    body.stopped .voiceOrb:after {
+      animation: none;
+      opacity: .5;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(.96); opacity: .85; }
+      50% { transform: scale(1.08); opacity: 1; }
+    }
+
+    .voiceActions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .voiceBtn.primary {
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.35);
+    }
+
+    .voiceBtn.danger {
+      background: rgba(251,113,133,.18);
+      border-color: rgba(251,113,133,.35);
+    }
+
+    .transcript,
+    .logBox,
+    .patchBox {
+      min-height: 92px;
+      max-height: 220px;
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      padding: 12px;
+      color: var(--muted);
+      background: rgba(0,0,0,.24);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .screen {
+      max-width: 1900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .heroTop {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .heroTop h2 {
+      margin-top: 8px;
+      font-size: clamp(30px, 4vw, 66px);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+
+    .heroTop p {
+      color: var(--muted);
+      line-height: 1.72;
+      max-width: 1040px;
+    }
+
+    .meters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .meter {
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.058);
+      border-radius: 18px;
+    }
+
+    .meter small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meter b {
+      font-size: 20px;
+    }
+
+    .grid16 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .capCard {
+      padding: 16px;
+      min-height: 142px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      border-radius: 20px;
+      color: var(--text);
+    }
+
+    .capCard:hover {
+      border-color: rgba(125,211,252,.44);
+      background: rgba(255,255,255,.095);
+    }
+
+    .capCard h4 {
+      font-size: 15px;
+    }
+
+    .capCard p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .riskTag {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 11px;
+      border: 1px solid rgba(125,211,252,.25);
+      color: var(--accent);
+    }
+
+    .chatArea {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(380px, .72fr);
+      gap: 18px;
+      min-height: 540px;
+    }
+
+    .terminal {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: rgba(0,0,0,.40);
+      box-shadow: var(--shadow);
+    }
+
+    .termHead {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.058);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .lights {
+      display: flex;
+      gap: 6px;
+    }
+
+    .lights i {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--danger);
+    }
+
+    .lights i:nth-child(2) { background: var(--warn); }
+    .lights i:nth-child(3) { background: var(--good); }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      color: #dbeafe;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.65;
+      padding: 14px;
+      max-height: 520px;
+      overflow: auto;
+    }
+
+    .composer {
+      max-width: 1900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .suggestions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .inputShell {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .bottomGrid {
+      max-width: 1900px;
+      margin: 18px auto 0;
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 18px;
+    }
+
+    .logBox {
+      height: 420px;
+      max-height: 520px;
+      min-height: 420px;
+      font-family: var(--mono);
+      color: #dbeafe;
+      font-size: 11px;
+    }
+
+    .logItem {
+      padding: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      color: #dbeafe;
+    }
+
+    .logItem strong {
+      color: var(--accent);
+    }
+
+    .controlGrid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .fourGrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .codeTabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .codePanel {
+      display: none;
+    }
+
+    .codePanel.active {
+      display: block;
+    }
+
+    .codePanel pre {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(0,0,0,.43);
+      max-height: 560px;
+    }
+
+    .integrationGrid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .integrationCard {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+    }
+
+    .integrationCard b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .integrationCard span {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 12px;
+    }
+
+    .drawerLaunch {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 70;
+      display: grid;
+      gap: 8px;
+    }
+
+    .drawerBtn.launch {
+      color: #06111f;
+      font-weight: 950;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+      box-shadow: var(--shadow);
+    }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: var(--drawer-width);
+      height: 100vh;
+      z-index: 90;
+      transform: translateX(104%);
+      transition: transform .22s ease;
+      background: rgba(7,17,31,.96);
+      border-left: 1px solid var(--line);
+      box-shadow: -26px 0 90px rgba(0,0,0,.55);
+      backdrop-filter: blur(18px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawerHead {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .drawerHead h3 {
+      font-size: 17px;
+    }
+
+    .drawerHead p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .drawerBody {
+      overflow: auto;
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .drawerComposer {
+      border-top: 1px solid var(--line);
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .techMessages {
+      min-height: 240px;
+      max-height: 360px;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 4px;
+    }
+
+    .modeGrid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .modeGrid label {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.055);
+      padding: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .patchBox {
+      min-height: 150px;
+      max-height: 280px;
+      font-family: var(--mono);
+      color: #dbeafe;
+    }
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 85;
+      background: rgba(0,0,0,.38);
+      display: none;
+    }
+
+    .backdrop.show {
+      display: block;
+    }
+
+    .freezeOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      place-items: center;
+      background: rgba(6,17,31,.72);
+      backdrop-filter: blur(10px);
+      pointer-events: none;
+    }
+
+    body.paused .freezeOverlay {
+      display: grid;
+    }
+
+    .freezeCard {
+      width: min(560px, 92vw);
+      border: 1px solid rgba(251,191,36,.42);
+      background: rgba(17,24,39,.90);
+      border-radius: 30px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      pointer-events: auto;
+    }
+
+    .freezeCard h2 {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .freezeCard p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      z-index: 110;
+      width: min(410px, calc(100vw - 36px));
+      display: grid;
+      gap: 8px;
+    }
+
+    .toastItem {
+      border: 1px solid var(--line);
+      background: rgba(15,23,42,.94);
+      border-radius: 18px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .badgeRow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: var(--muted);
+      font-size: 11px;
+      background: rgba(255,255,255,.055);
+    }
+
+    .critical {
+      border-color: rgba(52,211,153,.34);
+      color: #bbf7d0;
+      background: rgba(52,211,153,.09);
+    }
+
+    .warn {
+      border-color: rgba(251,191,36,.34);
+      color: #fde68a;
+      background: rgba(251,191,36,.09);
+    }
+
+    .danger {
+      border-color: rgba(251,113,133,.34);
+      color: #fecdd3;
+      background: rgba(251,113,133,.09);
+    }
+
+    @media (min-width: 2400px) {
+      .page,
+      .topbar {
+        padding-left: 3vw;
+        padding-right: 3vw;
+      }
+
+      .pageGrid,
+      .screen,
+      .composer,
+      .bottomGrid {
+        max-width: 94vw;
+      }
+
+      .grid16 {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+      }
+
+      .heroTopFirst h2 {
+        font-size: clamp(92px, 5vw, 190px);
+      }
+
+      .heroTop h2 {
+        font-size: clamp(78px, 4vw, 160px);
+      }
+    }
+
+    @media (max-width: 1150px) {
+      .pageGrid,
+      .chatArea,
+      .bottomGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid16,
+      .meters,
+      .frameMakers,
+      .integrationGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .inputRow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 14px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .grid16,
+      .meters,
+      .frameMakers,
+      .controlGrid,
+      .voiceActions,
+      .integrationGrid,
+      .fourGrid,
+      .modeGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .heroTop,
+      .heroTopFirst,
+      .doctrineBanner {
+        flex-direction: column;
+      }
+
+      .drawerLaunch {
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="appShell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brandMark">S</div>
+        <div>
+          <h1>Seif Agent Portal</h1>
+          <p>Zero-cost-first · revenue-aware · Seif-governed · static-live HTML</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Portal navigation">
+        <button id="navChat" class="tabBtn active" onclick="showPage('chat')">Page 1 · Agent Experience</button>
+        <button id="navConsole" class="tabBtn" onclick="showPage('console')">Page 2 · 16K Console</button>
+        <button class="tabBtn" onclick="openTechAgent()">Tech Agent</button>
+        <span class="pill"><span class="dot"></span><span id="runtimeStatus">Browser runtime live</span></span>
+      </nav>
+    </header>
+
+    <main id="pageChat" class="page active">
+      <div class="pageGrid">
+        <section class="heroFrame glass">
+          <div class="heroTopFirst">
+            <div>
+              <div class="kicker">First viewed HTML screen</div>
+              <h2>User Seif and his agents in one premium command frame.</h2>
+              <p>
+                The first page is the live interaction layer. User Seif gives orders, speaks with agents,
+                guests may join, and Seif can pause or stop every active agent instantly. The portal is built
+                around zero-cost-first execution and maximum-revenue strategy.
+              </p>
+              <div class="badgeRow">
+                <span class="badge critical">Zero-cost policy</span>
+                <span class="badge critical">Maximum revenue strategy</span>
+                <span class="badge warn">Seif-only governance</span>
+                <span class="badge">Telegram-ready bridge</span>
+                <span class="badge">Tech Agent side studio</span>
+              </div>
+            </div>
+            <span class="pill"><span class="dot"></span><span id="authorityState">Seif authority active</span></span>
+          </div>
+
+          <div class="doctrineBanner">
+            <div>
+              <b>Zero-Cost Policy · Maximum-Revenue Strategy · Seif-Controlled Execution</b>
+              <span>No paid API, paid hosting, external connector, deployment, or revenue-affecting dependency activates without User Seif approval.</span>
+            </div>
+            <button class="miniBtn" onclick="openTechAgent()">Open Tech Agent</button>
+          </div>
+
+          <div class="frameMakers">
+            <div class="frameCard">
+              <b>1 · Conversation Frame</b>
+              <span>Live agent chat, guest presence, command memory, and structured answers.</span>
+            </div>
+            <div class="frameCard">
+              <b>2 · Voice-Call Frame</b>
+              <span>Browser speech recognition where supported, speech playback, transcript, and voice evidence.</span>
+            </div>
+            <div class="frameCard">
+              <b>3 · Seif Command Frame</b>
+              <span>Enter executes. Pause freezes. Stop cancels. Governance remains under User Seif.</span>
+            </div>
+          </div>
+
+          <section class="chatWindow glass">
+            <div id="mainMessages"></div>
+
+            <div class="composerMain">
+              <div class="inputRow">
+                <textarea id="seifPrompt" placeholder="Write User Seif’s order to the agents..." oninput="updateMainChars()" onkeydown="handleMainKey(event)"></textarea>
+                <button class="send" onclick="executeSeifOrder()">Enter</button>
+                <button id="pauseBtn" class="authorityBtn pause" onclick="togglePause()">Pause</button>
+                <button class="authorityBtn stop" onclick="stopAll()">Stop</button>
+              </div>
+
+              <div class="hint">
+                <span>Enter = execute · Shift+Enter = new line · Pause = freeze agents · Stop = cancel active run</span>
+                <span id="mainCharHint">0 chars</span>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <aside class="sideStack">
+          <section class="panel glass">
+            <div class="panelHead">
+              <h3>Agents in the room</h3>
+              <button class="miniBtn" onclick="addGuest()">Add guest</button>
+            </div>
+            <div class="agentList" id="agentList"></div>
+          </section>
+
+          <section class="panel glass">
+            <div class="panelHead">
+              <h3>Voice call</h3>
+              <span class="pill" id="voiceStatus">Idle</span>
+            </div>
+
+            <div class="voiceConsole">
+              <div class="voiceOrb" aria-label="Voice call visual"></div>
+              <div class="voiceActions">
+                <button class="voiceBtn primary" onclick="startVoiceCall()">Start call</button>
+                <button class="voiceBtn" onclick="toggleMute()">Mute</button>
+                <button class="voiceBtn danger" onclick="endVoiceCall()">End</button>
+              </div>
+              <div id="voiceTranscript" class="transcript">
+                Voice transcript will appear here. Browser microphone support depends on the live environment.
+              </div>
+            </div>
+          </section>
+
+          <section class="panel glass">
+            <div class="panelHead">
+              <h3>Seif governance</h3>
+              <span class="pill" id="govState">Owner controlled</span>
+            </div>
+
+            <p class="metaLine">
+              <span>Agents can flag, explain, and log. They cannot approve, reject, override, deploy, or connect external systems.</span>
+            </p>
+
+            <div class="controlGrid" style="margin-top:12px;">
+              <button class="miniBtn" onclick="seifDecision('approved')">Seif Approves</button>
+              <button class="miniBtn" onclick="seifDecision('rejected')">Seif Rejects</button>
+              <button class="miniBtn" onclick="seifDecision('override')">Seif Overrides</button>
+              <button class="miniBtn" onclick="exportEvidence()">Export Evidence</button>
+            </div>
+          </section>
+
+          <section class="panel glass">
+            <div class="panelHead">
+              <h3>Telegram Command Bridge</h3>
+              <span class="pill" id="telegramStatus">Designed · not connected</span>
+            </div>
+            <p class="metaLine">
+              <span>Top-notch Telegram compatibility is designed inside the portal. True 24/7 receiving requires Seif-approved backend bridge deployment.</span>
+            </p>
+            <div class="controlGrid" style="margin-top:12px;">
+              <button class="miniBtn" onclick="simulateTelegram('/status')">/status</button>
+              <button class="miniBtn" onclick="simulateTelegram('/pause')">/pause</button>
+              <button class="miniBtn" onclick="simulateTelegram('/resume')">/resume</button>
+              <button class="miniBtn" onclick="simulateTelegram('/tech')">/tech</button>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <main id="pageConsole" class="page">
+      <section class="screen">
+        <div class="hero">
+          <div class="heroTop">
+            <div>
+              <div class="kicker">Python as the work engine</div>
+              <h2>16K pixel command screen</h2>
+              <p>
+                This is the second operational page. It preserves the original demo idea while reframing 16K as an ultra-wide
+                pixel command environment. The browser runtime is active, while Python, FastAPI, and Telegram backend code
+                are embedded as exportable text blueprints inside this same HTML.
+              </p>
+            </div>
+            <button class="btn" onclick="runCapability(0)">Start with AI Agent</button>
+          </div>
+
+          <div class="meters">
+            <div class="meter"><small>Runtime</small><b id="runtimeMeter">Browser + Python Blueprint</b></div>
+            <div class="meter"><small>Actions</small><b id="actionsMeter">0</b></div>
+            <div class="meter"><small>Screen</small><b id="capMeter">16K PX</b></div>
+            <div class="meter"><small>Governance Gate</small><b id="gateMeter">Seif</b></div>
+          </div>
+        </div>
+
+        <div class="grid16" id="capGrid"></div>
+
+        <div class="chatArea">
+          <div class="messages glass" id="messages"></div>
+
+          <div class="terminal">
+            <div class="termHead">
+              <div class="lights"><i></i><i></i><i></i></div>
+              <span id="termTitle">python_runtime.py</span>
+            </div>
+            <pre id="trace"># Seif Agent Portal runtime loaded
+# Static browser execution layer is active
+# Python/FastAPI/Telegram blueprints are embedded inside this HTML
+# Choose a capability or chat freely
+</pre>
+          </div>
+        </div>
+      </section>
+
+      <footer class="composer">
+        <div class="suggestions">
+          <button class="chip" onclick="ask('Show me how Python can run agents behind HTML')">Agents</button>
+          <button class="chip" onclick="ask('Show me a Python backend for this chat interface')">Backend</button>
+          <button class="chip" onclick="ask('Show me Python data analysis capability')">Data</button>
+          <button class="chip" onclick="ask('Show me Python automation and Seif governance')">Automation</button>
+          <button class="chip" onclick="ask('Show me Telegram Command Bridge compatibility')">Telegram</button>
+          <button class="chip" onclick="ask('Show me zero-cost maximum revenue strategy')">Revenue</button>
+        </div>
+
+        <div class="inputShell">
+          <textarea id="prompt" placeholder="Message the Python 16K runtime..." oninput="updateConsoleChars()" onkeydown="handleKey(event)"></textarea>
+          <button class="send" onclick="sendMsg()">↗</button>
+        </div>
+
+        <div class="hint">
+          <span>Enter = send · Shift+Enter = new line</span>
+          <span id="tokenHint">0 chars</span>
+        </div>
+      </footer>
+
+      <section class="bottomGrid">
+        <div class="panel glass">
+          <div class="panelHead">
+            <h3>Seif-only evidence log</h3>
+            <span class="pill" id="logLockState">Unlocked by Seif</span>
+          </div>
+
+          <p class="metaLine">
+            <span>
+              This log records browser-level contact after the portal opens: load, focus, visibility, clicks, keyboard events,
+              mouse movement samples, commands, voice events, Telegram simulations, Tech Agent activity, pause, stop, export, and governance decisions.
+            </span>
+          </p>
+
+          <div class="fourGrid" style="margin-top:12px;">
+            <button class="miniBtn" onclick="lockLog()">Lock</button>
+            <button class="miniBtn" onclick="unlockLog()">Unlock</button>
+            <button class="miniBtn" onclick="exportEvidence()">Export</button>
+            <button class="miniBtn" onclick="clearEvidence()">Clear</button>
+          </div>
+
+          <div id="evidenceLog" class="logBox" style="margin-top:12px;"></div>
+        </div>
+
+        <div class="panel glass">
+          <div class="panelHead">
+            <h3>Embedded Python, backend, Telegram, and deployment code</h3>
+            <button class="miniBtn" onclick="copyActiveCode()">Copy active code</button>
+          </div>
+
+          <div class="codeTabs">
+            <button class="tabBtn active" id="codeTabPython" onclick="showCodePanel('pythonRuntime')">Python Runtime</button>
+            <button class="tabBtn" id="codeTabFastapi" onclick="showCodePanel('fastapiBackend')">FastAPI Backend</button>
+            <button class="tabBtn" id="codeTabTelegram" onclick="showCodePanel('telegramBridge')">Telegram Bridge</button>
+            <button class="tabBtn" id="codeTabDeploy" onclick="showCodePanel('deploymentNotes')">Deployment Notes</button>
+            <button class="tabBtn" onclick="tryLoadPyodide()">Activate Browser Python</button>
+          </div>
+
+          <div id="pythonRuntime" class="codePanel active"><pre id="pythonRuntimeCode"></pre></div>
+          <div id="fastapiBackend" class="codePanel"><pre id="fastapiBackendCode"></pre></div>
+          <div id="telegramBridge" class="codePanel"><pre id="telegramBridgeCode"></pre></div>
+          <div id="deploymentNotes" class="codePanel"><pre id="deploymentNotesCode"></pre></div>
+        </div>
+      </section>
+
+      <section class="screen" style="margin-top:18px;">
+        <div class="panel glass">
+          <div class="panelHead">
+            <h3>Built-in easiest integrations</h3>
+            <span class="pill">Zero-cost-first</span>
+          </div>
+
+          <div class="integrationGrid">
+            <div class="integrationCard">
+              <b>Telegram Command Bridge</b>
+              <span>Designed for remote Seif commands, approval queue, status, logs, pause, stop, and Tech Agent workflow.</span>
+            </div>
+            <div class="integrationCard">
+              <b>Tech Agent Code Studio</b>
+              <span>Side pop-up chatbot for minor enhancements, backup-first patches, approval, export, and rollback.</span>
+            </div>
+            <div class="integrationCard">
+              <b>Evidence Pack Export</b>
+              <span>Exports browser evidence, command history, governance decisions, and technical activity.</span>
+            </div>
+            <div class="integrationCard">
+              <b>Browser Voice Layer</b>
+              <span>Uses free browser speech features where available. No paid voice API by default.</span>
+            </div>
+            <div class="integrationCard">
+              <b>Python Blueprint</b>
+              <span>Python runtime model is embedded as copyable code and optional Pyodide execution path.</span>
+            </div>
+            <div class="integrationCard">
+              <b>FastAPI Blueprint</b>
+              <span>Server path is embedded for approved 24/7 backend deployment without changing the HTML baseline.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="drawerBackdrop" class="backdrop" onclick="closeTechAgent()"></div>
+
+  <aside id="techDrawer" class="drawer" aria-label="Tech Agent Code Studio">
+    <div class="drawerHead">
+      <div>
+        <h3>Tech Agent Code Studio</h3>
+        <p>World-class side chatbot for Seif-controlled minor enhancements, backup, preview, export, and rollback.</p>
+      </div>
+      <button class="miniBtn" onclick="closeTechAgent()">Close</button>
+    </div>
+
+    <div class="drawerBody">
+      <section>
+        <div class="panelHead">
+          <h3>Mode</h3>
+          <span class="pill" id="techModeState">Ask</span>
+        </div>
+
+        <div class="modeGrid">
+          <label><input type="radio" name="techMode" value="ask" checked onchange="setTechMode(this.value)"> Ask</label>
+          <label><input type="radio" name="techMode" value="patch" onchange="setTechMode(this.value)"> Propose Patch</label>
+          <label><input type="radio" name="techMode" value="backup" onchange="setTechMode(this.value)"> Backup / Rollback</label>
+          <label><input type="radio" name="techMode" value="export" onchange="setTechMode(this.value)"> Export Version</label>
+        </div>
+      </section>
+
+      <section>
+        <div class="panelHead">
+          <h3>Tech conversation</h3>
+          <span class="pill" id="techAuthorityState">Read-only until approved</span>
+        </div>
+        <div id="techMessages" class="techMessages"></div>
+      </section>
+
+      <section>
+        <div class="panelHead">
+          <h3>Patch preview</h3>
+          <span class="pill" id="patchState">No patch</span>
+        </div>
+        <div id="patchPreview" class="patchBox">Patch preview will appear here. Tech Agent cannot apply changes without User Seif approval.</div>
+      </section>
+
+      <section>
+        <div class="panelHead">
+          <h3>Backup chain</h3>
+          <span class="pill" id="backupState">0 backups</span>
+        </div>
+        <div class="controlGrid">
+          <button class="miniBtn" onclick="createBackup()">Backup Now</button>
+          <button class="miniBtn" onclick="previewRollback()">Preview Rollback</button>
+          <button class="miniBtn" onclick="approvePatch()">Approve Patch</button>
+          <button class="miniBtn" onclick="rejectPatch()">Reject Patch</button>
+        </div>
+        <div class="controlGrid" style="margin-top:8px;">
+          <button class="miniBtn" onclick="exportStagedHtml()">Export Version</button>
+          <button class="miniBtn" onclick="lockEditing()">Lock Editing</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="drawerComposer">
+      <textarea id="techPrompt" placeholder="Ask the Tech Agent for a minor enhancement..." onkeydown="handleTechKey(event)"></textarea>
+      <div class="controlGrid">
+        <button class="send" onclick="sendTechPrompt()">Send</button>
+        <button class="miniBtn" onclick="createBackup()">Backup</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="drawerLaunch">
+    <button class="drawerBtn launch" onclick="openTechAgent()">&lt;/&gt; Tech Agent</button>
+  </div>
+
+  <div class="freezeOverlay">
+    <div class="freezeCard">
+      <h2>Paused by Seif</h2>
+      <p>All agents, voice activity, response generation, timers, Tech Agent activity, and command execution are frozen until User Seif resumes.</p>
+      <button class="authorityBtn pause" onclick="togglePause()">Resume</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const PYTHON_RUNTIME_CODE = `
+from dataclasses import dataclass, asdict
+from datetime import datetime
+from typing import List, Dict, Any, Literal
+
+@dataclass
+class Agent:
+    id: str
+    name: str
+    role: str
+    state: str = "ready"
+
+@dataclass
+class RuntimeEvent:
+    timestamp: str
+    event_type: str
+    actor: str
+    details: Dict[str, Any]
+
+class SeifGovernedRuntime:
+    """
+    Python runtime model for the Seif Agent Portal.
+
+    Core doctrine:
+    - Zero-cost policy.
+    - Maximum-revenue strategy.
+    - Seif-controlled execution.
+
+    Authority principle:
+    - Agents can think, draft, explain, and log.
+    - Agents cannot approve governance decisions.
+    - User Seif controls approval, rejection, override, pause, stop, export, rollback, deployment, and integrations.
+    """
+
+    def __init__(self):
+        self.owner = "User Seif"
+        self.paused = False
+        self.stopped = False
+        self.actions = 0
+        self.events: List[RuntimeEvent] = []
+        self.agents = [
+            Agent("sandy", "Sandy Bell", "Lead agent"),
+            Agent("planner", "Strategy Agent", "Plans and priorities"),
+            Agent("builder", "Python Builder", "Runtime and backend logic"),
+            Agent("auditor", "Evidence Auditor", "Logs and governance evidence"),
+            Agent("tech", "Tech Agent", "Minor enhancements, patch preview, backup, rollback"),
+        ]
+
+    def log(self, event_type: str, actor: str, details: Dict[str, Any]):
+        event = RuntimeEvent(
+            timestamp=datetime.utcnow().isoformat() + "Z",
+            event_type=event_type,
+            actor=actor,
+            details=details,
+        )
+        self.events.append(event)
+        return asdict(event)
+
+    def cost_revenue_filter(self, proposal: str):
+        return {
+            "cost_impact": "Zero-cost-first unless User Seif approves otherwise.",
+            "revenue_impact": "Must reduce cost, create value, improve conversion, protect control, or support revenue.",
+            "approval": "Paid or external dependency requires User Seif approval.",
+            "proposal": proposal,
+        }
+
+    def pause(self):
+        self.paused = True
+        return self.log("pause", self.owner, {"message": "All agents frozen by User Seif."})
+
+    def resume(self):
+        self.paused = False
+        return self.log("resume", self.owner, {"message": "Agents resumed by User Seif."})
+
+    def stop(self):
+        self.stopped = True
+        return self.log("stop", self.owner, {"message": "Active run cancelled by User Seif."})
+
+    def seif_decision(self, decision: Literal["approved", "rejected", "override"], context: str):
+        return self.log(
+            "governance_decision",
+            self.owner,
+            {
+                "decision": decision,
+                "context": context,
+                "principle": "Only User Seif controls governance decisions.",
+            },
+        )
+
+    def respond(self, prompt: str):
+        if self.paused:
+            return {
+                "status": "paused",
+                "message": "Runtime is frozen by User Seif.",
+                "risk_review": "No governance decision made by agents.",
+            }
+
+        if self.stopped:
+            return {
+                "status": "stopped",
+                "message": "Runtime was stopped by User Seif.",
+                "risk_review": "No further activity until Seif resumes or resets.",
+            }
+
+        self.actions += 1
+        normalized = prompt.lower().strip()
+
+        if "telegram" in normalized:
+            answer = "Telegram Command Bridge is designed for Seif-authorized remote commands. True 24/7 receiving requires an approved backend bridge."
+        elif "backend" in normalized or "fastapi" in normalized:
+            answer = "FastAPI backend code is embedded as a deployment blueprint. Static hosting runs the portal; approved backend hosting runs server logic."
+        elif "voice" in normalized or "call" in normalized:
+            answer = "Voice call mode uses browser speech recognition where supported, transcript logging, and speech synthesis playback."
+        elif "zero" in normalized or "revenue" in normalized:
+            answer = "Every proposal must pass the zero-cost-first and maximum-revenue filter before becoming an enhancement."
+        elif "tech" in normalized or "patch" in normalized:
+            answer = "Tech Agent can propose minor patches, create backups, preview changes, export versions, and rollback only with User Seif approval."
+        else:
+            answer = "Order received. Agents respond inside the Seif-controlled command frame."
+
+        self.log("agent_response", "Sandy Bell", {"prompt": prompt, "answer": answer})
+        return {
+            "status": "completed",
+            "message": answer,
+            "risk_review": "Governance remains controlled by User Seif.",
+            "commercial_filter": self.cost_revenue_filter(prompt),
+        }
+
+runtime = SeifGovernedRuntime()
+`;
+
+    const FASTAPI_BACKEND_CODE = `
+from fastapi import FastAPI, HTTPException, Header
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Dict, Any, List, Literal, Optional
+from uuid import uuid4
+
+app = FastAPI(title="Seif Agent Portal Backend", version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Replace with approved final portal origin before production.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+OWNER = "User Seif"
+APP_DOCTRINE = "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution."
+
+class ChatRequest(BaseModel):
+    prompt: str = Field(..., min_length=1)
+    actor: str = "User Seif"
+    source: str = "portal"
+
+class DecisionRequest(BaseModel):
+    decision: Literal["approved", "rejected", "override"]
+    context: str = ""
+
+class RuntimeState(BaseModel):
+    paused: bool = False
+    stopped: bool = False
+    actions: int = 0
+    telegram_connected: bool = False
+
+state = RuntimeState()
+events: List[Dict[str, Any]] = []
+
+CAPABILITIES = [
+    {"id": "agent_command", "name": "Agent Command Center", "risk": "Seif-controlled"},
+    {"id": "voice_runtime", "name": "Voice Call Runtime", "risk": "Seif-controlled"},
+    {"id": "pause_stop", "name": "Pause / Stop Authority", "risk": "Owner authority"},
+    {"id": "evidence_log", "name": "Evidence Logging", "risk": "Seif-only"},
+    {"id": "governance", "name": "Governance Decisioning", "risk": "Owner authority"},
+    {"id": "python_runtime", "name": "Python Runtime Blueprint", "risk": "Internal"},
+    {"id": "fastapi_backend", "name": "FastAPI Backend Blueprint", "risk": "Exportable"},
+    {"id": "telegram_bridge", "name": "Telegram Command Bridge", "risk": "Requires Seif approval"},
+    {"id": "tech_agent", "name": "Tech Agent Code Studio", "risk": "Seif-controlled"},
+    {"id": "revenue_strategy", "name": "Zero-Cost / Revenue Filter", "risk": "Strategic rule"},
+]
+
+def log(event_type: str, actor: str, details: Dict[str, Any]):
+    item = {
+        "id": str(uuid4()),
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "event_type": event_type,
+        "actor": actor,
+        "details": details,
+        "doctrine": APP_DOCTRINE,
+    }
+    events.append(item)
+    return item
+
+def verify_seif_token(seif_token: Optional[str]):
+    """
+    Production placeholder:
+    - Replace with real secret/token verification.
+    - Never expose tokens in frontend HTML.
+    - Bind Telegram user id and portal session to User Seif approval.
+    """
+    if not seif_token:
+        raise HTTPException(status_code=401, detail="Missing Seif authority token.")
+    return True
+
+@app.get("/health")
+def health():
+    return {
+        "status": "live",
+        "runtime": "FastAPI",
+        "owner": OWNER,
+        "paused": state.paused,
+        "stopped": state.stopped,
+        "actions": state.actions,
+        "doctrine": APP_DOCTRINE,
+    }
+
+@app.get("/capabilities")
+def capabilities():
+    return CAPABILITIES
+
+@app.post("/chat")
+def chat(req: ChatRequest):
+    if state.paused:
+        return {
+            "status": "paused",
+            "message": "Runtime is frozen by User Seif.",
+            "risk_review": "Governance remains controlled by User Seif.",
+        }
+
+    if state.stopped:
+        return {
+            "status": "stopped",
+            "message": "Runtime is stopped by User Seif.",
+            "risk_review": "No further action until Seif resumes or resets.",
+        }
+
+    state.actions += 1
+    prompt = req.prompt.lower()
+
+    if "telegram" in prompt:
+        message = "Telegram bridge is ready as a backend-compatible command layer after User Seif approves deployment."
+    elif "backend" in prompt:
+        message = "FastAPI backend is ready as the server layer for approved real deployment."
+    elif "voice" in prompt:
+        message = "Voice-call controls should be handled by the browser and logged through this backend when connected."
+    elif "revenue" in prompt or "zero" in prompt:
+        message = "Zero-cost-first and maximum-revenue filters apply to every enhancement."
+    else:
+        message = "Order received by the Seif Agent Portal backend."
+
+    log("chat", req.actor, {"source": req.source, "prompt": req.prompt, "message": message})
+
+    return {
+        "status": "completed",
+        "message": message,
+        "risk_review": "Agents do not approve governance. User Seif controls approval, rejection, or override.",
+        "commercial_filter": {
+            "cost_impact": "Zero-cost-first",
+            "revenue_impact": "Must create, protect, or improve value",
+            "approval": "Paid or external dependency requires User Seif approval",
+        },
+    }
+
+@app.post("/pause")
+def pause(seif_token: Optional[str] = Header(None)):
+    verify_seif_token(seif_token)
+    state.paused = True
+    return log("pause", OWNER, {"message": "All agents frozen by User Seif."})
+
+@app.post("/resume")
+def resume(seif_token: Optional[str] = Header(None)):
+    verify_seif_token(seif_token)
+    state.paused = False
+    return log("resume", OWNER, {"message": "Agents resumed by User Seif."})
+
+@app.post("/stop")
+def stop(seif_token: Optional[str] = Header(None)):
+    verify_seif_token(seif_token)
+    state.stopped = True
+    return log("stop", OWNER, {"message": "Active run stopped by User Seif."})
+
+@app.post("/decision")
+def decision(req: DecisionRequest, seif_token: Optional[str] = Header(None)):
+    verify_seif_token(seif_token)
+    return log(
+        "governance_decision",
+        OWNER,
+        {
+            "decision": req.decision,
+            "context": req.context,
+            "principle": "Only User Seif controls governance decisions.",
+        },
+    )
+
+@app.get("/events")
+def get_events(seif_token: Optional[str] = Header(None)):
+    verify_seif_token(seif_token)
+    return events
+`;
+
+    const TELEGRAM_BRIDGE_CODE = `
+"""
+Seif Telegram Command Bridge Blueprint
+
+Purpose:
+- Remote interaction channel for User Seif.
+- Commands route to the same portal authority model.
+- No Telegram user receives governance authority unless explicitly paired and approved by User Seif.
+
+Zero-cost-first note:
+- Telegram bot usage is free.
+- Avoid paid automation platforms by default.
+- Use a simple approved backend bridge only when User Seif approves deployment.
+
+Required environment variables:
+- TELEGRAM_BOT_TOKEN
+- SEIF_TELEGRAM_USER_ID
+- PORTAL_BACKEND_URL
+- SEIF_AUTHORITY_TOKEN
+
+Never put the bot token inside the browser HTML.
+"""
+
+import os
+import httpx
+from fastapi import FastAPI, Request, HTTPException
+
+app = FastAPI(title="Seif Telegram Command Bridge", version="1.0.0")
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
+SEIF_TELEGRAM_USER_ID = os.environ.get("SEIF_TELEGRAM_USER_ID")
+PORTAL_BACKEND_URL = os.environ.get("PORTAL_BACKEND_URL")
+SEIF_AUTHORITY_TOKEN = os.environ.get("SEIF_AUTHORITY_TOKEN")
+
+COMMANDS = {
+    "/status": "Return portal health status.",
+    "/execute": "Execute a Seif command.",
+    "/pause": "Freeze all agents.",
+    "/resume": "Resume agents.",
+    "/stop": "Cancel active run.",
+    "/approve": "Approve staged action.",
+    "/reject": "Reject staged action.",
+    "/override": "Override staged action.",
+    "/rollback": "Start rollback workflow.",
+    "/log": "Return latest evidence summary.",
+    "/export": "Request evidence or version export.",
+    "/tech": "Start Tech Agent workflow.",
+}
+
+async def send_telegram(chat_id: int, text: str):
+    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    async with httpx.AsyncClient(timeout=20) as client:
+      await client.post(url, json={"chat_id": chat_id, "text": text})
+
+def is_seif(user_id: int) -> bool:
+    return str(user_id) == str(SEIF_TELEGRAM_USER_ID)
+
+async def portal_post(path: str, payload=None):
+    headers = {"seif-token": SEIF_AUTHORITY_TOKEN}
+    async with httpx.AsyncClient(timeout=20) as client:
+        response = await client.post(f"{PORTAL_BACKEND_URL}{path}", json=payload or {}, headers=headers)
+        response.raise_for_status()
+        return response.json()
+
+async def portal_get(path: str):
+    headers = {"seif-token": SEIF_AUTHORITY_TOKEN}
+    async with httpx.AsyncClient(timeout=20) as client:
+        response = await client.get(f"{PORTAL_BACKEND_URL}{path}", headers=headers)
+        response.raise_for_status()
+        return response.json()
+
+@app.post("/telegram/webhook")
+async def telegram_webhook(request: Request):
+    update = await request.json()
+    message = update.get("message") or {}
+    chat = message.get("chat") or {}
+    user = message.get("from") or {}
+    text = (message.get("text") or "").strip()
+    chat_id = chat.get("id")
+    user_id = user.get("id")
+
+    if not is_seif(user_id):
+        await send_telegram(chat_id, "Access denied. This command bridge is controlled by User Seif only.")
+        return {"status": "denied"}
+
+    if text == "/status":
+        result = await portal_get("/health")
+        await send_telegram(chat_id, f"Portal status: {result}")
+        return {"status": "ok"}
+
+    if text == "/pause":
+        result = await portal_post("/pause")
+        await send_telegram(chat_id, "Paused by User Seif. All agents frozen.")
+        return result
+
+    if text == "/resume":
+        result = await portal_post("/resume")
+        await send_telegram(chat_id, "Resumed by User Seif.")
+        return result
+
+    if text == "/stop":
+        result = await portal_post("/stop")
+        await send_telegram(chat_id, "Stopped by User Seif. Active run cancelled.")
+        return result
+
+    if text.startswith("/approve"):
+        result = await portal_post("/decision", {"decision": "approved", "context": text})
+        await send_telegram(chat_id, "Governance decision recorded: approved.")
+        return result
+
+    if text.startswith("/reject"):
+        result = await portal_post("/decision", {"decision": "rejected", "context": text})
+        await send_telegram(chat_id, "Governance decision recorded: rejected.")
+        return result
+
+    if text.startswith("/override"):
+        result = await portal_post("/decision", {"decision": "override", "context": text})
+        await send_telegram(chat_id, "Governance decision recorded: override.")
+        return result
+
+    if text.startswith("/execute"):
+        prompt = text.replace("/execute", "", 1).strip()
+        result = await portal_post("/chat", {"prompt": prompt, "actor": "User Seif", "source": "telegram"})
+        await send_telegram(chat_id, result.get("message", "Command executed."))
+        return result
+
+    if text == "/tech":
+        await send_telegram(chat_id, "Tech Agent workflow opened conceptually. Portal-side approval remains required.")
+        return {"status": "tech_ready"}
+
+    await send_telegram(chat_id, "Available commands: " + ", ".join(COMMANDS.keys()))
+    return {"status": "unknown_command"}
+`;
+
+    const DEPLOYMENT_NOTES_CODE = `
+SEIF AGENT PORTAL — DEPLOYMENT NOTES
+
+1. Static HTML mode
+   - Upload this HTML to Microsoft Drive / OneDrive / static hosting.
+   - It runs the visible portal directly in the browser.
+   - It does not call localhost, ports, or hidden external services.
+
+2. Browser Python mode
+   - The Python runtime model is embedded as text.
+   - "Activate Browser Python" attempts to load Pyodide from a public CDN.
+   - This remains optional and zero-cost-first.
+   - If CDN access is blocked, the JavaScript runtime remains active.
+
+3. Backend mode
+   - FastAPI backend code is embedded as text.
+   - Copy it to main.py only after User Seif approves backend deployment.
+   - Static OneDrive hosting alone cannot run a 24/7 Python server.
+   - A live backend or approved cloud function is required for true server execution.
+
+4. Telegram Bridge mode
+   - Telegram bot token must never be stored in frontend HTML.
+   - Use the embedded Telegram Bridge blueprint only in an approved backend.
+   - Pair Telegram user identity to User Seif's approved Telegram user ID.
+   - Every command must be logged.
+   - Pause, resume, stop, approve, reject, override, rollback, export, and Tech Agent workflows remain User Seif-controlled.
+
+5. Tech Agent Code Studio
+   - Side pop-up chatbot for minor enhancements.
+   - It proposes patches, creates backups, previews changes, exports versions, and supports rollback.
+   - It cannot apply real modifications silently.
+   - User Seif approves before patch application or export.
+   - Major rewrites and deletions require a plan first.
+
+6. Evidence log
+   - Captures browser-level activity after the page opens.
+   - Captures load, focus, blur, visibility, clicks, keyboard actions, sampled mouse movement, commands, voice actions, Telegram simulations, Tech Agent activity, pause, stop, governance decisions, export, and clearing.
+   - It cannot detect physical proximity before the browser opens the page.
+   - Physical proximity monitoring needs approved hardware or OS-level sensors.
+
+7. Zero-cost / revenue doctrine
+   - No paid API by default.
+   - No paid hosting by default.
+   - No recurring-cost tool without approval.
+   - Every feature must reduce cost, increase value, create revenue potential, or improve control.
+   - Every paid or external dependency requires User Seif approval.
+`;
+
+    const state = {
+      page: "chat",
+      paused: false,
+      stopped: false,
+      muted: false,
+      voiceActive: false,
+      actionCount: 0,
+      guestCount: 0,
+      logLocked: false,
+      activeCodePanel: "pythonRuntime",
+      pyodideReady: false,
+      recognition: null,
+      lastMouseLogAt: 0,
+      techMode: "ask",
+      techLocked: false,
+      stagedPatch: null,
+      backups: [],
+      agents: [
+        { id: "sandy", name: "Sandy Bell", role: "Lead agent", state: "ready" },
+        { id: "planner", name: "Strategy Agent", role: "Plans, priorities, decision logic", state: "ready" },
+        { id: "builder", name: "Python Builder", role: "Runtime, backend, integration logic", state: "ready" },
+        { id: "auditor", name: "Evidence Auditor", role: "Logs, governance, test evidence", state: "ready" },
+        { id: "tech", name: "Tech Agent", role: "Side pop-up code studio, minor enhancements only", state: "ready" }
+      ],
+      capabilities: [
+        ["Agent Command Center", "Coordinates agents, guests, instructions, and active command state.", "Seif-controlled"],
+        ["Voice Call Runtime", "Starts voice interaction, transcript capture, and speech playback.", "Seif-controlled"],
+        ["Pause / Stop Authority", "Freezes or cancels all portal activity immediately.", "Owner authority"],
+        ["Evidence Logging", "Records browser-level interactions after the portal is opened.", "Seif-only"],
+        ["Governance Decisioning", "Flags decisions but leaves approval to User Seif.", "Owner authority"],
+        ["Zero-Cost Policy", "Evaluates every enhancement against zero-cost-first execution.", "Strategic rule"],
+        ["Maximum-Revenue Strategy", "Prioritizes value creation, monetization, conversion, and cost reduction.", "Strategic rule"],
+        ["Telegram Command Bridge", "Remote command compatibility for User Seif via approved backend bridge.", "Requires approval"],
+        ["Tech Agent Code Studio", "Side pop-up chatbot for minor enhancements, backup, preview, export, and rollback.", "Seif-controlled"],
+        ["Python Runtime Blueprint", "Contains embedded Python logic for backend-grade processing.", "Internal"],
+        ["FastAPI Backend Blueprint", "Contains server code for approved deployment outside static hosting.", "Exportable"],
+        ["Guest Participation", "Allows guests to appear in the room without owner authority.", "Controlled"],
+        ["Session Export", "Creates test evidence packs for review.", "Safe"],
+        ["16K Pixel Screen", "Scales the command interface for ultra-wide display environments.", "Safe"],
+        ["Runtime Trace", "Shows safe execution trace without exposing secrets.", "Safe"],
+        ["Production Readiness View", "Frames the portal for final real testing before further action.", "Safe"]
+      ]
+    };
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+
+    function now() {
+      return new Date().toISOString();
+    }
+
+    function safeText(value) {
+      return String(value ?? "").replace(/[<>&]/g, function (char) {
+        return { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[char];
+      });
+    }
+
+    function toast(message) {
+      const box = $("toast");
+      const item = document.createElement("div");
+      item.className = "toastItem";
+      item.textContent = message;
+      box.appendChild(item);
+      setTimeout(() => item.remove(), 3800);
+    }
+
+    function logEvent(type, details = {}) {
+      if (state.logLocked && type !== "log_unlock_attempt") return;
+
+      const entry = {
+        time: now(),
+        type,
+        page: state.page,
+        paused: state.paused,
+        stopped: state.stopped,
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution.",
+        details
+      };
+
+      const logBox = $("evidenceLog");
+      if (logBox) {
+        const item = document.createElement("div");
+        item.className = "logItem";
+        item.innerHTML = `<strong>${safeText(type)}</strong> · ${safeText(entry.time)}<br>${safeText(JSON.stringify(details))}`;
+        logBox.prepend(item);
+      }
+
+      const existing = JSON.parse(sessionStorage.getItem("seifEvidenceLog") || "[]");
+      existing.push(entry);
+      sessionStorage.setItem("seifEvidenceLog", JSON.stringify(existing.slice(-1600)));
+    }
+
+    function incrementAction(label) {
+      state.actionCount += 1;
+      $("actionsMeter").textContent = String(state.actionCount);
+      logEvent("action", { label, count: state.actionCount });
+    }
+
+    function showPage(page) {
+      state.page = page;
+      $("pageChat").classList.toggle("active", page === "chat");
+      $("pageConsole").classList.toggle("active", page === "console");
+      $("navChat").classList.toggle("active", page === "chat");
+      $("navConsole").classList.toggle("active", page === "console");
+      logEvent("page_change", { page });
+    }
+
+    function addMessage(containerId, role, text) {
+      const container = $(containerId);
+      const msg = document.createElement("div");
+      msg.className = `msg ${role}`;
+      msg.textContent = text;
+      container.appendChild(msg);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function agentAnswer(prompt) {
+      const p = prompt.toLowerCase();
+
+      if (state.paused) return "Runtime is paused by User Seif. Agents are frozen until Seif resumes.";
+      if (state.stopped) return "Runtime is stopped by User Seif. No active run will continue.";
+
+      if (p.includes("telegram")) {
+        return "Telegram Command Bridge is designed into the portal as a Seif-authorized remote command layer. True 24/7 receiving needs an approved backend bridge; the blueprint is embedded.";
+      }
+
+      if (p.includes("voice") || p.includes("call")) {
+        return "Voice-call layer is active through browser speech tools where supported. The transcript and actions are logged for User Seif.";
+      }
+
+      if (p.includes("backend") || p.includes("fastapi") || p.includes("server")) {
+        return "The backend code is embedded inside this HTML as a FastAPI blueprint. Static hosting runs the portal; approved server deployment runs backend logic.";
+      }
+
+      if (p.includes("tech") || p.includes("patch") || p.includes("code")) {
+        return "Tech Agent Code Studio is available as a side pop-up. It can propose minor patches, create backups, preview changes, export versions, and support rollback only under User Seif control.";
+      }
+
+      if (p.includes("log") || p.includes("evidence")) {
+        return "The evidence log records browser-level portal contact after page open: clicks, keyboard actions, page focus, visibility, sampled mouse movement, voice actions, Telegram simulations, Tech Agent actions, pause, stop, and exports.";
+      }
+
+      if (p.includes("zero") || p.includes("cost") || p.includes("revenue")) {
+        return "Every feature must pass the zero-cost-first and maximum-revenue filter: avoid cost by default, protect control, increase value, and require Seif approval for paid or external dependencies.";
+      }
+
+      if (p.includes("pause") || p.includes("stop")) {
+        return "Pause freezes agents, voice, timers, and execution. Stop cancels the active run and logs User Seif’s interruption.";
+      }
+
+      if (p.includes("risk") || p.includes("governance")) {
+        return "Risk and governance decisions are controlled only by User Seif. Agents can flag and explain, but cannot approve.";
+      }
+
+      return "Order received. Sandy Bell, Strategy Agent, Python Builder, Evidence Auditor, and Tech Agent are aligned inside User Seif’s command frame.";
+    }
+
+    function executeSeifOrder() {
+      const input = $("seifPrompt");
+      const prompt = input.value.trim();
+      if (!prompt) return;
+
+      incrementAction("execute_seif_order");
+      addMessage("mainMessages", "user", prompt);
+      input.value = "";
+      updateMainChars();
+
+      logEvent("seif_order", { prompt });
+
+      if (state.paused) {
+        addMessage("mainMessages", "system", "Paused by User Seif. The order is logged, but agents remain frozen.");
+        return;
+      }
+
+      if (state.stopped) {
+        addMessage("mainMessages", "system", "Stopped by User Seif. The order is logged, but no run is active.");
+        return;
+      }
+
+      const response = agentAnswer(prompt);
+      addMessage("mainMessages", "agent", response + "\n\nGovernance note: final approval remains with User Seif.\nCommercial note: zero-cost-first and maximum-revenue logic remain active.");
+
+      if (!state.muted) speak(response);
+      appendTrace("main_order", prompt, response);
+    }
+
+    function handleMainKey(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        executeSeifOrder();
+      }
+    }
+
+    function updateMainChars() {
+      $("mainCharHint").textContent = `${$("seifPrompt").value.length} chars`;
+    }
+
+    function togglePause() {
+      state.paused = !state.paused;
+      document.body.classList.toggle("paused", state.paused);
+      $("pauseBtn").textContent = state.paused ? "Resume" : "Pause";
+      $("authorityState").textContent = state.paused ? "Paused by User Seif" : "Seif authority active";
+      $("runtimeStatus").textContent = state.paused ? "Frozen by User Seif" : "Browser runtime live";
+      updateAgents();
+
+      if (state.paused) {
+        if (state.recognition) {
+          try { state.recognition.stop(); } catch (e) {}
+        }
+        speechSynthesis.cancel();
+      }
+
+      logEvent(state.paused ? "pause" : "resume", {
+        actor: "User Seif",
+        effect: state.paused ? "All agents frozen" : "Agents resumed"
+      });
+
+      toast(state.paused ? "All agents frozen by User Seif." : "Agents resumed by User Seif.");
+    }
+
+    function stopAll() {
+      state.stopped = true;
+      state.voiceActive = false;
+      document.body.classList.add("stopped");
+
+      if (state.recognition) {
+        try { state.recognition.stop(); } catch (e) {}
+      }
+
+      speechSynthesis.cancel();
+
+      $("voiceStatus").textContent = "Stopped";
+      $("runtimeStatus").textContent = "Stopped by User Seif";
+      addMessage("mainMessages", "system", "Stop command executed by User Seif. Active run cancelled.");
+      appendTrace("stop", "User Seif stopped all activity", "Runtime stopped.");
+
+      logEvent("stop", {
+        actor: "User Seif",
+        effect: "Active run cancelled, voice ended, speech cancelled, Tech Agent activity frozen"
+      });
+
+      toast("Stop executed. Active run cancelled.");
+    }
+
+    function seifDecision(decision) {
+      $("govState").textContent = `Seif ${decision}`;
+      logEvent("governance_decision", {
+        actor: "User Seif",
+        decision,
+        principle: "Only User Seif controls governance decisions"
+      });
+      toast(`Governance decision recorded: ${decision}`);
+    }
+
+    function updateAgents() {
+      const list = $("agentList");
+      list.innerHTML = "";
+
+      state.agents.forEach(agent => {
+        const card = document.createElement("div");
+        card.className = "agent";
+        card.innerHTML = `
+          <div class="avatar">${safeText(agent.name[0])}</div>
+          <div>
+            <b>${safeText(agent.name)}</b>
+            <small>${safeText(agent.role)}</small>
+          </div>
+          <span class="agentState">${state.paused ? "paused" : "ready"}</span>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function addGuest() {
+      state.guestCount += 1;
+      const guest = {
+        id: `guest_${state.guestCount}`,
+        name: `Guest ${state.guestCount}`,
+        role: "Guest participant, no governance authority",
+        state: "joined"
+      };
+
+      state.agents.push(guest);
+      updateAgents();
+      logEvent("guest_joined", guest);
+      addMessage("mainMessages", "system", `${guest.name} joined the room. Guest has no Seif authority.`);
+    }
+
+    function startVoiceCall() {
+      if (state.paused) {
+        toast("Voice cannot start while User Seif has paused the portal.");
+        logEvent("voice_blocked", { reason: "paused" });
+        return;
+      }
+
+      if (state.stopped) {
+        toast("Voice cannot start after Stop until the portal is refreshed or reset.");
+        logEvent("voice_blocked", { reason: "stopped" });
+        return;
+      }
+
+      state.voiceActive = true;
+      $("voiceStatus").textContent = "Live";
+      $("voiceTranscript").textContent = "Voice call started. Listening support depends on this browser.";
+
+      logEvent("voice_call_started", { actor: "User Seif" });
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        $("voiceTranscript").textContent = "Voice recognition is not supported in this browser. Speech playback remains available.";
+        speak("Voice recognition is not supported in this browser. Speech playback remains available.");
+        return;
+      }
+
+      state.recognition = new SpeechRecognition();
+      state.recognition.lang = "en-US";
+      state.recognition.continuous = true;
+      state.recognition.interimResults = true;
+
+      state.recognition.onresult = function (event) {
+        let text = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          text += event.results[i][0].transcript;
+        }
+
+        $("voiceTranscript").textContent = text;
+        logEvent("voice_transcript", { text });
+      };
+
+      state.recognition.onerror = function (event) {
+        $("voiceTranscript").textContent = `Voice error: ${event.error}`;
+        logEvent("voice_error", { error: event.error });
+      };
+
+      state.recognition.onend = function () {
+        if (state.voiceActive && !state.paused && !state.stopped) {
+          try { state.recognition.start(); } catch (e) {}
+        }
+      };
+
+      try {
+        state.recognition.start();
+      } catch (error) {
+        $("voiceTranscript").textContent = `Voice start failed: ${error.message}`;
+        logEvent("voice_start_failed", { message: error.message });
+      }
+    }
+
+    function toggleMute() {
+      state.muted = !state.muted;
+      if (state.muted) speechSynthesis.cancel();
+      logEvent("voice_mute_toggle", { muted: state.muted });
+      toast(state.muted ? "Voice playback muted." : "Voice playback active.");
+    }
+
+    function endVoiceCall() {
+      state.voiceActive = false;
+
+      if (state.recognition) {
+        try { state.recognition.stop(); } catch (e) {}
+      }
+
+      speechSynthesis.cancel();
+      $("voiceStatus").textContent = "Ended";
+      logEvent("voice_call_ended", { actor: "User Seif" });
+      toast("Voice call ended.");
+    }
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) return;
+      if (state.muted || state.paused || state.stopped) return;
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = .92;
+      utterance.pitch = 1.02;
+      utterance.volume = 1;
+      speechSynthesis.speak(utterance);
+    }
+
+    function renderCapabilities() {
+      const grid = $("capGrid");
+      grid.innerHTML = "";
+
+      state.capabilities.forEach((cap, index) => {
+        const card = document.createElement("button");
+        card.className = "capCard";
+        card.onclick = () => runCapability(index);
+        card.innerHTML = `
+          <div>
+            <h4>${String(index + 1).padStart(2, "0")} · ${safeText(cap[0])}</h4>
+            <p>${safeText(cap[1])}</p>
+          </div>
+          <span class="riskTag">${safeText(cap[2])}</span>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function runCapability(index) {
+      const cap = state.capabilities[index];
+      incrementAction("run_capability");
+      addMessage("messages", "user", `Run capability: ${cap[0]}`);
+
+      const response = `Capability activated: ${cap[0]}\n${cap[1]}\n\nGovernance: ${cap[2]}. Final decision remains controlled by User Seif.\nCommercial filter: zero-cost-first and maximum-revenue strategy checked.`;
+
+      addMessage("messages", "agent", response);
+      appendTrace("capability", cap[0], response);
+      logEvent("capability_run", { index, capability: cap[0], governance: cap[2] });
+    }
+
+    function ask(text) {
+      $("prompt").value = text;
+      updateConsoleChars();
+      sendMsg();
+    }
+
+    function sendMsg() {
+      const input = $("prompt");
+      const text = input.value.trim();
+      if (!text) return;
+
+      incrementAction("console_message");
+      addMessage("messages", "user", text);
+      input.value = "";
+      updateConsoleChars();
+
+      const response = agentAnswer(text);
+      addMessage("messages", "agent", response + "\n\nGovernance note: User Seif controls final approval.\nCommercial note: zero-cost policy and maximum-revenue strategy remain active.");
+      appendTrace("console_chat", text, response);
+      logEvent("console_message", { text, response });
+    }
+
+    function handleKey(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMsg();
+      }
+    }
+
+    function updateConsoleChars() {
+      $("tokenHint").textContent = `${$("prompt").value.length} chars`;
+    }
+
+    function appendTrace(type, input, output) {
+      const trace = $("trace");
+      const line = `
+[${new Date().toLocaleTimeString()}] ${type}
+input: ${input}
+output: ${output}
+governance: controlled by User Seif
+commercial: zero-cost-first / maximum-revenue checked
+`;
+      trace.textContent += line;
+      trace.scrollTop = trace.scrollHeight;
+    }
+
+    function simulateTelegram(command) {
+      logEvent("telegram_simulated_command", {
+        command,
+        note: "Portal-side simulation only. True Telegram receiving requires approved backend bridge."
+      });
+
+      $("telegramStatus").textContent = `Simulated ${command}`;
+
+      if (command === "/pause" && !state.paused) togglePause();
+      else if (command === "/resume" && state.paused) togglePause();
+      else if (command === "/tech") openTechAgent();
+      else if (command === "/status") toast(`Status: ${$("runtimeStatus").textContent}`);
+
+      addMessage("mainMessages", "system", `Telegram command simulation received: ${command}`);
+    }
+
+    function lockLog() {
+      logEvent("log_locked", { actor: "User Seif" });
+      state.logLocked = true;
+      $("logLockState").textContent = "Locked by Seif";
+      toast("Evidence log locked.");
+    }
+
+    function unlockLog() {
+      const answer = prompt("Type SEIF to unlock the evidence log.");
+      if (answer === "SEIF") {
+        state.logLocked = false;
+        $("logLockState").textContent = "Unlocked by Seif";
+        logEvent("log_unlocked", { actor: "User Seif" });
+        toast("Evidence log unlocked.");
+      } else {
+        logEvent("log_unlock_attempt", { result: "failed" });
+        toast("Unlock rejected.");
+      }
+    }
+
+    function clearEvidence() {
+      const answer = prompt("Type SEIF CLEAR to clear the evidence log.");
+      if (answer !== "SEIF CLEAR") {
+        logEvent("clear_log_rejected", { reason: "phrase mismatch" });
+        toast("Clear rejected.");
+        return;
+      }
+
+      sessionStorage.removeItem("seifEvidenceLog");
+      $("evidenceLog").innerHTML = "";
+      logEvent("clear_log", { actor: "User Seif" });
+      toast("Evidence log cleared by User Seif.");
+    }
+
+    function exportEvidence() {
+      const evidence = JSON.parse(sessionStorage.getItem("seifEvidenceLog") || "[]");
+      const payload = {
+        product: "Seif Agent Portal Full Production HTML",
+        exportedAt: now(),
+        owner: "User Seif",
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution.",
+        state: {
+          paused: state.paused,
+          stopped: state.stopped,
+          actions: state.actionCount,
+          guests: state.guestCount,
+          backups: state.backups.length,
+          techLocked: state.techLocked
+        },
+        evidence
+      };
+
+      downloadText(`seif-portal-evidence-${Date.now()}.json`, JSON.stringify(payload, null, 2), "application/json");
+      logEvent("evidence_exported", { count: evidence.length });
+      toast("Evidence pack exported.");
+    }
+
+    function showCodePanel(id) {
+      state.activeCodePanel = id;
+      document.querySelectorAll(".codePanel").forEach(panel => panel.classList.remove("active"));
+      document.querySelectorAll(".codeTabs .tabBtn").forEach(btn => btn.classList.remove("active"));
+
+      $(id).classList.add("active");
+      const tabMap = {
+        pythonRuntime: "codeTabPython",
+        fastapiBackend: "codeTabFastapi",
+        telegramBridge: "codeTabTelegram",
+        deploymentNotes: "codeTabDeploy"
+      };
+
+      if (tabMap[id]) $(tabMap[id]).classList.add("active");
+      logEvent("code_panel_opened", { id });
+    }
+
+    function getActiveCode() {
+      if (state.activeCodePanel === "pythonRuntime") return PYTHON_RUNTIME_CODE;
+      if (state.activeCodePanel === "fastapiBackend") return FASTAPI_BACKEND_CODE;
+      if (state.activeCodePanel === "telegramBridge") return TELEGRAM_BRIDGE_CODE;
+      if (state.activeCodePanel === "deploymentNotes") return DEPLOYMENT_NOTES_CODE;
+      return "";
+    }
+
+    function copyActiveCode() {
+      const text = getActiveCode();
+
+      navigator.clipboard.writeText(text).then(() => {
+        logEvent("code_copied", { panel: state.activeCodePanel });
+        toast("Active code copied.");
+      }).catch(() => {
+        toast("Clipboard copy blocked by browser.");
+      });
+    }
+
+    async function tryLoadPyodide() {
+      if (state.pyodideReady) {
+        toast("Browser Python is already active.");
+        return;
+      }
+
+      logEvent("pyodide_activation_requested", { actor: "User Seif" });
+      toast("Attempting to activate browser Python through Pyodide CDN.");
+
+      try {
+        if (!window.loadPyodide) {
+          const script = document.createElement("script");
+          script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+          document.body.appendChild(script);
+          await new Promise((resolve, reject) => {
+            script.onload = resolve;
+            script.onerror = reject;
+          });
+        }
+
+        window.pyodide = await loadPyodide();
+        await window.pyodide.runPythonAsync(PYTHON_RUNTIME_CODE);
+        state.pyodideReady = true;
+        $("runtimeStatus").textContent = "Browser Python active";
+        $("runtimeMeter").textContent = "Pyodide + Browser";
+        appendTrace("pyodide", "activate", "Browser Python runtime loaded.");
+        logEvent("pyodide_activated", { status: "success" });
+        toast("Browser Python activated.");
+      } catch (error) {
+        logEvent("pyodide_failed", { message: error.message });
+        toast("Browser Python activation failed. JavaScript runtime remains active.");
+      }
+    }
+
+    function openTechAgent() {
+      $("techDrawer").classList.add("open");
+      $("drawerBackdrop").classList.add("show");
+      logEvent("tech_agent_opened", { actor: "User Seif" });
+    }
+
+    function closeTechAgent() {
+      $("techDrawer").classList.remove("open");
+      $("drawerBackdrop").classList.remove("show");
+      logEvent("tech_agent_closed", {});
+    }
+
+    function setTechMode(mode) {
+      state.techMode = mode;
+      $("techModeState").textContent = mode[0].toUpperCase() + mode.slice(1);
+      logEvent("tech_mode_changed", { mode });
+    }
+
+    function addTechMessage(role, text) {
+      const box = $("techMessages");
+      const msg = document.createElement("div");
+      msg.className = `msg ${role === "user" ? "user" : "tech"}`;
+      msg.textContent = text;
+      box.appendChild(msg);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function sendTechPrompt() {
+      const input = $("techPrompt");
+      const text = input.value.trim();
+      if (!text) return;
+
+      if (state.paused) {
+        toast("Tech Agent is frozen while User Seif has paused the portal.");
+        return;
+      }
+
+      if (state.stopped) {
+        toast("Tech Agent cannot continue after Stop.");
+        return;
+      }
+
+      if (state.techLocked) {
+        addTechMessage("tech", "Editing is locked by User Seif. I can answer conceptually, but I cannot stage patches.");
+        return;
+      }
+
+      addTechMessage("user", text);
+      input.value = "";
+      logEvent("tech_prompt", { mode: state.techMode, text });
+
+      const classification = classifyTechRequest(text);
+      const response = [
+        "Tech Agent assessment:",
+        `Change class: ${classification.changeClass}`,
+        `Cost impact: ${classification.costImpact}`,
+        `Revenue impact: ${classification.revenueImpact}`,
+        `Approval required: ${classification.approval}`,
+        "",
+        classification.message
+      ].join("\n");
+
+      addTechMessage("tech", response);
+
+      if (state.techMode === "patch" || /add|change|improve|button|label|style|enhance|fix/i.test(text)) {
+        preparePatch(text, classification);
+      }
+    }
+
+    function handleTechKey(event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendTechPrompt();
+      }
+    }
+
+    function classifyTechRequest(text) {
+      const p = text.toLowerCase();
+      const isDeletion = p.includes("delete") || p.includes("remove") || p.includes("erase");
+      const isExternal = p.includes("api") || p.includes("connect") || p.includes("telegram token") || p.includes("deploy");
+      const isMajor = p.includes("rewrite") || p.includes("rebuild") || p.includes("replace all");
+
+      if (isDeletion || isMajor) {
+        return {
+          changeClass: "Major / restricted",
+          costImpact: "Unknown until planned",
+          revenueImpact: "Requires business justification",
+          approval: "Separate explicit User Seif approval required",
+          message: "I will not stage this as a minor enhancement. A plan must be presented before any major rewrite or deletion."
+        };
+      }
+
+      if (isExternal) {
+        return {
+          changeClass: "Integration-sensitive",
+          costImpact: "Zero-cost-first, but external dependency risk exists",
+          revenueImpact: "Potentially high if approved",
+          approval: "User Seif approval required before connection",
+          message: "I can design the integration, but I cannot activate or connect external services."
+        };
+      }
+
+      return {
+        changeClass: "Minor enhancement candidate",
+        costImpact: "Zero",
+        revenueImpact: "Indirect value improvement",
+        approval: "User Seif approval required before apply/export",
+        message: "I can prepare a safe patch preview with backup-first logic. No change is applied silently."
+      };
+    }
+
+    function preparePatch(text, classification) {
+      state.stagedPatch = {
+        id: `patch_${Date.now()}`,
+        request: text,
+        classification,
+        createdAt: now(),
+        status: "staged",
+        pseudoPatch: [
+          "PATCH PREVIEW ONLY — NOT APPLIED",
+          "Target: Single-file portal HTML",
+          "Action: Minor enhancement requested by User Seif",
+          `Instruction: ${text}`,
+          "",
+          "Planned safe method:",
+          "1. Create backup snapshot.",
+          "2. Identify affected UI/component area.",
+          "3. Add or adjust code without deletion.",
+          "4. Show before/after preview.",
+          "5. Wait for User Seif approval.",
+          "6. Export updated HTML version.",
+          "7. Keep rollback available.",
+          "",
+          "No deletion, external connection, paid service, or deployment is included in this staged patch."
+        ].join("\n")
+      };
+
+      $("patchPreview").textContent = state.stagedPatch.pseudoPatch;
+      $("patchState").textContent = "Patch staged";
+      logEvent("tech_patch_staged", state.stagedPatch);
+    }
+
+    function createBackup() {
+      const backup = {
+        version: `v1.0.${state.backups.length + 1}`,
+        createdAt: now(),
+        approvedBy: "User Seif",
+        reason: state.stagedPatch ? state.stagedPatch.request : "Manual backup snapshot",
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution.",
+        htmlSnapshotNote: "In browser static mode, the portal can export a snapshot package. It cannot silently overwrite the hosted source file.",
+        rollbackAvailable: true
+      };
+
+      state.backups.push(backup);
+      $("backupState").textContent = `${state.backups.length} backups`;
+      logEvent("backup_created", backup);
+      addTechMessage("tech", `Backup created: ${backup.version}\nReason: ${backup.reason}\nRollback available: Yes`);
+      toast("Backup snapshot created.");
+    }
+
+    function previewRollback() {
+      if (!state.backups.length) {
+        addTechMessage("tech", "No backups available yet. Create a backup first.");
+        return;
+      }
+
+      const latest = state.backups[state.backups.length - 1];
+      addTechMessage("tech", `Rollback preview:\nTarget version: ${latest.version}\nCreated: ${latest.createdAt}\nReason: ${latest.reason}\n\nRollback requires User Seif approval.`);
+      logEvent("rollback_preview", latest);
+    }
+
+    function approvePatch() {
+      if (!state.stagedPatch) {
+        addTechMessage("tech", "No staged patch to approve.");
+        return;
+      }
+
+      if (!state.backups.length) {
+        createBackup();
+      }
+
+      state.stagedPatch.status = "approved_by_seif";
+      $("patchState").textContent = "Approved";
+      addTechMessage("tech", "Approved by User Seif.\nPatch remains staged in this static demo. Export Version will produce a controlled evidence/version package.");
+      logEvent("tech_patch_approved", state.stagedPatch);
+      toast("Patch approved by User Seif.");
+    }
+
+    function rejectPatch() {
+      if (!state.stagedPatch) {
+        addTechMessage("tech", "No staged patch to reject.");
+        return;
+      }
+
+      const rejected = state.stagedPatch;
+      state.stagedPatch = null;
+      $("patchPreview").textContent = "Patch rejected. No amendment applied.";
+      $("patchState").textContent = "Rejected";
+      addTechMessage("tech", "Patch rejected by User Seif. No amendment applied.");
+      logEvent("tech_patch_rejected", rejected);
+    }
+
+    function exportStagedHtml() {
+      const payload = {
+        product: "Seif Agent Portal",
+        exportedAt: now(),
+        owner: "User Seif",
+        note: "This is a static export metadata package from Tech Agent Code Studio. Full HTML source is the current opened file.",
+        stagedPatch: state.stagedPatch,
+        backups: state.backups,
+        evidence: JSON.parse(sessionStorage.getItem("seifEvidenceLog") || "[]")
+      };
+
+      downloadText(`seif-tech-agent-version-package-${Date.now()}.json`, JSON.stringify(payload, null, 2), "application/json");
+      logEvent("tech_version_exported", { stagedPatch: state.stagedPatch?.id || null, backups: state.backups.length });
+      toast("Tech Agent version package exported.");
+    }
+
+    function lockEditing() {
+      state.techLocked = true;
+      $("techAuthorityState").textContent = "Editing locked by Seif";
+      logEvent("tech_editing_locked", { actor: "User Seif" });
+      addTechMessage("tech", "Editing locked by User Seif. Tech Agent is now advisory/read-only.");
+      toast("Tech Agent editing locked.");
+    }
+
+    function downloadText(filename, content, type) {
+      const blob = new Blob([content], { type: type || "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function loadStoredEvidence() {
+      const evidence = JSON.parse(sessionStorage.getItem("seifEvidenceLog") || "[]");
+      const logBox = $("evidenceLog");
+      logBox.innerHTML = "";
+
+      evidence.slice(-300).reverse().forEach(entry => {
+        const item = document.createElement("div");
+        item.className = "logItem";
+        item.innerHTML = `<strong>${safeText(entry.type)}</strong> · ${safeText(entry.time)}<br>${safeText(JSON.stringify(entry.details || {}))}`;
+        logBox.appendChild(item);
+      });
+    }
+
+    function boot() {
+      updateAgents();
+      renderCapabilities();
+
+      $("pythonRuntimeCode").textContent = PYTHON_RUNTIME_CODE.trim();
+      $("fastapiBackendCode").textContent = FASTAPI_BACKEND_CODE.trim();
+      $("telegramBridgeCode").textContent = TELEGRAM_BRIDGE_CODE.trim();
+      $("deploymentNotesCode").textContent = DEPLOYMENT_NOTES_CODE.trim();
+
+      addMessage("mainMessages", "system", "Portal loaded. User Seif controls execution, pause, stop, governance, Telegram activation, Tech Agent patching, export, and rollback.");
+      addMessage("messages", "system", "Second-page 16K console is ready. Evidence logging is active after page open.");
+      addTechMessage("tech", "Tech Agent Code Studio ready.\nI handle minor enhancements only through backup-first, patch-preview, Seif approval, export, and rollback.");
+
+      loadStoredEvidence();
+
+      logEvent("portal_loaded", {
+        userAgent: navigator.userAgent,
+        url: location.href,
+        screen: {
+          width: screen.width,
+          height: screen.height,
+          devicePixelRatio: window.devicePixelRatio
+        },
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution."
+      });
+    }
+
+    document.addEventListener("click", function (event) {
+      const target = event.target;
+      logEvent("mouse_click", {
+        tag: target.tagName,
+        id: target.id || "",
+        className: String(target.className || "").slice(0, 140),
+        text: String(target.innerText || target.value || "").slice(0, 140),
+        x: event.clientX,
+        y: event.clientY
+      });
+    }, true);
+
+    document.addEventListener("keydown", function (event) {
+      logEvent("keyboard", {
+        key: event.key,
+        ctrl: event.ctrlKey,
+        shift: event.shiftKey,
+        alt: event.altKey,
+        meta: event.metaKey
+      });
+    }, true);
+
+    document.addEventListener("mousemove", function (event) {
+      const t = Date.now();
+      if (t - state.lastMouseLogAt > 2500) {
+        state.lastMouseLogAt = t;
+        logEvent("mouse_near_portal_sample", {
+          x: event.clientX,
+          y: event.clientY,
+          note: "Browser-level movement sample after portal was opened."
+        });
+      }
+    }, true);
+
+    window.addEventListener("focus", () => logEvent("window_focus", {}));
+    window.addEventListener("blur", () => logEvent("window_blur", {}));
+    document.addEventListener("visibilitychange", () => logEvent("visibility_change", { visibility: document.visibilityState }));
+    window.addEventListener("beforeunload", () => logEvent("portal_unload", { message: "Portal tab/window closing or navigating away." }));
+
+    boot();
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: clawi-telegram-runtime
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVarGroups:
+      - name: clawi-env
+        envVars:
+          - key: NODE_VERSION
+            value: 18.20.0
+          - key: NPM_CONFIG_PRODUCTION
+            value: "false"
+    disk:
+      name: clawi-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
+    healthCheckPath: /health
