@@ -1,0 +1,314 @@
+{
+  "name": "S-AgentOS Kernel v0.2.0 \u2014 Command Gateway",
+  "nodes": [
+    {
+      "id": "d9e705e5-cbaf-4974-ac9a-f8a8f62f322a",
+      "name": "Webhook \u2014 Command Entry",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        180,
+        300
+      ],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "s-agentos-command",
+        "responseMode": "responseNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "1f7f64ec-7dea-409c-9f1b-2c910932f616",
+      "name": "Code \u2014 Extract & Validate Auth",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ],
+      "parameters": {
+        "jsCode": "// S/ AgentOS Kernel v0.2.0 \u2014 Command Gateway auth + envelope validation\nconst incoming = $input.first().json || {};\nconst body = incoming.body || {};\nconst headers = incoming.headers || {};\n\nfunction getHeader(name) {\n  const target = String(name).toLowerCase();\n  for (const [key, value] of Object.entries(headers)) {\n    if (String(key).toLowerCase() === target) {\n      return Array.isArray(value) ? value[0] : value;\n    }\n  }\n  return \"\";\n}\n\nfunction cleanId(prefix) {\n  const raw = `${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;\n  return `${prefix}_${raw}`;\n}\n\nconst authHeader = String(getHeader(\"authorization\") || \"\");\nconst bearerToken = authHeader.replace(/^Bearer\\s+/i, \"\").trim();\nconst xAgentOSKey = String(getHeader(\"x-agentos-key\") || \"\").trim();\n\nconst expectedKey = process.env.S_AGENTOS_OPERATOR_KEY || process.env.S_AGENTOS_API_TOKEN || \"\";\nconst providedToken = xAgentOSKey || bearerToken;\nconst authValid = Boolean(expectedKey && providedToken && providedToken === expectedKey);\n\nconst allowedActions = [\n  \"health_check\", \"create_agent\", \"execute_task\", \"evaluate_agent\", \"evolve_agent\",\n  \"registry_sync\", \"telemetry_log\", \"list_agents\", \"get_agent\", \"update_agent_status\"\n];\nconst allowedPriorities = [\"low\", \"normal\", \"medium\", \"high\", \"urgent\", \"critical\"];\nconst allowedRunModes = [\"draft\", \"dry_run\", \"read_only\", \"live\"];\nconst allowedApprovalStatuses = [\"not_required\", \"pending\", \"approved\", \"rejected\", \"expired\"];\n\nconst action = body.action;\nconst objective = typeof body.objective === \"string\" ? body.objective.trim() : \"\";\nconst command_id = body.command_id || cleanId(\"cmd\");\nconst trace_id = body.trace_id || cleanId(\"trace\");\nconst idempotency_key = body.idempotency_key || null;\nconst requested_by = body.requested_by || \"operator\";\nconst priority = allowedPriorities.includes(body.priority) ? body.priority : \"normal\";\nconst run_mode = allowedRunModes.includes(body.run_mode) ? body.run_mode : \"draft\";\nconst approval_status = allowedApprovalStatuses.includes(body.approval_status) ? body.approval_status : \"not_required\";\nconst agent_id = body.agent_id || null;\nconst context = body.context && typeof body.context === \"object\" ? body.context : {};\nconst metadata = body.metadata && typeof body.metadata === \"object\" ? body.metadata : {};\n\nconst validationErrors = [];\nif (!allowedActions.includes(action)) validationErrors.push(\"Unsupported or missing action\");\nif (!objective) validationErrors.push(\"objective is required\");\nif (body.command_id && !/^cmd_[A-Za-z0-9_\\-]+$/.test(body.command_id)) validationErrors.push(\"command_id must start with cmd_\");\nif (body.trace_id && !/^trace_[A-Za-z0-9_\\-]+$/.test(body.trace_id)) validationErrors.push(\"trace_id must start with trace_\");\nif (idempotency_key && String(idempotency_key).length > 128) validationErrors.push(\"idempotency_key max length is 128\");\n\nconst writeActions = [\"create_agent\", \"execute_task\", \"evaluate_agent\", \"evolve_agent\", \"registry_sync\", \"telemetry_log\", \"update_agent_status\"];\nconst approvalRequired = run_mode === \"live\" && writeActions.includes(action);\nconst approvalAllowed = !approvalRequired || approval_status === \"approved\";\nif (!approvalAllowed) validationErrors.push(\"live write actions require approval_status=approved\");\n\nreturn [{\n  json: {\n    ...incoming,\n    body,\n    headers,\n    auth_method: xAgentOSKey ? \"x-agentos-key\" : (bearerToken ? \"bearer\" : \"missing\"),\n    x_agentos_key: providedToken ? \"[REDACTED]\" : null,\n    authValid,\n    validationValid: validationErrors.length === 0,\n    validationErrors,\n    command: {\n      command_id,\n      trace_id,\n      idempotency_key,\n      action,\n      objective,\n      requested_by,\n      priority,\n      run_mode,\n      approval_status,\n      approval_required: approvalRequired,\n      agent_id,\n      context,\n      metadata,\n      kernel_version: \"0.2.0\"\n    }\n  }\n}];"
+      }
+    },
+    {
+      "id": "4cb929b7-3598-4304-b295-99b63f29f266",
+      "name": "IF \u2014 Auth Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "e4963b17-2a55-4b2a-b24b-50fafabf49c0",
+              "leftValue": "={{ $json.authValid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "c9220fed-df56-4661-8230-e96c70a113c2",
+      "name": "Code \u2014 Auth Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        520
+      ],
+      "parameters": {
+        "jsCode": "const j = $input.first().json || {};\nreturn [{ json: {\n  ok: false,\n  error: \"Unauthorized\",\n  message: \"Missing or invalid S/ AgentOS operator key. Use X-AgentOS-Key or Authorization: Bearer.\",\n  code: 401,\n  command_id: j.command?.command_id || null,\n  trace_id: j.command?.trace_id || null,\n  kernel_version: \"0.2.0\"\n}}];"
+      }
+    },
+    {
+      "id": "518a03cd-9c9d-451f-a827-16502b89abfa",
+      "name": "Respond to Webhook \u2014 Auth Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        520
+      ],
+      "parameters": {
+        "statusCode": 401,
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "8e72a133-11fe-4342-bdb4-60300467d6c4",
+      "name": "IF \u2014 Validation Valid?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        900,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "70ff64e7-0909-4a2a-8c06-991fa127be96",
+              "leftValue": "={{ $json.validationValid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "d28f51f2-f75a-4c7b-8068-2adbddc1974a",
+      "name": "Code \u2014 Validation Error",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        420
+      ],
+      "parameters": {
+        "jsCode": "const j = $input.first().json || {};\nreturn [{ json: {\n  ok: false,\n  error: \"Validation Failed\",\n  message: (j.validationErrors || []).join(\"; \"),\n  code: 400,\n  command_id: j.command?.command_id || null,\n  trace_id: j.command?.trace_id || null,\n  kernel_version: \"0.2.0\"\n}}];"
+      }
+    },
+    {
+      "id": "2014f074-8140-4c98-96c0-6877ce749b46",
+      "name": "Respond to Webhook \u2014 Validation Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        420
+      ],
+      "parameters": {
+        "statusCode": 400,
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "4b1a49cf-47af-4847-a838-95883fe3fb3d",
+      "name": "Code \u2014 Route Command",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        220
+      ],
+      "parameters": {
+        "jsCode": "// S/ AgentOS Kernel v0.2.0 \u2014 safe command router.\n// This gateway is intentionally safe-by-default. It routes and returns a normalized response.\n// Consequential side effects should be implemented downstream after approval/idempotency persistence.\nconst j = $input.first().json || {};\nconst c = j.command || {};\n\nconst routeByAction = {\n  health_check: \"kernel_health\",\n  create_agent: \"agent_registry\",\n  execute_task: \"task_executor\",\n  evaluate_agent: \"evaluation_engine\",\n  evolve_agent: \"evolution_engine\",\n  registry_sync: \"agent_registry\",\n  telemetry_log: \"telemetry_logger\",\n  list_agents: \"agent_registry\",\n  get_agent: \"agent_registry\",\n  update_agent_status: \"agent_registry\"\n};\n\nconst route = routeByAction[c.action] || \"unsupported\";\n\nconst safeModes = [\"draft\", \"dry_run\", \"read_only\"];\nconst side_effects_enabled = c.run_mode === \"live\" && c.approval_status === \"approved\";\n\nlet result = {};\nif (c.action === \"health_check\") {\n  result = {\n    status: \"healthy\",\n    mode: \"command_gateway\",\n    provider_agnostic: true,\n    supported_actions: Object.keys(routeByAction),\n    side_effects_enabled: false\n  };\n} else {\n  result = {\n    accepted: true,\n    planned_route: route,\n    safe_mode: safeModes.includes(c.run_mode),\n    side_effects_enabled,\n    next_step: side_effects_enabled\n      ? \"Execute downstream workflow with persisted audit/idempotency checks.\"\n      : \"No live side effects. Return plan only until run_mode=live and approval_status=approved.\"\n  };\n}\n\nreturn [{ json: {\n  ok: true,\n  system: \"S/ AgentOS\",\n  kernel_version: \"0.2.0\",\n  trace_id: c.trace_id,\n  command_id: c.command_id,\n  idempotency_key: c.idempotency_key,\n  action: c.action,\n  requested_by: c.requested_by,\n  priority: c.priority,\n  run_mode: c.run_mode,\n  approval_status: c.approval_status,\n  approval_required: c.approval_required,\n  route,\n  result\n}}];"
+      }
+    },
+    {
+      "id": "a6a04de3-08fc-476f-b606-df7b9cc2b2ac",
+      "name": "Respond to Webhook \u2014 Command Result",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        220
+      ],
+      "parameters": {
+        "statusCode": 200,
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook \u2014 Command Entry": {
+      "main": [
+        [
+          {
+            "node": "Code \u2014 Extract & Validate Auth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Extract & Validate Auth": {
+      "main": [
+        [
+          {
+            "node": "IF \u2014 Auth Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2014 Auth Valid?": {
+      "main": [
+        [
+          {
+            "node": "IF \u2014 Validation Valid?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code \u2014 Auth Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Auth Error": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook \u2014 Auth Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF \u2014 Validation Valid?": {
+      "main": [
+        [
+          {
+            "node": "Code \u2014 Route Command",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code \u2014 Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Validation Error": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook \u2014 Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code \u2014 Route Command": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook \u2014 Command Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    "s-agentos",
+    "kernel",
+    "v0.2.0",
+    "command-gateway"
+  ]
+}

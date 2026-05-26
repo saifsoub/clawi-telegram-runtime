@@ -1,0 +1,22 @@
+{
+  "name": "apex-openclaw-telegram-onefile",
+  "version": "1.0.0",
+  "description": "Single-file Telegram-ready APEX/OpenClaw-style assistant runtime",
+  "main": "apex-openclaw-telegram.js",
+  "scripts": {
+    "start": "node apex-openclaw-telegram.js",
+    "check": "node --check apex-openclaw-telegram.js",
+    "health": "node -e \"fetch('http://localhost:'+(process.env.PORT||8080)+'/health').then(r=>r.text()).then(console.log).catch(e=>{console.error(e.message);process.exit(1)})\""
+  },
+  "dependencies": {
+    "axios": "^1.15.0",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "groq-sdk": "^1.1.2",
+    "node-cron": "^4.2.1",
+    "node-telegram-bot-api": "^0.64.0"
+  },
+  "author": "Seif Alsoub",
+  "license": "UNLICENSED"
+}
