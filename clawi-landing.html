@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLAWI — AI Workforce OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #03040a;
+      --bg-elevated: #0a0c18;
+      --panel: #0f1225;
+      --panel-2: #13162e;
+      --border: rgba(143, 77, 255, 0.25);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --text: #f0ecff;
+      --text-muted: #8a8fb5;
+      --purple: #8f4dff;
+      --purple-glow: rgba(143, 77, 255, 0.4);
+      --cyan: #22d7ff;
+      --cyan-glow: rgba(34, 215, 255, 0.3);
+      --green: #35e58c;
+      --gold: #ffc857;
+      --orange: #ff8b45;
+      --radius: 24px;
+      --radius-sm: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Animated background */
+    .bg-effects {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .bg-orb-1 {
+      width: 600px; height: 600px;
+      background: var(--purple);
+      top: -10%; left: -10%;
+      animation-delay: 0s;
+    }
+
+    .bg-orb-2 {
+      width: 500px; height: 500px;
+      background: var(--cyan);
+      top: 30%; right: -15%;
+      animation-delay: -7s;
+      opacity: 0.2;
+    }
+
+    .bg-orb-3 {
+      width: 400px; height: 400px;
+      background: var(--purple);
+      bottom: 10%; left: 30%;
+      animation-delay: -14s;
+      opacity: 0.15;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -40px) scale(1.1); }
+      66% { transform: translate(-30px, 30px) scale(0.95); }
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.35) 1px, transparent 1px),
+        radial-gradient(circle, rgba(143,77,255,.25) 1px, transparent 1px),
+        radial-gradient(circle, rgba(34,215,255,.18) 1px, transparent 1px);
+      background-size: 100px 100px, 160px 160px, 220px 220px;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(3,4,10,0.9), transparent);
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 24px;
+      letter-spacing: -0.03em;
+      background: linear-gradient(90deg, #fff, #c8b5ff 40%, var(--purple) 70%, var(--cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--purple), #6c2dff);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px var(--purple-glow);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px var(--purple-glow);
+    }
+
+    /* Layout */
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      width: min(1280px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 100px 0;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(143,77,255,0.4);
+      background: rgba(143,77,255,0.1);
+      color: #c8b5ff;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .hero .grad {
+      background: linear-gradient(90deg, #fff, #d7c5ff 25%, #9e63ff 55%, #20dfff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.5;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), #6c2dff);
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 32px var(--purple-glow);
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px var(--purple-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-subtle);
+      padding: 16px 36px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* Hero visual - phone mockups */
+    .hero-phones {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-end;
+      perspective: 1200px;
+      margin-top: 20px;
+    }
+
+    .phone-mockup {
+      width: 260px;
+      border-radius: 36px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 12px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      transform-style: preserve-3d;
+      transition: transform 0.4s ease;
+    }
+
+    .phone-mockup:nth-child(1) { transform: rotateY(12deg) translateZ(-40px); }
+    .phone-mockup:nth-child(2) { transform: translateZ(20px); }
+    .phone-mockup:nth-child(3) { transform: rotateY(-12deg) translateZ(-40px); }
+
+    .phone-mockup:hover { transform: rotateY(0deg) translateZ(40px) scale(1.02); }
+
+    .phone-screen {
+      aspect-ratio: 9/18.5;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #0c1020, #050712 70%);
+      border: 1px solid rgba(192, 173, 255, 0.3);
+      overflow: hidden;
+      position: relative;
+      padding: 16px;
+    }
+
+    .phone-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    /* Cards */
+    .card {
+      background: linear-gradient(145deg, rgba(18,24,47,0.9), rgba(6,9,20,0.92));
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.06), transparent 25%, transparent 75%, rgba(143,77,255,0.06));
+      pointer-events: none;
+    }
+
+    .card > * { position: relative; z-index: 1; }
+
+    /* Section titles */
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Features grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      padding: 32px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border);
+    }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      background: rgba(143,77,255,0.15);
+      border: 1px solid rgba(143,77,255,0.3);
+    }
+
+    .feature-icon.cyan { background: rgba(34,215,255,0.15); border-color: rgba(34,215,255,0.3); }
+    .feature-icon.green { background: rgba(53,229,140,0.15); border-color: rgba(53,229,140,0.3); }
+    .feature-icon.gold { background: rgba(255,200,87,0.15); border-color: rgba(255,200,87,0.3); }
+    .feature-icon.orange { background: rgba(255,139,69,0.15); border-color: rgba(255,139,69,0.3); }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Screens showcase */
+    .screens-section {
+      overflow: hidden;
+    }
+
+    .screens-track {
+      display: flex;
+      gap: 24px;
+      animation: scroll 40s linear infinite;
+      width: max-content;
+      padding: 20px 0;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .screen-card {
+      width: 280px;
+      flex-shrink: 0;
+      border-radius: 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 14px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.45);
+    }
+
+    .screen-card .phone-screen { aspect-ratio: 9/19; }
+
+    /* Architecture section */
+    .arch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .arch-card {
+      padding: 40px;
+      min-height: 320px;
+    }
+
+    .arch-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .arch-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: #c8cfff;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      padding: 40px 32px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--border);
+      box-shadow: 0 0 60px rgba(143,77,255,0.15);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .pricing-tier {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .pricing-price {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price span {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 32px 0;
+      text-align: left;
+    }
+
+    .pricing-features li {
+      padding: 8px 0;
+      color: var(--text-muted);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pricing-features li::before {
+      content: "✦";
+      color: var(--purple);
+      font-size: 12px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      text-align: center;
+    }
+
+    .cta-box {
+      padding: 80px 40px;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(143,77,255,0.2), transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(34,215,255,0.15), transparent 50%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-box p {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 500px;
+      margin: 0 auto 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Waitlist form */
+    .waitlist-form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 999px;
+      padding: 16px 24px;
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .waitlist-form input:focus {
+      border-color: var(--border);
+    }
+
+    .waitlist-form input::placeholder {
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-brand {
+      font-weight: 900;
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    /* Scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile */
+    @media (max-width: 1024px) {
+      .features-grid, .arch-grid, .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section { padding: 60px 0; }
+      .features-grid, .arch-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .hero-phones { display: none; }
+      .waitlist-form { flex-direction: column; }
+      .hero-cta-row { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 300px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-effects">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+  </div>
+  <div class="stars"></div>
+
+  <nav>
+    <div class="logo">CLAWI</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#screens">Screens</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#pricing">Pricing</a>
+      <button class="nav-cta" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join Waitlist</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">Beta Preview — Join Early</div>
+      <h1>
+        Your AI<br/>
+        <span class="grad">Workforce OS</span>
+      </h1>
+      <p>Build, customize, and deploy multiple AI workers. Swarm orchestration, skill marketplace, memory matrix — one mobile command center.</p>
+      <div class="hero-cta-row">
+        <button class="btn-primary" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join the Waitlist</button>
+        <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Explore Features</button>
+      </div>
+
+      <div class="hero-phones">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <span style="font-size:11px;color:var(--text-muted);">☰</span>
+              <span style="font-size:12px;font-weight:700;">Home Command</span>
+              <span style="font-size:11px;color:var(--text-muted);">⌁</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;">
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;">12,450</div>
+                <div style="font-size:9px;color:var(--text-muted);">CLAW</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;text-align:center;">
+                <div style="font-size:16px;font-weight:800;">2,345</div>
+                <div style="font-size:9px;color:var(--text-muted);">TON</div>
+              </div>
+            </div>
+            <div style="display:grid;place-items:center;height:120px;">
+              <svg width="100" viewBox="0 0 180 150">
+                <circle cx="90" cy="75" r="54" fill="#141a36" stroke="#9b63ff" stroke-width="4"/>
+                <rect x="48" y="48" width="84" height="58" rx="24" fill="#050711"/>
+                <circle cx="72" cy="74" r="9" fill="#b05cff"/>
+                <circle cx="108" cy="74" r="9" fill="#b05cff"/>
+                <path d="M78 94 Q90 103 102 94" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:12px;margin-top:12px;">
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;">
+                <span style="color:var(--text-muted);">Clawi Power</span>
+                <span style="font-weight:800;">8,750</span>
+              </div>
+              <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;">
+                <div style="height:100%;width:72%;background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));border-radius:inherit;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <span style="font-size:11px;color:var(--text-muted);">←</span>
+              <span style="font-size:12px;font-weight:700;">Swarm Control</span>
+              <span style="font-size:11px;color:var(--text-muted);">+</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:12px;margin-bottom:12px;">
+              <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:6px;">
+                <span style="color:var(--text-muted);">Your Swarm</span>
+                <span style="font-weight:800;">9 Active</span>
+              </div>
+              <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;">
+                <div style="height:100%;width:62%;background:linear-gradient(90deg,var(--green),var(--cyan),var(--purple));border-radius:inherit;"></div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:10px;">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;margin-bottom:4px;">
+                  <div style="width:24px;height:24px;border-radius:10px;background:radial-gradient(circle at 35% 25%,#fff,var(--cyan) 18%,var(--purple) 65%);"></div>
+                  Research
+                </div>
+                <div style="font-size:9px;color:var(--text-muted);">Working · 88%</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:10px;">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;margin-bottom:4px;">
+                  <div style="width:24px;height:24px;border-radius:10px;background:radial-gradient(circle at 35% 25%,#fff,var(--green) 18%,var(--cyan) 65%);"></div>
+                  Code
+                </div>
+                <div style="font-size:9px;color:var(--text-muted);">Build auth · 72%</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:10px;">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;margin-bottom:4px;">
+                  <div style="width:24px;height:24px;border-radius:10px;background:radial-gradient(circle at 35% 25%,#fff,var(--gold) 18%,var(--orange) 65%);"></div>
+                  Design
+                </div>
+                <div style="font-size:9px;color:var(--text-muted);">Screens · 65%</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:10px;">
+                <div style="display:flex;align-items:center;gap:6px;font-size:10px;font-weight:700;margin-bottom:4px;">
+                  <div style="width:24px;height:24px;border-radius:10px;background:radial-gradient(circle at 35% 25%,#fff,var(--purple) 18%,var(--cyan) 65%);"></div>
+                  Money
+                </div>
+                <div style="font-size:9px;color:var(--text-muted);">Signals · 49%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <span style="font-size:11px;color:var(--text-muted);">←</span>
+              <span style="font-size:12px;font-weight:700;">Marketplace</span>
+              <span style="font-size:11px;color:var(--text-muted);">⌕</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;min-height:90px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div style="height:32px;border-radius:10px;background:radial-gradient(circle,rgba(255,255,255,0.8),rgba(143,77,255,0.6) 30%,rgba(34,215,255,0.18) 70%,transparent);"></div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;">Auto Writer</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Skill · 750 CLAW</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;min-height:90px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div style="height:32px;border-radius:10px;background:radial-gradient(circle,rgba(255,255,255,0.8),rgba(34,215,255,0.6) 30%,rgba(143,77,255,0.18) 70%,transparent);"></div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;">SEO Booster</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Skill · 650 CLAW</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;min-height:90px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div style="height:32px;border-radius:10px;background:radial-gradient(circle,rgba(255,255,255,0.8),rgba(53,229,140,0.6) 30%,rgba(34,215,255,0.18) 70%,transparent);"></div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;">Content Flow</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Workflow · 1,250</div>
+                </div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px;min-height:90px;display:flex;flex-direction:column;justify-content:space-between;">
+                <div style="height:32px;border-radius:10px;background:radial-gradient(circle,rgba(255,255,255,0.8),rgba(255,200,87,0.6) 30%,rgba(255,139,69,0.18) 70%,transparent);"></div>
+                <div>
+                  <div style="font-size:11px;font-weight:700;">Neon Skin</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Skin · 350 CLAW</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <div class="section-header reveal">
+        <h2>One OS. <span class="grad">Infinite Workers.</span></h2>
+        <p>CLAWI isn't a chatbot. It's a living AI workforce system where you build, manage, and deploy specialized Clawis across real workflows.</p>
+      </div>
+      <div class="features-grid">
+        <div class="card feature-card reveal">
+          <div class="feature-icon">◈</div>
+          <h3>Multi-Clawi System</h3>
+          <p>Own multiple specialized Clawis — Research, Code, Design, Finance, Social. Each with unique skills, memory, and permissions.</p>
+        </div>
+        <div class="card feature-card reveal">
+          <div class="feature-icon cyan">⟁</div>
+          <h3>Swarm Engine</h3>
+          <p>Connect Clawis into executable pipelines. Research → Write → Design → QA → Publish. Visual live orchestration with handoffs and approvals.</p>
+        </div>
+        <div class="card feature-card reveal">
+          <div class="feature-icon green">⚒</div>
+          <h3>Skill Forge</h3>
+          <p>Create, install, and export reusable skills. Turn prompts into executable tools. Share skill packs on the marketplace.</p>
+        </div>
+        <div class="card feature-card reveal">
+          <div class="feature-icon">◉</div>
+          <h3>Memory Matrix</h3>
+          <p>Persistent contextual memory across preferences, habits, people, projects, and emotional patterns. Your Clawis remember everything.</p>
+        </div>
+        <div class="card feature-card reveal">
+          <div class="feature-icon gold">◬</div>
+          <h3>Tool Connectors</h3>
+          <p>Native integrations with Gmail, Telegram, Google Drive, GitHub, Shopify, Supabase, and more. Wire your existing stack into the swarm.</p>
+        </div>
+        <div class="card feature-card reveal">
+          <div class="feature-icon orange">◐</div>
+          <h3>Model Routing</h3>
+          <p>Intelligent routing between local models (Ollama) and cloud APIs (OpenAI, Claude, Gemini). Task complexity + device resources = optimal choice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screens -->
+    <section id="screens" class="screens-section">
+      <div class="section-header reveal">
+        <h2>12 Screens. <span class="grad">One Vision.</span></h2>
+        <p>From Home Command to Skill Forge — every screen is designed for speed, clarity, and that premium dark-future aesthetic.</p>
+      </div>
+      <div style="overflow:hidden;">
+        <div class="screens-track">
+          <!-- Screen cards duplicated for seamless loop -->
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Home Command</div>
+              <div style="display:grid;place-items:center;height:100px;margin-bottom:12px;">
+                <svg width="80" viewBox="0 0 180 150"><circle cx="90" cy="75" r="54" fill="#141a36" stroke="#9b63ff" stroke-width="4"/><rect x="48" y="48" width="84" height="58" rx="24" fill="#050711"/><circle cx="72" cy="74" r="9" fill="#b05cff"/><circle cx="108" cy="74" r="9" fill="#b05cff"/><path d="M78 94 Q90 103 102 94" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:10px;color:var(--text-muted);">CLAW Balance</div>
+                <div style="font-size:18px;font-weight:800;">12,450</div>
+              </div>
+              <button style="width:100%;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--purple),#6c2dff);color:white;font-weight:700;font-size:12px;">Enter Clawiverse</button>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Swarm Control</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--cyan) 30%,var(--purple) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Research</div>
+                  <div style="font-size:9px;color:var(--green);">● Working</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--green) 30%,var(--cyan) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Code</div>
+                  <div style="font-size:9px;color:var(--green);">● Building</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--gold) 30%,var(--orange) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Design</div>
+                  <div style="font-size:9px;color:var(--gold);">● Active</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--purple) 30%,var(--cyan) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Money</div>
+                  <div style="font-size:9px;color:var(--text-muted);">○ Idle</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Workflow Map</div>
+              <div style="display:grid;gap:8px;place-items:center;">
+                <div style="width:90%;border-radius:14px;padding:12px;border:1px solid rgba(34,215,255,0.35);background:rgba(34,215,255,0.06);font-size:11px;text-align:center;">
+                  <div style="font-weight:700;">Research Clawi</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Gather data · 100%</div>
+                </div>
+                <div style="height:16px;width:2px;background:linear-gradient(var(--cyan),var(--purple));border-radius:99px;"></div>
+                <div style="width:90%;border-radius:14px;padding:12px;border:1px solid rgba(143,77,255,0.45);background:rgba(143,77,255,0.08);font-size:11px;text-align:center;">
+                  <div style="font-weight:700;">Writer Clawi</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Draft copy · 85%</div>
+                </div>
+                <div style="height:16px;width:2px;background:linear-gradient(var(--purple),var(--gold));border-radius:99px;"></div>
+                <div style="width:90%;border-radius:14px;padding:12px;border:1px solid rgba(255,200,87,0.42);background:rgba(255,200,87,0.07);font-size:11px;text-align:center;">
+                  <div style="font-weight:700;">QA Clawi</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Waiting approval</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Skill Forge</div>
+              <div style="display:grid;place-items:center;height:100px;margin-bottom:12px;">
+                <svg width="70" viewBox="0 0 180 150"><circle cx="90" cy="75" r="54" fill="#141a36" stroke="#9b63ff" stroke-width="4"/><rect x="48" y="48" width="84" height="58" rx="24" fill="#050711"/><circle cx="72" cy="74" r="9" fill="#b05cff"/><circle cx="108" cy="74" r="9" fill="#b05cff"/><path d="M78 94 Q90 103 102 94" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:10px;color:var(--text-muted);">Skill Name</div>
+                <div style="font-size:14px;font-weight:700;">Data Summarizer</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:10px;color:var(--text-muted);">Input</div>
+                <div style="font-size:12px;font-weight:600;">Text / URL / PDF</div>
+              </div>
+              <button style="width:100%;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--purple),#6c2dff);color:white;font-weight:700;font-size:12px;">Forge Skill</button>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Memory Matrix</div>
+              <div style="display:grid;place-items:center;height:120px;margin-bottom:12px;">
+                <svg width="100" viewBox="0 0 180 150">
+                  <circle cx="90" cy="74" r="62" fill="none" stroke="#22d7ff" stroke-opacity=".25"/>
+                  <circle cx="90" cy="74" r="46" fill="none" stroke="#8f4dff" stroke-opacity=".35"/>
+                  <circle cx="90" cy="74" r="32" fill="#151b38" stroke="#8f4dff"/>
+                  <circle cx="42" cy="50" r="8" fill="#35e58c"/>
+                  <circle cx="132" cy="48" r="8" fill="#22d7ff"/>
+                  <circle cx="140" cy="105" r="8" fill="#8f4dff"/>
+                  <circle cx="60" cy="118" r="8" fill="#ffc857"/>
+                </svg>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;text-align:center;">
+                  <div style="font-size:18px;font-weight:800;">2,457</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Memories</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;text-align:center;">
+                  <div style="font-size:18px;font-weight:800;">94%</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Accuracy</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Tool Wiring</div>
+              <div style="display:grid;gap:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">Telegram Bot</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan));position:relative;">
+                    <div style="width:12px;height:12px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">Gmail API</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan));position:relative;">
+                    <div style="width:12px;height:12px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">Google Drive</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan));position:relative;">
+                    <div style="width:12px;height:12px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">GitHub</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:rgba(255,255,255,0.1);position:relative;">
+                    <div style="width:12px;height:12px;background:rgba(255,255,255,0.3);border-radius:50%;position:absolute;left:2px;top:2px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Duplicate for seamless scroll -->
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Home Command</div>
+              <div style="display:grid;place-items:center;height:100px;margin-bottom:12px;">
+                <svg width="80" viewBox="0 0 180 150"><circle cx="90" cy="75" r="54" fill="#141a36" stroke="#9b63ff" stroke-width="4"/><rect x="48" y="48" width="84" height="58" rx="24" fill="#050711"/><circle cx="72" cy="74" r="9" fill="#b05cff"/><circle cx="108" cy="74" r="9" fill="#b05cff"/><path d="M78 94 Q90 103 102 94" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:10px;color:var(--text-muted);">CLAW Balance</div>
+                <div style="font-size:18px;font-weight:800;">12,450</div>
+              </div>
+              <button style="width:100%;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--purple),#6c2dff);color:white;font-weight:700;font-size:12px;">Enter Clawiverse</button>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Swarm Control</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--cyan) 30%,var(--purple) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Research</div>
+                  <div style="font-size:9px;color:var(--green);">● Working</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--green) 30%,var(--cyan) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Code</div>
+                  <div style="font-size:9px;color:var(--green);">● Building</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--gold) 30%,var(--orange) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Design</div>
+                  <div style="font-size:9px;color:var(--gold);">● Active</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;">
+                  <div style="width:28px;height:28px;border-radius:10px;background:radial-gradient(circle,#fff,var(--purple) 30%,var(--cyan) 70%);margin-bottom:6px;"></div>
+                  <div style="font-size:11px;font-weight:700;">Money</div>
+                  <div style="font-size:9px;color:var(--text-muted);">○ Idle</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Workflow Map</div>
+              <div style="display:grid;gap:8px;place-items:center;">
+                <div style="width:90%;border-radius:14px;padding:12px;border:1px solid rgba(34,215,255,0.35);background:rgba(34,215,255,0.06);font-size:11px;text-align:center;">
+                  <div style="font-weight:700;">Research Clawi</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Gather data · 100%</div>
+                </div>
+                <div style="height:16px;width:2px;background:linear-gradient(var(--cyan),var(--purple));border-radius:99px;"></div>
+                <div style="width:90%;border-radius:14px;padding:12px;border:1px solid rgba(143,77,255,0.45);background:rgba(143,77,255,0.08);font-size:11px;text-align:center;">
+                  <div style="font-weight:700;">Writer Clawi</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Draft copy · 85%</div>
+                </div>
+                <div style="height:16px;width:2px;background:linear-gradient(var(--purple),var(--gold));border-radius:99px;"></div>
+                <div style="width:90%;border-radius:14px;padding:12px;border:1px solid rgba(255,200,87,0.42);background:rgba(255,200,87,0.07);font-size:11px;text-align:center;">
+                  <div style="font-weight:700;">QA Clawi</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Waiting approval</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Skill Forge</div>
+              <div style="display:grid;place-items:center;height:100px;margin-bottom:12px;">
+                <svg width="70" viewBox="0 0 180 150"><circle cx="90" cy="75" r="54" fill="#141a36" stroke="#9b63ff" stroke-width="4"/><rect x="48" y="48" width="84" height="58" rx="24" fill="#050711"/><circle cx="72" cy="74" r="9" fill="#b05cff"/><circle cx="108" cy="74" r="9" fill="#b05cff"/><path d="M78 94 Q90 103 102 94" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:10px;color:var(--text-muted);">Skill Name</div>
+                <div style="font-size:14px;font-weight:700;">Data Summarizer</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;margin-bottom:8px;">
+                <div style="font-size:10px;color:var(--text-muted);">Input</div>
+                <div style="font-size:12px;font-weight:600;">Text / URL / PDF</div>
+              </div>
+              <button style="width:100%;padding:10px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--purple),#6c2dff);color:white;font-weight:700;font-size:12px;">Forge Skill</button>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Memory Matrix</div>
+              <div style="display:grid;place-items:center;height:120px;margin-bottom:12px;">
+                <svg width="100" viewBox="0 0 180 150">
+                  <circle cx="90" cy="74" r="62" fill="none" stroke="#22d7ff" stroke-opacity=".25"/>
+                  <circle cx="90" cy="74" r="46" fill="none" stroke="#8f4dff" stroke-opacity=".35"/>
+                  <circle cx="90" cy="74" r="32" fill="#151b38" stroke="#8f4dff"/>
+                  <circle cx="42" cy="50" r="8" fill="#35e58c"/>
+                  <circle cx="132" cy="48" r="8" fill="#22d7ff"/>
+                  <circle cx="140" cy="105" r="8" fill="#8f4dff"/>
+                  <circle cx="60" cy="118" r="8" fill="#ffc857"/>
+                </svg>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;text-align:center;">
+                  <div style="font-size:18px;font-weight:800;">2,457</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Memories</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:10px;text-align:center;">
+                  <div style="font-size:18px;font-weight:800;">94%</div>
+                  <div style="font-size:9px;color:var(--text-muted);">Accuracy</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="screen-card">
+            <div class="phone-screen">
+              <div style="font-size:12px;font-weight:700;text-align:center;margin-bottom:16px;">Tool Wiring</div>
+              <div style="display:grid;gap:8px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">Telegram Bot</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan));position:relative;">
+                    <div style="width:12px;height:12px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">Gmail API</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan));position:relative;">
+                    <div style="width:12px;height:12px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">Google Drive</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--cyan));position:relative;">
+                    <div style="width:12px;height:12px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);">
+                  <span style="font-size:11px;">GitHub</span>
+                  <div style="width:28px;height:16px;border-radius:99px;background:rgba(255,255,255,0.1);position:relative;">
+                    <div style="width:12px;height:12px;background:rgba(255,255,255,0.3);border-radius:50%;position:absolute;left:2px;top:2px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section id="architecture">
+      <div class="section-header reveal">
+        <h2>System <span class="grad">Architecture</span></h2>
+        <p>Three layers working together: cute companion surface, powerful execution runtime, and a thriving marketplace economy.</p>
+      </div>
+      <div class="arch-grid">
+        <div class="card arch-card reveal">
+          <div class="feature-icon" style="margin-bottom:20px;">◈</div>
+          <h3>01 / Clawi Core</h3>
+          <p>Identity, skins, moods, skills, memory, tools, voice, and routines. The emotional attachment layer that keeps users coming back.</p>
+          <div class="chip-row">
+            <span class="chip">Skills</span>
+            <span class="chip">Memory</span>
+            <span class="chip">Voice</span>
+            <span class="chip">Tools</span>
+            <span class="chip">Skins</span>
+          </div>
+        </div>
+        <div class="card arch-card reveal">
+          <div class="feature-icon cyan" style="margin-bottom:20px;">⟁</div>
+          <h3>02 / Flow Runtime</h3>
+          <p>Pipeline orchestration with handoffs, task states, human approvals, audit logs, and real-time execution monitoring.</p>
+          <div class="chip-row">
+            <span class="chip">Pipelines</span>
+            <span class="chip">Approvals</span>
+            <span class="chip">Logs</span>
+            <span class="chip">Roles</span>
+            <span class="chip">Runtime</span>
+          </div>
+        </div>
+        <div class="card arch-card reveal">
+          <div class="feature-icon gold" style="margin-bottom:20px;">◬</div>
+          <h3>03 / Marketplace</h3>
+          <p>Buy, sell, export, gift, and monetize skins, skill packs, workflow templates, personalities, and complete Clawi forms.</p>
+          <div class="chip-row">
+            <span class="chip">Skins</span>
+            <span class="chip">Skills</span>
+            <span class="chip">Packs</span>
+            <span class="chip">Export</span>
+            <span class="chip">Gift</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+      <div class="section-header reveal">
+        <h2>Choose Your <span class="grad">Power Level</span></h2>
+        <p>Start free. Scale as your swarm grows. Premium unlocks the full workforce OS experience.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="card pricing-card reveal">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">Free</div>
+          <div style="color:var(--text-muted);font-size:14px;">Forever free</div>
+          <ul class="pricing-features">
+            <li>1 Clawi</li>
+            <li>3 Basic Skills</li>
+            <li>Local Memory</li>
+            <li>1 Tool Connector</li>
+            <li>Community Support</li>
+          </ul>
+          <button class="btn-secondary" style="width:100%;">Get Started</button>
+        </div>
+        <div class="card pricing-card featured reveal">
+          <div class="pricing-tier" style="color:var(--purple);">Pro</div>
+          <div class="pricing-price">$19<span>/mo</span></div>
+          <div style="color:var(--text-muted);font-size:14px;">For growing swarms</div>
+          <ul class="pricing-features">
+            <li>5 Clawis</li>
+            <li>Unlimited Skills</li>
+            <li>Cloud Memory Sync</li>
+            <li>10 Tool Connectors</li>
+            <li>Workflow Builder</li>
+            <li>Priority Support</li>
+          </ul>
+          <button class="btn-primary" style="width:100%;">Upgrade to Pro</button>
+        </div>
+        <div class="card pricing-card reveal">
+          <div class="pricing-tier">Enterprise</div>
+          <div class="pricing-price">$49<span>/mo</span></div>
+          <div style="color:var(--text-muted);font-size:14px;">For serious operators</div>
+          <ul class="pricing-features">
+            <li>Unlimited Clawis</li>
+            <li>Team Swarm Mode</li>
+            <li>Advanced Model Routing</li>
+            <li>Unlimited Tools</li>
+            <li>White-label Export</li>
+            <li>Dedicated Support</li>
+          </ul>
+          <button class="btn-secondary" style="width:100%;">Contact Sales</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA / Waitlist -->
+    <section id="waitlist" class="cta-section">
+      <div class="card cta-box reveal">
+        <h2>Join the <span class="grad">Clawiverse</span></h2>
+        <p>Be the first to build your AI workforce. Early access gets premium perks, exclusive skins, and founding member status.</p>
+        <form class="waitlist-form" onsubmit="event.preventDefault(); this.innerHTML='<div style=\\'color:var(--green);font-weight:700;font-size:16px;\\'>✦ You\\'re on the list. Welcome to the future.</div>';">
+          <input type="email" placeholder="Enter your email" required />
+          <button type="submit" class="btn-primary">Join Waitlist</button>
+        </form>
+        <div style="margin-top:24px;display:flex;gap:32px;justify-content:center;color:var(--text-muted);font-size:14px;">
+          <span>✦ No spam</span>
+          <span>✦ Early access</span>
+          <span>✦ Founding perks</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">CLAWI</div>
+    <div>AI Workforce Operating System · Beta Preview</div>
+    <div style="margin-top:8px;">Built with intention. Powered by swarm intelligence.</div>
+  </footer>
+
+  <script>
+    // Scroll reveal animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Command Center</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="font-size:20px">&#128126;</div>
+      <span style="font-size:15px;font-weight:800;letter-spacing:-.02em">Clawi Command Center</span>
+    </div>
+    <div class="topbar-icon">&#128276;</div>
+  </div>
+
+  <div class="content">
+    <div class="currency-bar">
+      <div class="currency-pill">
+        <div class="currency-icon claw">C</div>
+        <div class="currency-info">
+          <div class="currency-value">12,450</div>
+          <div class="currency-label">CLAW</div>
+        </div>
+        <div class="currency-add">+</div>
+      </div>
+      <div class="currency-pill">
+        <div class="currency-icon ton">T</div>
+        <div class="currency-info">
+          <div class="currency-value">2,345</div>
+          <div class="currency-label">TON</div>
+        </div>
+        <div class="currency-add">+</div>
+      </div>
+    </div>
+
+    <div class="glass-card" style="padding:18px;margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:18px;font-weight:800">Your Swarm</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">9 Active Clawis</div>
+        </div>
+        <a href="swarm.html" class="btn btn-sm">+ Add Clawi</a>
+      </div>
+      <div style="display:flex;gap:16px;margin-bottom:12px">
+        <div style="text-align:center;flex:1">
+          <div style="font-size:20px;font-weight:800">24</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Active Tasks</div>
+        </div>
+        <div style="text-align:center;flex:1">
+          <div style="font-size:20px;font-weight:800">62%</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">System Load</div>
+        </div>
+        <div style="text-align:center;flex:1">
+          <div style="font-size:20px;font-weight:800">3,420</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Energy</div>
+        </div>
+        <div style="text-align:center;flex:1">
+          <div style="font-size:20px;font-weight:800">1,250</div>
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Revenue/Day</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-tabs">
+      <div class="filter-tab active">All</div>
+      <div class="filter-tab">Working</div>
+      <div class="filter-tab">Idle</div>
+      <div class="filter-tab">Heavy Load</div>
+      <div class="filter-tab">Error</div>
+    </div>
+
+    <div class="agent-grid">
+      <a href="detail.html" class="agent-card">
+        <div class="agent-head">
+          <div class="agent-avatar" style="background:linear-gradient(135deg,#22d7ff,#8f4dff)">&#129302;</div>
+          <div><div class="agent-name">Research</div><div class="agent-status">Gathering data</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">88%</span></div>
+        <div class="agent-bar"><div class="agent-bar-fill" style="width:88%"></div></div>
+      </a>
+      <a href="detail.html" class="agent-card">
+        <div class="agent-head">
+          <div class="agent-avatar" style="background:linear-gradient(135deg,#ff4d94,#8f4dff)">&#128187;</div>
+          <div><div class="agent-name">Code</div><div class="agent-status">Building login</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">72%</span></div>
+        <div class="agent-bar"><div class="agent-bar-fill" style="width:72%"></div></div>
+      </a>
+      <a href="detail.html" class="agent-card">
+        <div class="agent-head">
+          <div class="agent-avatar" style="background:linear-gradient(135deg,#ffc857,#ff8b45)">&#127912;</div>
+          <div><div class="agent-name">Design</div><div class="agent-status">Creating UI kit</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">65%</span></div>
+        <div class="agent-bar"><div class="agent-bar-fill" style="width:65%"></div></div>
+      </a>
+      <a href="detail.html" class="agent-card">
+        <div class="agent-head">
+          <div class="agent-avatar" style="background:linear-gradient(135deg,#35e58c,#22d7ff)">&#128172;</div>
+          <div><div class="agent-name">Social</div><div class="agent-status">Planning</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">50%</span></div>
+        <div class="agent-bar"><div class="agent-bar-fill" style="width:50%"></div></div>
+      </a>
+      <a href="detail.html" class="agent-card">
+        <div class="agent-head">
+          <div class="agent-avatar" style="background:linear-gradient(135deg,#ff8b45,#ff4c7d)">&#128176;</div>
+          <div><div class="agent-name">Money</div><div class="agent-status">Trading profit</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">45%</span></div>
+        <div class="agent-bar"><div class="agent-bar-fill" style="width:45%"></div></div>
+      </a>
+      <a href="detail.html" class="agent-card">
+        <div class="agent-head">
+          <div class="agent-avatar" style="background:linear-gradient(135deg,#9ca6c7,#6c2dff)">&#128274;</div>
+          <div><div class="agent-name">Security</div><div class="agent-status">Idle</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px"><span style="color:var(--muted)">34%</span></div>
+        <div class="agent-bar"><div class="agent-bar-fill" style="width:34%"></div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="bottomnav">
+    <a href="index.html" class="nav-item active"><i>S</i>Swarm</a>
+    <a href="workflow.html" class="nav-item"><i>F</i>Flows</a>
+    <a href="activity.html" class="nav-item"><i>A</i>Activity</a>
+    <a href="marketplace.html" class="nav-item"><i>M</i>Market</a>
+    <a href="settings.html" class="nav-item"><i>P</i>Profile</a>
+  </div>
+</div>
+</body>
+</html>

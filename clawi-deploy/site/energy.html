@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Energy & Load</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="index.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Energy & Load</div>
+    <div class="topbar-right"><div class="topbar-icon">i</div></div>
+  </div>
+  <div class="content">
+    <div class="gauge-container">
+      <div class="gauge-bg">
+        <div class="gauge-inner">
+          <div class="gauge-value">62%</div>
+          <div class="gauge-label">System Load</div>
+          <div style="font-size:11px;color:var(--green);margin-top:4px">Optimal</div>
+        </div>
+      </div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-size:18px">&#9889;</div>
+        <div><div style="font-size:13px;font-weight:700">Total Energy</div><div style="font-size:12px;color:var(--muted)">3,420 / 10,000</div></div>
+      </div>
+    </div>
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Load Over Time (24h)</div>
+    <svg class="sparkline" viewBox="0 0 300 60" preserveAspectRatio="none">
+      <defs><linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="rgba(34,215,255,.4)"/><stop offset="1" stop-color="rgba(34,215,255,0)"/></linearGradient></defs>
+      <path d="M0,45 Q30,40 60,35 T120,30 T180,25 T240,20 T300,15" fill="none" stroke="var(--cyan)" stroke-width="2"/>
+      <path d="M0,45 Q30,40 60,35 T120,30 T180,25 T240,20 T300,15 L300,60 L0,60 Z" fill="url(#sg1)"/>
+      <circle cx="300" cy="15" r="4" fill="var(--cyan)"/>
+    </svg>
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Clawi Load Distribution</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Research Clawi</span><span>88%</span></div><div class="agent-bar"><div class="agent-bar-fill" style="width:88%"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Code Clawi</span><span>72%</span></div><div class="agent-bar"><div class="agent-bar-fill" style="width:72%"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Design Clawi</span><span>65%</span></div><div class="agent-bar"><div class="agent-bar-fill" style="width:65%"></div></div></div>
+      <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Security Clawi</span><span>45%</span></div><div class="agent-bar"><div class="agent-bar-fill" style="width:45%"></div></div></div>
+    </div>
+    <div class="section-title" style="font-size:16px;margin:20px 0 10px">Model Load</div>
+    <a href="models.html" style="text-decoration:none;color:inherit;display:block;margin-bottom:8px">
+      <div class="glass-panel" style="padding:12px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--cyan));display:grid;place-items:center;font-size:14px">&#127793;</div>
+          <div><div style="font-size:13px;font-weight:600">llama3.1 (Local)</div><div style="font-size:11px;color:var(--muted)">4.7GB VRAM &#183; 8ms latency</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--green);font-weight:700">42%</div>
+      </div>
+    </a>
+    <a href="models.html" style="text-decoration:none;color:inherit;display:block;margin-bottom:8px">
+      <div class="glass-panel" style="padding:12px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--green),var(--cyan));display:grid;place-items:center;font-size:14px">&#127793;</div>
+          <div><div style="font-size:13px;font-weight:600">qwen2.5 (Local)</div><div style="font-size:11px;color:var(--muted)">3.2GB VRAM &#183; 12ms latency</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--green);font-weight:700">28%</div>
+      </div>
+    </a>
+    <a href="models.html" style="text-decoration:none;color:inherit;display:block">
+      <div class="glass-panel" style="padding:12px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--violet));display:grid;place-items:center;font-size:14px">&#9729;</div>
+          <div><div style="font-size:13px;font-weight:600">GPT-4o (Cloud)</div><div style="font-size:11px;color:var(--muted)">API &#183; 340ms latency</div></div>
+        </div>
+        <div style="font-size:12px;color:var(--purple);font-weight:700">18%</div>
+      </div>
+    </a>
+  </div>
+  <div class="bottomnav">
+    <a href="index.html" class="nav-item"><i>C</i>CPU</a>
+    <a href="energy.html" class="nav-item active"><i>L</i>Load</a>
+    <a href="models.html" class="nav-item"><i>M</i>Models</a>
+    <a href="index.html" class="nav-item"><i>H</i>Health</a>
+  </div>
+</div>
+</body>
+</html>

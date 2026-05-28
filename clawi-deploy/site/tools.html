@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Tool Wiring</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="index.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Tool Wiring</div>
+    <div class="topbar-right"><div class="topbar-icon">i</div></div>
+  </div>
+  <div class="content">
+    <a href="connectors.html" style="text-decoration:none;color:inherit;display:block;margin-bottom:14px">
+      <div class="glass-card" style="padding:14px;display:flex;align-items:center;gap:12px">
+        <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--green),var(--cyan));display:grid;place-items:center;font-size:20px">&#128268;</div>
+        <div style="flex:1">
+          <div style="font-size:15px;font-weight:800">Connectors Hub</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">8 of 12 services connected</div>
+        </div>
+        <div style="font-size:18px;color:var(--muted)">&#9656;</div>
+      </div>
+    </a>
+
+    <div class="section-title" style="font-size:14px;margin:8px 0 10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">LLM Connectors</div>
+    <a href="models.html" style="text-decoration:none;color:inherit;display:block;margin-bottom:8px">
+      <div class="tool-row">
+        <div class="tool-info">
+          <div class="tool-icon" style="background:rgba(53,229,140,.15);color:var(--green)">&#127793;</div>
+          <div><div class="tool-name">Ollama (Local)</div><div style="font-size:10px;color:var(--green)">2 models running</div></div>
+        </div>
+        <div style="font-size:14px;color:var(--muted)">&#9656;</div>
+      </div>
+    </a>
+    <div class="tool-row">
+      <div class="tool-info">
+        <div class="tool-icon" style="background:rgba(143,77,255,.15);color:var(--purple)">&#9729;</div>
+        <div><div class="tool-name">OpenAI API</div><div style="font-size:10px;color:var(--green)">Connected</div></div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-info">
+        <div class="tool-icon" style="background:rgba(255,139,69,.15);color:var(--orange)">&#9729;</div>
+        <div><div class="tool-name">Anthropic API</div><div style="font-size:10px;color:var(--green)">Connected</div></div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+
+    <div class="section-title" style="font-size:14px;margin:16px 0 10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)">App Connectors</div>
+    <a href="telegram-connect.html" style="text-decoration:none;color:inherit;display:block;margin-bottom:8px">
+      <div class="tool-row">
+        <div class="tool-info">
+          <div class="tool-icon" style="background:rgba(34,158,217,.15);color:#229ED9">&#128172;</div>
+          <div><div class="tool-name">Telegram Bot</div><div style="font-size:10px;color:var(--green)">@ClawiBot &#183; Active</div></div>
+        </div>
+        <span class="badge badge-green">Connected</span>
+      </div>
+    </a>
+    <a href="gmail-connect.html" style="text-decoration:none;color:inherit;display:block;margin-bottom:8px">
+      <div class="tool-row">
+        <div class="tool-info">
+          <div class="tool-icon" style="background:rgba(234,67,53,.15);color:#ea4335">&#9993;</div>
+          <div><div class="tool-name">Gmail</div><div style="font-size:10px;color:var(--green)">seif.alsoub@gmail.com</div></div>
+        </div>
+        <span class="badge badge-green">Connected</span>
+      </div>
+    </a>
+    <div class="tool-row">
+      <div class="tool-info">
+        <div class="tool-icon" style="background:rgba(255,139,69,.15);color:var(--orange)">&#128170;</div>
+        <div><div class="tool-name">Base44 API</div><div style="font-size:10px;color:var(--green)">Connected</div></div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-info">
+        <div class="tool-icon" style="background:rgba(156,166,199,.15);color:var(--muted)">&#60;/&#62;</div>
+        <div><div class="tool-name">GitHub</div><div style="font-size:10px;color:var(--green)">Connected</div></div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-info">
+        <div class="tool-icon" style="background:rgba(255,255,255,.08);color:var(--text)">N</div>
+        <div><div class="tool-name">Notion</div><div style="font-size:10px;color:var(--green)">Connected</div></div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+    <div class="tool-row">
+      <div class="tool-info">
+        <div class="tool-icon" style="background:rgba(66,133,244,.15);color:#4285f4">&#9729;</div>
+        <div><div class="tool-name">Google Drive</div><div style="font-size:10px;color:var(--green)">Connected</div></div>
+      </div>
+      <div class="toggle active"></div>
+    </div>
+    <a href="connectors.html" class="btn" style="margin-top:16px">Browse All Connectors</a>
+  </div>
+  <div class="bottomnav">
+    <a href="tools.html" class="nav-item"><i>T</i>Tools</a>
+    <a href="connectors.html" class="nav-item active"><i>C</i>Connect</a>
+    <a href="models.html" class="nav-item"><i>M</i>Models</a>
+    <a href="settings.html" class="nav-item"><i>S</i>Settings</a>
+  </div>
+</div>
+</body>
+</html>

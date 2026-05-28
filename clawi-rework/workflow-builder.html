@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Workflow Builder</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.nl-input{width:100%;padding:14px;border-radius:var(--radius-sm);border:1px solid rgba(140,120,220,.2);background:rgba(160,128,255,.04);color:var(--text);font-family:inherit;font-size:14px;outline:none;min-height:60px;resize:vertical}
+.nl-input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(160,128,255,.12)}
+.pipeline-container{padding:16px;border-radius:var(--radius-sm);background:rgba(160,128,255,.04);border:1px solid rgba(140,120,220,.1);margin-top:12px}
+.pipeline-step{border-radius:12px;padding:12px;border:1px solid rgba(140,120,220,.15);background:rgba(255,255,255,.8);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.pipeline-step-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;font-size:14px;flex-shrink:0}
+.pipeline-connector{width:2px;height:12px;background:linear-gradient(var(--cyan),var(--purple));margin:0 auto}
+.code-view{background:#1a1525;border-radius:var(--radius-sm);padding:14px;font-family:'SF Mono',monospace;font-size:11px;color:#c5b8e0;overflow-x:auto;margin-top:12px;white-space:pre-wrap}
+.code-view .kw{color:#a080ff}
+.code-view .str{color:#5cd899}
+.code-view .num{color:#ffc46e}
+.tab-btn{padding:8px 14px;border-radius:10px;border:1px solid rgba(140,120,220,.15);background:rgba(160,128,255,.04);color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn.active{background:linear-gradient(135deg,var(--purple),var(--violet));border-color:transparent;color:white}
+.assign-card{border-radius:14px;padding:12px;border:1px solid rgba(140,120,220,.12);background:rgba(255,255,255,.7);display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer}
+.assign-card:hover{border-color:rgba(160,128,255,.3)}
+.assign-card.selected{border-color:var(--purple);background:rgba(160,128,255,.08)}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="workflow.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Workflow Builder</div>
+    <div class="topbar-right"><div class="topbar-icon">?</div></div>
+  </div>
+  <div class="content">
+    <div style="text-align:center;margin-bottom:16px">
+      <div style="font-size:18px;font-weight:800">Describe what you want</div>
+      <div style="font-size:12px;color:var(--muted)">Type in plain English, we'll build the pipeline</div>
+    </div>
+
+    <div class="form-group">
+      <textarea class="nl-input" placeholder="e.g. 'Every morning, summarize my unread emails, check my calendar, and write a daily plan'">Every morning at 8am, read my unread emails, check today&#39;s calendar events, summarize them into a morning brief, and send it to me.</textarea>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="tab-btn active" onclick="showTab('visual')">Visual</button>
+      <button class="tab-btn" onclick="showTab('code')">Code</button>
+    </div>
+
+    <div id="visual-tab">
+      <div class="pipeline-container">
+        <div class="pipeline-step">
+          <div class="pipeline-step-icon" style="background:rgba(160,128,255,.15)">&#9200;</div>
+          <div>
+            <div style="font-size:13px;font-weight:700">Trigger</div>
+            <div style="font-size:11px;color:var(--muted)">Every day at 8:00 AM</div>
+          </div>
+        </div>
+        <div class="pipeline-connector"></div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-icon" style="background:rgba(92,184,255,.15)">&#128231;</div>
+          <div>
+            <div style="font-size:13px;font-weight:700">Read Emails</div>
+            <div style="font-size:11px;color:var(--muted)">Fetch unread messages</div>
+          </div>
+        </div>
+        <div class="pipeline-connector"></div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-icon" style="background:rgba(92,216,153,.15)">&#128197;</div>
+          <div>
+            <div style="font-size:13px;font-weight:700">Check Calendar</div>
+            <div style="font-size:11px;color:var(--muted)">Get today's events</div>
+          </div>
+        </div>
+        <div class="pipeline-connector"></div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-icon" style="background:rgba(255,196,110,.15)">&#128221;</div>
+          <div>
+            <div style="font-size:13px;font-weight:700">Summarize</div>
+            <div style="font-size:11px;color:var(--muted)">Create morning brief</div>
+          </div>
+        </div>
+        <div class="pipeline-connector"></div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-icon" style="background:rgba(160,128,255,.15)">&#128172;</div>
+          <div>
+            <div style="font-size:13px;font-weight:700">Deliver</div>
+            <div style="font-size:11px;color:var(--muted)">Send to user</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="code-tab" style="display:none">
+      <div class="code-view">workflow <span class="str">"morning_brief"</span> {
+  trigger: <span class="kw">cron</span>(<span class="str">"0 8 * * *"</span>)
+  steps: [
+    { <span class="kw">action</span>: <span class="str">"email.fetch_unread"</span> },
+    { <span class="kw">action</span>: <span class="str">"calendar.get_today"</span> },
+    { <span class="kw">action</span>: <span class="str">"ai.summarize"</span>, inputs: [<span class="str">"emails"</span>, <span class="str">"events"</span>] },
+    { <span class="kw">action</span>: <span class="str">"message.send"</span>, to: <span class="str">"user"</span> }
+  ]
+}</div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px;font-size:16px">Assign to Clawi</div>
+    <div class="empty-state" style="padding:20px">
+      <div class="empty-state-desc">Create a Clawi first to assign this workflow</div>
+      <a href="create-clawi.html" class="btn" style="margin-top:12px;width:auto;display:inline-block;padding:8px 20px;font-size:12px">Create Clawi</a>
+    </div>
+
+    <a href="workflow.html" class="btn" style="margin-top:16px">Save Workflow</a>
+  </div>
+  <div class="bottomnav">
+    <a href="index.html" class="nav-item"><i>C</i>Clawis</a>
+    <a href="workflow.html" class="nav-item active"><i>W</i>Workflows</a>
+    <a href="activity.html" class="nav-item"><i>A</i>Activity</a>
+    <a href="settings.html" class="nav-item"><i>P</i>Profile</a>
+  </div>
+</div>
+<script>
+function showTab(tab){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('visual-tab').style.display=tab==='visual'?'block':'none';
+  document.getElementById('code-tab').style.display=tab==='code'?'block':'none';
+}
+</script>
+</body>
+</html>

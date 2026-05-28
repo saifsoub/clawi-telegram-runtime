@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Telegram Setup</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.step-indicator {display:flex;gap:8px;margin-bottom:20px}
+.step {flex:1;height:4px;border-radius:999px;background:rgba(255,255,255,.08)}
+.step.active {background:linear-gradient(90deg,var(--green),var(--cyan))}
+.step.done {background:var(--green)}
+.setup-card {padding:16px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);margin-bottom:12px}
+.setup-label {font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.setup-value {font-size:14px;font-weight:700;font-family:monospace}
+.msg-row {display:flex;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);margin-bottom:8px}
+.msg-avatar {width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#229ED9,#34b7f1);display:grid;place-items:center;font-size:14px;flex-shrink:0}
+.msg-body {flex:1}
+.msg-from {font-size:12px;font-weight:700;margin-bottom:2px}
+.msg-text {font-size:11px;color:var(--muted);line-height:1.4}
+.msg-time {font-size:10px;color:var(--muted);white-space:nowrap}
+.cmd-pill {display:inline-block;padding:3px 8px;border-radius:6px;background:rgba(34,215,255,.1);color:var(--cyan);font-size:10px;font-weight:700;margin-right:4px}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="connectors.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Telegram Setup</div>
+    <div class="topbar-right"><div class="topbar-icon">i</div></div>
+  </div>
+  <div class="content">
+    <!-- Connected State -->
+    <div class="glass-card" style="padding:16px;margin-bottom:14px;text-align:center">
+      <div style="width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#229ED9,#34b7f1);display:grid;place-items:center;font-size:28px;margin:0 auto 10px;box-shadow:0 8px 24px rgba(34,158,217,.3)">&#128172;</div>
+      <div style="font-size:16px;font-weight:800">Telegram Bot Active</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">@ClawiBot &#183; Connected 3 days ago</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+        <span class="badge badge-green">Receiving</span>
+        <span class="badge badge-purple">Webhook OK</span>
+      </div>
+    </div>
+
+    <div class="step-indicator">
+      <div class="step done"></div>
+      <div class="step done"></div>
+      <div class="step done"></div>
+      <div class="step active"></div>
+    </div>
+
+    <div class="setup-card">
+      <div class="setup-label">Bot Token</div>
+      <div class="setup-value" style="font-size:11px">7429****:AAH****xJ8Q****wE****</div>
+    </div>
+    <div class="setup-card">
+      <div class="setup-label">Webhook URL</div>
+      <div class="setup-value" style="font-size:10px">https://api.clawi.io/webhook/telegram</div>
+    </div>
+    <div class="setup-card">
+      <div class="setup-label">Connected Chat</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--violet));display:grid;place-items:center;font-size:16px">&#128126;</div>
+        <div>
+          <div style="font-size:13px;font-weight:700">Seif Alsoub</div>
+          <div style="font-size:10px;color:var(--muted)">@seif_alsoub &#183; ID: 48291***</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin:16px 0">
+      <div class="glass-panel" style="flex:1;padding:12px;text-align:center">
+        <div style="font-size:18px;font-weight:800">1,247</div>
+        <div style="font-size:10px;color:var(--muted)">Messages In</div>
+      </div>
+      <div class="glass-panel" style="flex:1;padding:12px;text-align:center">
+        <div style="font-size:18px;font-weight:800">892</div>
+        <div style="font-size:10px;color:var(--muted)">Messages Out</div>
+      </div>
+      <div class="glass-panel" style="flex:1;padding:12px;text-align:center">
+        <div style="font-size:18px;font-weight:800">156</div>
+        <div style="font-size:10px;color:var(--muted)">Commands</div>
+      </div>
+    </div>
+
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Recent Messages</div>
+    <div class="msg-row">
+      <div class="msg-avatar">S</div>
+      <div class="msg-body">
+        <div class="msg-from">Seif Alsoub</div>
+        <div class="msg-text">/status check my swarm</div>
+      </div>
+      <div class="msg-time">2m</div>
+    </div>
+    <div class="msg-row">
+      <div class="msg-avatar" style="background:linear-gradient(135deg,var(--purple),var(--violet));font-size:12px">&#9996;</div>
+      <div class="msg-body">
+        <div class="msg-from" style="color:var(--purple)">Clawi Bot</div>
+        <div class="msg-text">Swarm status: 6 active, 2 idle. System load 62%. All systems operational.</div>
+      </div>
+      <div class="msg-time">2m</div>
+    </div>
+    <div class="msg-row">
+      <div class="msg-avatar">S</div>
+      <div class="msg-body">
+        <div class="msg-from">Seif Alsoub</div>
+        <div class="msg-text">/workflow deploy website launch</div>
+      </div>
+      <div class="msg-time">15m</div>
+    </div>
+    <div class="msg-row">
+      <div class="msg-avatar" style="background:linear-gradient(135deg,var(--purple),var(--violet));font-size:12px">&#9996;</div>
+      <div class="msg-body">
+        <div class="msg-from" style="color:var(--purple)">Clawi Bot</div>
+        <div class="msg-text">Workflow "Website Launch" started. 6 nodes queued. Research node running...</div>
+      </div>
+      <div class="msg-time">15m</div>
+    </div>
+
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Bot Commands</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span class="cmd-pill">/status</span>
+      <span class="cmd-pill">/workflow</span>
+      <span class="cmd-pill">/task</span>
+      <span class="cmd-pill">/memory</span>
+      <span class="cmd-pill">/skill</span>
+      <span class="cmd-pill">/report</span>
+    </div>
+
+    <a href="index.html" class="btn" style="margin-top:20px">Send Test Message</a>
+    <a href="connectors.html" class="btn" style="margin-top:10px;background:rgba(255,255,255,.08);box-shadow:none">Disconnect</a>
+  </div>
+  <div class="bottomnav">
+    <a href="tools.html" class="nav-item"><i>T</i>Tools</a>
+    <a href="connectors.html" class="nav-item active"><i>C</i>Connect</a>
+    <a href="models.html" class="nav-item"><i>M</i>Models</a>
+    <a href="settings.html" class="nav-item"><i>S</i>Settings</a>
+  </div>
+</div>
+</body>
+</html>

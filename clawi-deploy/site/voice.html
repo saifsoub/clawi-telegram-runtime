@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Voice Command</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="index.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Voice Command</div>
+    <div class="topbar-right"><div class="topbar-icon">i</div></div>
+  </div>
+  <div class="content">
+    <div style="text-align:center;padding:30px 0">
+      <svg class="clawi-avatar animate-pulse" viewBox="0 0 180 150" style="width:140px;height:120px;margin:0 auto">
+        <defs><radialGradient id="vc1" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".2" stop-color="#b9eaff"/><stop offset=".5" stop-color="#8f4dff"/><stop offset="1" stop-color="#080b18"/></radialGradient>
+        <filter id="gvc"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <circle cx="90" cy="75" r="55" fill="none" stroke="#8f4dff" stroke-opacity=".3" stroke-width="2"/>
+        <circle cx="90" cy="75" r="45" fill="#151b38" stroke="#8f4dff" stroke-width="3"/>
+        <rect x="55" y="52" width="70" height="48" rx="20" fill="#050711"/>
+        <circle cx="75" cy="73" r="7" fill="#b05cff"/><circle cx="105" cy="73" r="7" fill="#b05cff"/>
+        <path d="M80 89 Q90 96 100 89" stroke="#ffb7ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div style="margin-top:20px">
+        <span class="badge badge-purple animate-pulse">Listening...</span>
+      </div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:10px">
+      <div style="font-size:13px;color:var(--muted);font-style:italic">"Research latest AI tools"</div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:10px">
+      <div style="font-size:13px;color:var(--muted);font-style:italic">"Send report to my email"</div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:10px">
+      <div style="font-size:13px;color:var(--muted);font-style:italic">"Create UI for login screen"</div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--muted);font-style:italic">"Check my system status"</div>
+    </div>
+    <div class="voice-wave">
+      <div class="wave-bar" style="height:12px"></div>
+      <div class="wave-bar" style="height:20px"></div>
+      <div class="wave-bar" style="height:28px"></div>
+      <div class="wave-bar" style="height:18px"></div>
+      <div class="wave-bar" style="height:32px"></div>
+      <div class="wave-bar" style="height:22px"></div>
+      <div class="wave-bar" style="height:14px"></div>
+    </div>
+    <a href="index.html" class="btn" style="margin-top:10px">Hold to Speak</a>
+  </div>
+  <div class="bottomnav">
+    <a href="voice.html" class="nav-item active"><i>V</i>Voice</a>
+    <a href="index.html" class="nav-item"><i>C</i>Commands</a>
+    <a href="index.html" class="nav-item"><i>H</i>History</a>
+    <a href="settings.html" class="nav-item"><i>S</i>Settings</a>
+  </div>
+</div>
+</body>
+</html>

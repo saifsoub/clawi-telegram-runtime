@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Skill Forge</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="index.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Skill Forge</div>
+    <div class="topbar-right"><div class="topbar-icon">i</div></div>
+  </div>
+  <div class="content">
+    <div style="text-align:center;margin-bottom:16px">
+      <h1 class="section-title" style="margin:0 0 6px">Turn ideas into powerful skills</h1>
+      <p class="section-subtitle" style="margin:0">Create, test and deploy skills for your Clawis.</p>
+    </div>
+    <div style="text-align:center;margin:20px 0">
+      <svg class="clawi-avatar animate-float" viewBox="0 0 180 150" style="width:120px;height:100px;margin:0 auto">
+        <defs><radialGradient id="sk1" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".3" stop-color="#b9eaff"/><stop offset=".6" stop-color="#8f4dff"/><stop offset="1" stop-color="#080b18"/></radialGradient></defs>
+        <ellipse cx="90" cy="128" rx="45" ry="10" fill="#8f4dff" opacity=".25"/>
+        <circle cx="90" cy="75" r="45" fill="url(#sk1)" stroke="#d7c7ff" stroke-width="3"/>
+        <rect x="55" y="48" width="70" height="50" rx="20" fill="#050711" stroke="#b9a7ff" stroke-width="3"/>
+        <circle cx="75" cy="74" r="7" fill="#ad5cff"/><circle cx="105" cy="74" r="7" fill="#ad5cff"/>
+        <path d="M80 90 Q90 97 100 90" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:16px">
+      <div class="btn btn-sm" style="flex:1">Create</div>
+      <div class="btn btn-sm" style="background:rgba(255,255,255,.08);box-shadow:none;flex:1">Library</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Skill Name</label>
+      <input type="text" class="form-input" value="Data Summarizer" readonly>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <input type="text" class="form-input" value="Summarize long articles, reports and documents into key points." readonly>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Input</label>
+      <input type="text" class="form-input" value="Text / URL / PDF" readonly>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Output</label>
+      <input type="text" class="form-input" value="Summary (Bullet Points)" readonly>
+    </div>
+    <a href="index.html" class="btn" style="margin-top:10px">Forge Skill</a>
+  </div>
+  <div class="bottomnav">
+    <a href="skills.html" class="nav-item active"><i>C</i>Create</a>
+    <a href="index.html" class="nav-item"><i>L</i>Library</a>
+    <a href="index.html" class="nav-item"><i>E</i>Export</a>
+    <a href="marketplace.html" class="nav-item"><i>S</i>Store</a>
+  </div>
+</div>
+</body>
+</html>

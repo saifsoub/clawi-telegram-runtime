@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Gmail Setup</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.email-row {display:flex;gap:10px;padding:12px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);margin-bottom:8px}
+.email-sender {width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:14px;font-weight:700;flex-shrink:0}
+.email-body {flex:1;min-width:0}
+.email-from {font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.email-subject {font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.email-preview {font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.email-time {font-size:10px;color:var(--muted);white-space:nowrap}
+.email-unread {width:8px;height:8px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);flex-shrink:0;margin-top:4px}
+.perm-row {display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.perm-icon {width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.06);display:grid;place-items:center;font-size:12px}
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="connectors.html" class="topbar-back">&#8592;</a>
+    <div class="topbar-title">Gmail Setup</div>
+    <div class="topbar-right"><div class="topbar-icon">i</div></div>
+  </div>
+  <div class="content">
+    <!-- Setup / Connected State -->
+    <div class="glass-card" style="padding:16px;margin-bottom:14px;text-align:center">
+      <div style="width:56px;height:56px;border-radius:18px;background:linear-gradient(135deg,#ea4335,#fbbc05);display:grid;place-items:center;font-size:28px;margin:0 auto 10px;box-shadow:0 8px 24px rgba(234,67,53,.3)">&#9993;</div>
+      <div style="font-size:16px;font-weight:800">Gmail Connected</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px">seif.alsoub@gmail.com</div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+        <span class="badge badge-green">Read</span>
+        <span class="badge badge-purple">Send</span>
+        <span class="badge badge-gold">Draft</span>
+      </div>
+    </div>
+
+    <div class="setup-card" style="padding:14px;border-radius:var(--radius-sm);border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);margin-bottom:12px">
+      <div class="setup-label" style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">OAuth Permissions</div>
+      <div class="perm-row">
+        <div class="perm-icon">&#128269;</div>
+        <div style="font-size:12px">Read emails and threads</div>
+        <span class="badge badge-green" style="font-size:9px">Granted</span>
+      </div>
+      <div class="perm-row">
+        <div class="perm-icon">&#9993;</div>
+        <div style="font-size:12px">Send emails on your behalf</div>
+        <span class="badge badge-green" style="font-size:9px">Granted</span>
+      </div>
+      <div class="perm-row">
+        <div class="perm-icon">&#128204;</div>
+        <div style="font-size:12px">Manage labels and filters</div>
+        <span class="badge badge-green" style="font-size:9px">Granted</span>
+      </div>
+      <div class="perm-row" style="border:none">
+        <div class="perm-icon">&#128190;</div>
+        <div style="font-size:12px">Create and manage drafts</div>
+        <span class="badge badge-green" style="font-size:9px">Granted</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin:16px 0">
+      <div class="glass-panel" style="flex:1;padding:12px;text-align:center">
+        <div style="font-size:18px;font-weight:800">24</div>
+        <div style="font-size:10px;color:var(--muted)">Unread</div>
+      </div>
+      <div class="glass-panel" style="flex:1;padding:12px;text-align:center">
+        <div style="font-size:18px;font-weight:800">156</div>
+        <div style="font-size:10px;color:var(--muted)">Processed</div>
+      </div>
+      <div class="glass-panel" style="flex:1;padding:12px;text-align:center">
+        <div style="font-size:18px;font-weight:800">8</div>
+        <div style="font-size:10px;color:var(--muted)">Drafts</div>
+      </div>
+    </div>
+
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Recent Emails</div>
+    <div class="email-row">
+      <div class="email-sender" style="background:linear-gradient(135deg,#ea4335,#fbbc05)">A</div>
+      <div class="email-body">
+        <div class="email-from">AWS Notifications <span class="email-time">2h</span></div>
+        <div class="email-subject">Your monthly billing statement</div>
+        <div class="email-preview">Your AWS account has a new billing statement available for May 2026...</div>
+      </div>
+      <div class="email-unread"></div>
+    </div>
+    <div class="email-row">
+      <div class="email-sender" style="background:linear-gradient(135deg,var(--purple),var(--violet))">G</div>
+      <div class="email-body">
+        <div class="email-from">GitHub <span class="email-time">5h</span></div>
+        <div class="email-subject">[clawi] PR #42 merged: Model routing engine</div>
+        <div class="email-preview">Your pull request has been merged into the main branch...</div>
+      </div>
+      <div class="email-unread"></div>
+    </div>
+    <div class="email-row">
+      <div class="email-sender" style="background:linear-gradient(135deg,#22d7ff,#8f4dff)">S</div>
+      <div class="email-body">
+        <div class="email-from">Stripe <span class="email-time">1d</span></div>
+        <div class="email-subject">Payment received: $1,250.00</div>
+        <div class="email-preview">You have received a new payment from Customer #48291...</div>
+      </div>
+    </div>
+    <div class="email-row">
+      <div class="email-sender" style="background:linear-gradient(135deg,#35e58c,#22d7ff)">N</div>
+      <div class="email-body">
+        <div class="email-from">Notion <span class="email-time">2d</span></div>
+        <div class="email-subject">Weekly digest: 3 page updates</div>
+        <div class="email-preview">Pages you follow have been updated this week...</div>
+      </div>
+    </div>
+
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Clawi Actions</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="glass-panel" style="padding:12px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:18px">&#128203;</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">Auto-summarize</div><div style="font-size:11px;color:var(--muted)">Daily digest at 9AM</div></div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="glass-panel" style="padding:12px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:18px">&#128172;</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">Telegram alerts</div><div style="font-size:11px;color:var(--muted)">Forward important emails</div></div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="glass-panel" style="padding:12px;display:flex;align-items:center;gap:10px">
+        <div style="font-size:18px">&#9881;</div>
+        <div style="flex:1"><div style="font-size:13px;font-weight:600">Auto-reply</div><div style="font-size:11px;color:var(--muted)">For common queries</div></div>
+        <div class="toggle"></div>
+      </div>
+    </div>
+
+    <a href="index.html" class="btn" style="margin-top:20px">Sync Now</a>
+    <a href="connectors.html" class="btn" style="margin-top:10px;background:rgba(255,255,255,.08);box-shadow:none">Disconnect Gmail</a>
+  </div>
+  <div class="bottomnav">
+    <a href="tools.html" class="nav-item"><i>T</i>Tools</a>
+    <a href="connectors.html" class="nav-item active"><i>C</i>Connect</a>
+    <a href="models.html" class="nav-item"><i>M</i>Models</a>
+    <a href="settings.html" class="nav-item"><i>S</i>Settings</a>
+  </div>
+</div>
+</body>
+</html>

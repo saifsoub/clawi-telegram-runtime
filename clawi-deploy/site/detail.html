@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clawi - Code Clawi</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="phone-frame">
+  <div class="topbar">
+    <a href="index.html" class="topbar-back">&#8592;</a>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span class="status-dot"></span>
+      <span class="topbar-title">Code Clawi</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-icon">&#9998;</div>
+      <div class="topbar-icon">&#8942;</div>
+    </div>
+  </div>
+  <div class="content">
+    <div style="text-align:center;padding:20px 0">
+      <svg class="clawi-avatar animate-float" viewBox="0 0 180 150" style="width:140px;height:120px;margin:0 auto">
+        <defs>
+          <radialGradient id="av1" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".2" stop-color="#b9eaff"/><stop offset=".5" stop-color="#8f4dff"/><stop offset="1" stop-color="#080b18"/></radialGradient>
+          <filter id="g1"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <ellipse cx="90" cy="128" rx="50" ry="12" fill="#8f4dff" opacity=".2" filter="url(#g1)"/>
+        <circle cx="90" cy="75" r="50" fill="url(#av1)" stroke="#d7c7ff" stroke-width="3"/>
+        <rect x="52" y="45" width="76" height="55" rx="22" fill="#050711" stroke="#b9a7ff" stroke-width="3"/>
+        <circle cx="72" cy="72" r="8" fill="#ad5cff" filter="url(#g1)"/>
+        <circle cx="108" cy="72" r="8" fill="#ad5cff" filter="url(#g1)"/>
+        <path d="M76 90 Q90 98 104 90" stroke="#ffb7ff" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M48 35 L60 12 L76 38" fill="#151b38" stroke="#bd94ff" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M132 35 L120 12 L104 38" fill="#151b38" stroke="#bd94ff" stroke-width="4" stroke-linejoin="round"/>
+        <circle cx="90" cy="18" r="14" fill="#1c2450" stroke="#8f4dff" stroke-width="3"/>
+        <circle cx="90" cy="18" r="5" fill="#22d7ff" filter="url(#g1)"/>
+      </svg>
+      <div style="margin-top:10px"><span class="badge badge-green">Online</span></div>
+    </div>
+    <div style="display:flex;justify-content:space-around;margin:16px 0">
+      <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Status</div><div style="font-size:13px;font-weight:700;color:var(--green)">Working</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Load</div><div style="font-size:13px;font-weight:700">72%</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Energy</div><div style="font-size:13px;font-weight:700">880</div></div>
+      <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Model</div><div style="font-size:13px;font-weight:700">GPT-4o</div></div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:14px">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Current Task</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:8px">Build authentication system</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="font-size:11px;color:var(--muted)">Progress</div>
+        <div class="progress-bg" style="flex:1;margin:0"><div class="progress-fill" style="width:72%"></div></div>
+        <div style="font-size:12px;font-weight:700">72%</div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px">ETA: 00:12:46</div>
+    </div>
+    <div class="glass-card" style="padding:14px;margin-bottom:14px">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Model Assignment</div>
+      <a href="models.html" style="text-decoration:none;color:inherit">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--purple),var(--violet));display:grid;place-items:center;font-size:14px">&#9729;</div>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600">GPT-4o (Cloud)</div><div style="font-size:11px;color:var(--muted)">Complex reasoning tasks</div></div>
+          <div style="font-size:14px;color:var(--muted)">&#9656;</div>
+        </div>
+      </a>
+      <div class="divider" style="margin:10px 0"></div>
+      <div style="display:flex;gap:8px">
+        <span class="badge" style="background:rgba(143,77,255,.1);color:#d9c8ff;border:1px solid rgba(143,77,255,.2);font-size:9px">Fallback: llama3.1</span>
+        <span class="badge" style="background:rgba(53,229,140,.1);color:var(--green);border:1px solid rgba(53,229,140,.2);font-size:9px">Local ready</span>
+      </div>
+    </div>
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Skills</div>
+    <div class="icon-row">
+      <div class="icon-btn" style="background:rgba(53,229,140,.1);color:var(--green)">&#128295;</div>
+      <div class="icon-btn" style="background:rgba(143,77,255,.1);color:var(--purple)">&#128220;</div>
+      <div class="icon-btn" style="background:rgba(34,215,255,.1);color:var(--cyan)">&#128187;</div>
+      <div class="icon-btn" style="background:rgba(255,200,87,.1);color:var(--gold)">&#128161;</div>
+      <div class="icon-btn" style="background:rgba(255,77,148,.1);color:var(--pink)">&#127919;</div>
+      <div class="icon-btn" style="background:rgba(156,166,199,.1);color:var(--muted)">&#8942;</div>
+    </div>
+    <div class="section-title" style="font-size:16px;margin:16px 0 10px">Tools</div>
+    <div class="icon-row">
+      <div class="icon-btn" style="background:rgba(255,255,255,.06);color:var(--text)">&#60;/&#62;</div>
+      <div class="icon-btn" style="background:rgba(255,255,255,.06);color:var(--text)">&#128269;</div>
+      <div class="icon-btn" style="background:rgba(255,255,255,.06);color:var(--text)">&#128190;</div>
+      <div class="icon-btn" style="background:rgba(255,255,255,.06);color:var(--text)">&#128203;</div>
+      <div class="icon-btn" style="background:rgba(255,255,255,.06);color:var(--text)">&#9881;</div>
+    </div>
+    <a href="memory.html" class="btn" style="margin-top:16px">Open Brain</a>
+  </div>
+  <div class="bottomnav">
+    <a href="detail.html" class="nav-item active"><i>O</i>Overview</a>
+    <a href="skills.html" class="nav-item"><i>S</i>Skills</a>
+    <a href="tools.html" class="nav-item"><i>T</i>Tools</a>
+    <a href="memory.html" class="nav-item"><i>M</i>Memory</a>
+    <a href="settings.html" class="nav-item"><i>&#9881;</i>Settings</a>
+  </div>
+</div>
+</body>
+</html>
