@@ -13,7 +13,7 @@ Canonical source was consolidated from `apex-openclaw-telegram-onefile` (May 202
 | **Cursor Cloud** | Yes | SDK cloud agent on GitHub repos |
 | **Agent runtime queue** | Yes (ack + store) | n8n + Supabase queue; laptop/cloud pickup |
 
-Full wiring: `C:\Users\saifs\n8n\s-agentos-kernel\docs\THREE_LANES.md`
+Full wiring: see [S-OS](https://github.com/saifsoub/S-OS).
 
 ## VPS deploy (quick)
 
