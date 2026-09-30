@@ -1,6 +1,6 @@
 # @clawi_bot — Telegram runtime (24/7)
 
-Production Telegram bot for **Clawi** — Groq + memory + `/handoff` to AgentOS.  
+Production Telegram bot for **Clawi** — Groq + memory + `/handoff` to the agent runtime.  
 **Not** Cursor IDE remote (`@cursor_mini_bot`). **Not** repo editing on your laptop.
 
 Canonical source was consolidated from `apex-openclaw-telegram-onefile` (May 2026).
@@ -11,7 +11,7 @@ Canonical source was consolidated from `apex-openclaw-telegram-onefile` (May 202
 |------|-------------------|--------------|
 | **This repo (VPS)** | Yes | @clawi_bot answers, todos, skills, `/handoff` |
 | **Cursor Cloud** | Yes | SDK cloud agent on GitHub repos |
-| **AgentOS queue** | Yes (ack + store) | n8n + Supabase queue; laptop/cloud pickup |
+| **Agent runtime queue** | Yes (ack + store) | n8n + Supabase queue; laptop/cloud pickup |
 
 Full wiring: `C:\Users\saifs\n8n\s-agentos-kernel\docs\THREE_LANES.md`
 
@@ -34,7 +34,7 @@ Health: `curl -s http://127.0.0.1:8080/health`
 1. BotFather token for **@clawi_bot** → `TELEGRAM_BOT_TOKEN`
 2. `/start` once, then `/whoami` → set `OWNER_TELEGRAM_USER_ID` + `SEIF_CHAT_ID`
 3. Set `AUTO_PAIR_FIRST_USER=false`, restart
-4. Point `N8N_WEBHOOK_URL` at AgentOS queue (see THREE_LANES.md)
+4. Point `N8N_WEBHOOK_URL` at the agent runtime queue (see THREE_LANES.md)
 
 ## Key commands
 
