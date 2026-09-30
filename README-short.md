@@ -11,7 +11,7 @@ TELEGRAM_BOT_TOKEN=your_bot_token_from_botfather
 ```
 # Identity
 APP_NAME=Clawi Telegram Runtime
-OWNER_NAME=Seif Alsoub
+OWNER_NAME=Your Name
 OWNER_TELEGRAM_USER_ID=123456789
 SEIF_CHAT_ID=123456789
 
