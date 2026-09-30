@@ -85,7 +85,7 @@ Restart the bot.
 /handoff [task]
 ```
 
-S/ skills:
+skills:
 
 ```txt
 /synthesize [topic]
@@ -134,7 +134,7 @@ curl -X POST http://localhost:8080/n8n/telegram/send \
 - Live preview edits while the model responds
 - Memory per chat + global memory
 - Notes and task tracking
-- S/ specialist skill routing
+- specialist skill routing
 - Social content options + approval cards
 - Market signal scanning
 - n8n/MCP-style webhook handoff
