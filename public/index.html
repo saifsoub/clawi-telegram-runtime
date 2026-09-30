@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Seif Agent Portal — zero-cost-first, revenue-aware, Seif-governed AI operating portal." />
-  <title>Seif Agent Portal — Full Production HTML</title>
+  <meta name="description" content="Agent Portal — zero-cost-first, revenue-aware, owner-governed AI operating portal." />
+  <title>Agent Portal — Full Production HTML</title>
 
   <style>
     :root {
@@ -1165,8 +1165,8 @@
       <div class="brand">
         <div class="brandMark">S</div>
         <div>
-          <h1>Seif Agent Portal</h1>
-          <p>Zero-cost-first · revenue-aware · Seif-governed · static-live HTML</p>
+          <h1>Agent Portal</h1>
+          <p>Zero-cost-first · revenue-aware · owner-governed · static-live HTML</p>
         </div>
       </div>
 
@@ -1184,27 +1184,27 @@
           <div class="heroTopFirst">
             <div>
               <div class="kicker">First viewed HTML screen</div>
-              <h2>User Seif and his agents in one premium command frame.</h2>
+              <h2>The Owner and his agents in one premium command frame.</h2>
               <p>
-                The first page is the live interaction layer. User Seif gives orders, speaks with agents,
-                guests may join, and Seif can pause or stop every active agent instantly. The portal is built
+                The first page is the live interaction layer. The Owner gives orders, speaks with agents,
+                guests may join, and Owner can pause or stop every active agent instantly. The portal is built
                 around zero-cost-first execution and maximum-revenue strategy.
               </p>
               <div class="badgeRow">
                 <span class="badge critical">Zero-cost policy</span>
                 <span class="badge critical">Maximum revenue strategy</span>
-                <span class="badge warn">Seif-only governance</span>
+                <span class="badge warn">owner-only governance</span>
                 <span class="badge">Telegram-ready bridge</span>
                 <span class="badge">Tech Agent side studio</span>
               </div>
             </div>
-            <span class="pill"><span class="dot"></span><span id="authorityState">Seif authority active</span></span>
+            <span class="pill"><span class="dot"></span><span id="authorityState">Owner authority active</span></span>
           </div>
 
           <div class="doctrineBanner">
             <div>
-              <b>Zero-Cost Policy · Maximum-Revenue Strategy · Seif-Controlled Execution</b>
-              <span>No paid API, paid hosting, external connector, deployment, or revenue-affecting dependency activates without User Seif approval.</span>
+              <b>Zero-Cost Policy · Maximum-Revenue Strategy · Owner-Controlled Execution</b>
+              <span>No paid API, paid hosting, external connector, deployment, or revenue-affecting dependency activates without Owner approval.</span>
             </div>
             <button class="miniBtn" onclick="openTechAgent()">Open Tech Agent</button>
           </div>
@@ -1219,8 +1219,8 @@
               <span>Browser speech recognition where supported, speech playback, transcript, and voice evidence.</span>
             </div>
             <div class="frameCard">
-              <b>3 · Seif Command Frame</b>
-              <span>Enter executes. Pause freezes. Stop cancels. Governance remains under User Seif.</span>
+              <b>3 · Owner Command Frame</b>
+              <span>Enter executes. Pause freezes. Stop cancels. Governance remains under the Owner.</span>
             </div>
           </div>
 
@@ -1229,7 +1229,7 @@
 
             <div class="composerMain">
               <div class="inputRow">
-                <textarea id="seifPrompt" placeholder="Write User Seif’s order to the agents..." oninput="updateMainChars()" onkeydown="handleMainKey(event)"></textarea>
+                <textarea id="seifPrompt" placeholder="Write the Owner’s order to the agents..." oninput="updateMainChars()" onkeydown="handleMainKey(event)"></textarea>
                 <button class="send" onclick="executeSeifOrder()">Enter</button>
                 <button id="pauseBtn" class="authorityBtn pause" onclick="togglePause()">Pause</button>
                 <button class="authorityBtn stop" onclick="stopAll()">Stop</button>
@@ -1273,7 +1273,7 @@
 
           <section class="panel glass">
             <div class="panelHead">
-              <h3>Seif governance</h3>
+              <h3>Owner governance</h3>
               <span class="pill" id="govState">Owner controlled</span>
             </div>
 
@@ -1282,9 +1282,9 @@
             </p>
 
             <div class="controlGrid" style="margin-top:12px;">
-              <button class="miniBtn" onclick="seifDecision('approved')">Seif Approves</button>
-              <button class="miniBtn" onclick="seifDecision('rejected')">Seif Rejects</button>
-              <button class="miniBtn" onclick="seifDecision('override')">Seif Overrides</button>
+              <button class="miniBtn" onclick="seifDecision('approved')">Owner Approves</button>
+              <button class="miniBtn" onclick="seifDecision('rejected')">Owner Rejects</button>
+              <button class="miniBtn" onclick="seifDecision('override')">Owner Overrides</button>
               <button class="miniBtn" onclick="exportEvidence()">Export Evidence</button>
             </div>
           </section>
@@ -1295,7 +1295,7 @@
               <span class="pill" id="telegramStatus">Designed · not connected</span>
             </div>
             <p class="metaLine">
-              <span>Top-notch Telegram compatibility is designed inside the portal. True 24/7 receiving requires Seif-approved backend bridge deployment.</span>
+              <span>Top-notch Telegram compatibility is designed inside the portal. True 24/7 receiving requires owner-approved backend bridge deployment.</span>
             </p>
             <div class="controlGrid" style="margin-top:12px;">
               <button class="miniBtn" onclick="simulateTelegram('/status')">/status</button>
@@ -1328,7 +1328,7 @@
             <div class="meter"><small>Runtime</small><b id="runtimeMeter">Browser + Python Blueprint</b></div>
             <div class="meter"><small>Actions</small><b id="actionsMeter">0</b></div>
             <div class="meter"><small>Screen</small><b id="capMeter">16K PX</b></div>
-            <div class="meter"><small>Governance Gate</small><b id="gateMeter">Seif</b></div>
+            <div class="meter"><small>Governance Gate</small><b id="gateMeter">Owner</b></div>
           </div>
         </div>
 
@@ -1342,7 +1342,7 @@
               <div class="lights"><i></i><i></i><i></i></div>
               <span id="termTitle">python_runtime.py</span>
             </div>
-            <pre id="trace"># Seif Agent Portal runtime loaded
+            <pre id="trace"># Agent Portal runtime loaded
 # Static browser execution layer is active
 # Python/FastAPI/Telegram blueprints are embedded inside this HTML
 # Choose a capability or chat freely
@@ -1356,7 +1356,7 @@
           <button class="chip" onclick="ask('Show me how Python can run agents behind HTML')">Agents</button>
           <button class="chip" onclick="ask('Show me a Python backend for this chat interface')">Backend</button>
           <button class="chip" onclick="ask('Show me Python data analysis capability')">Data</button>
-          <button class="chip" onclick="ask('Show me Python automation and Seif governance')">Automation</button>
+          <button class="chip" onclick="ask('Show me Python automation and Owner governance')">Automation</button>
           <button class="chip" onclick="ask('Show me Telegram Command Bridge compatibility')">Telegram</button>
           <button class="chip" onclick="ask('Show me zero-cost maximum revenue strategy')">Revenue</button>
         </div>
@@ -1375,8 +1375,8 @@
       <section class="bottomGrid">
         <div class="panel glass">
           <div class="panelHead">
-            <h3>Seif-only evidence log</h3>
-            <span class="pill" id="logLockState">Unlocked by Seif</span>
+            <h3>owner-only evidence log</h3>
+            <span class="pill" id="logLockState">Unlocked by Owner</span>
           </div>
 
           <p class="metaLine">
@@ -1427,7 +1427,7 @@
           <div class="integrationGrid">
             <div class="integrationCard">
               <b>Telegram Command Bridge</b>
-              <span>Designed for remote Seif commands, approval queue, status, logs, pause, stop, and Tech Agent workflow.</span>
+              <span>Designed for remote Owner commands, approval queue, status, logs, pause, stop, and Tech Agent workflow.</span>
             </div>
             <div class="integrationCard">
               <b>Tech Agent Code Studio</b>
@@ -1461,7 +1461,7 @@
     <div class="drawerHead">
       <div>
         <h3>Tech Agent Code Studio</h3>
-        <p>World-class side chatbot for Seif-controlled minor enhancements, backup, preview, export, and rollback.</p>
+        <p>World-class side chatbot for owner-controlled minor enhancements, backup, preview, export, and rollback.</p>
       </div>
       <button class="miniBtn" onclick="closeTechAgent()">Close</button>
     </div>
@@ -1494,7 +1494,7 @@
           <h3>Patch preview</h3>
           <span class="pill" id="patchState">No patch</span>
         </div>
-        <div id="patchPreview" class="patchBox">Patch preview will appear here. Tech Agent cannot apply changes without User Seif approval.</div>
+        <div id="patchPreview" class="patchBox">Patch preview will appear here. Tech Agent cannot apply changes without Owner approval.</div>
       </section>
 
       <section>
@@ -1530,8 +1530,8 @@
 
   <div class="freezeOverlay">
     <div class="freezeCard">
-      <h2>Paused by Seif</h2>
-      <p>All agents, voice activity, response generation, timers, Tech Agent activity, and command execution are frozen until User Seif resumes.</p>
+      <h2>Paused by Owner</h2>
+      <p>All agents, voice activity, response generation, timers, Tech Agent activity, and command execution are frozen until the Owner resumes.</p>
       <button class="authorityBtn pause" onclick="togglePause()">Resume</button>
     </div>
   </div>
@@ -1560,21 +1560,21 @@ class RuntimeEvent:
 
 class SeifGovernedRuntime:
     """
-    Python runtime model for the Seif Agent Portal.
+    Python runtime model for the Agent Portal.
 
     Core doctrine:
     - Zero-cost policy.
     - Maximum-revenue strategy.
-    - Seif-controlled execution.
+    - owner-controlled execution.
 
     Authority principle:
     - Agents can think, draft, explain, and log.
     - Agents cannot approve governance decisions.
-    - User Seif controls approval, rejection, override, pause, stop, export, rollback, deployment, and integrations.
+    - the Owner controls approval, rejection, override, pause, stop, export, rollback, deployment, and integrations.
     """
 
     def __init__(self):
-        self.owner = "User Seif"
+        self.owner = "the Owner"
         self.paused = False
         self.stopped = False
         self.actions = 0
@@ -1599,23 +1599,23 @@ class SeifGovernedRuntime:
 
     def cost_revenue_filter(self, proposal: str):
         return {
-            "cost_impact": "Zero-cost-first unless User Seif approves otherwise.",
+            "cost_impact": "Zero-cost-first unless the Owner approves otherwise.",
             "revenue_impact": "Must reduce cost, create value, improve conversion, protect control, or support revenue.",
-            "approval": "Paid or external dependency requires User Seif approval.",
+            "approval": "Paid or external dependency requires Owner approval.",
             "proposal": proposal,
         }
 
     def pause(self):
         self.paused = True
-        return self.log("pause", self.owner, {"message": "All agents frozen by User Seif."})
+        return self.log("pause", self.owner, {"message": "All agents frozen by the Owner."})
 
     def resume(self):
         self.paused = False
-        return self.log("resume", self.owner, {"message": "Agents resumed by User Seif."})
+        return self.log("resume", self.owner, {"message": "Agents resumed by the Owner."})
 
     def stop(self):
         self.stopped = True
-        return self.log("stop", self.owner, {"message": "Active run cancelled by User Seif."})
+        return self.log("stop", self.owner, {"message": "Active run cancelled by the Owner."})
 
     def seif_decision(self, decision: Literal["approved", "rejected", "override"], context: str):
         return self.log(
@@ -1624,7 +1624,7 @@ class SeifGovernedRuntime:
             {
                 "decision": decision,
                 "context": context,
-                "principle": "Only User Seif controls governance decisions.",
+                "principle": "Only the Owner controls governance decisions.",
             },
         )
 
@@ -1632,22 +1632,22 @@ class SeifGovernedRuntime:
         if self.paused:
             return {
                 "status": "paused",
-                "message": "Runtime is frozen by User Seif.",
+                "message": "Runtime is frozen by the Owner.",
                 "risk_review": "No governance decision made by agents.",
             }
 
         if self.stopped:
             return {
                 "status": "stopped",
-                "message": "Runtime was stopped by User Seif.",
-                "risk_review": "No further activity until Seif resumes or resets.",
+                "message": "Runtime was stopped by the Owner.",
+                "risk_review": "No further activity until Owner resumes or resets.",
             }
 
         self.actions += 1
         normalized = prompt.lower().strip()
 
         if "telegram" in normalized:
-            answer = "Telegram Command Bridge is designed for Seif-authorized remote commands. True 24/7 receiving requires an approved backend bridge."
+            answer = "Telegram Command Bridge is designed for owner-authorized remote commands. True 24/7 receiving requires an approved backend bridge."
         elif "backend" in normalized or "fastapi" in normalized:
             answer = "FastAPI backend code is embedded as a deployment blueprint. Static hosting runs the portal; approved backend hosting runs server logic."
         elif "voice" in normalized or "call" in normalized:
@@ -1655,15 +1655,15 @@ class SeifGovernedRuntime:
         elif "zero" in normalized or "revenue" in normalized:
             answer = "Every proposal must pass the zero-cost-first and maximum-revenue filter before becoming an enhancement."
         elif "tech" in normalized or "patch" in normalized:
-            answer = "Tech Agent can propose minor patches, create backups, preview changes, export versions, and rollback only with User Seif approval."
+            answer = "Tech Agent can propose minor patches, create backups, preview changes, export versions, and rollback only with Owner approval."
         else:
-            answer = "Order received. Agents respond inside the Seif-controlled command frame."
+            answer = "Order received. Agents respond inside the owner-controlled command frame."
 
         self.log("agent_response", "Sandy Bell", {"prompt": prompt, "answer": answer})
         return {
             "status": "completed",
             "message": answer,
-            "risk_review": "Governance remains controlled by User Seif.",
+            "risk_review": "Governance remains controlled by the Owner.",
             "commercial_filter": self.cost_revenue_filter(prompt),
         }
 
@@ -1678,7 +1678,7 @@ from datetime import datetime
 from typing import Dict, Any, List, Literal, Optional
 from uuid import uuid4
 
-app = FastAPI(title="Seif Agent Portal Backend", version="1.0.0")
+app = FastAPI(title="Agent Portal Backend", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -1688,12 +1688,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OWNER = "User Seif"
-APP_DOCTRINE = "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution."
+OWNER = "the Owner"
+APP_DOCTRINE = "Zero-cost policy. Maximum-revenue strategy. owner-controlled execution."
 
 class ChatRequest(BaseModel):
     prompt: str = Field(..., min_length=1)
-    actor: str = "User Seif"
+    actor: str = "the Owner"
     source: str = "portal"
 
 class DecisionRequest(BaseModel):
@@ -1710,15 +1710,15 @@ state = RuntimeState()
 events: List[Dict[str, Any]] = []
 
 CAPABILITIES = [
-    {"id": "agent_command", "name": "Agent Command Center", "risk": "Seif-controlled"},
-    {"id": "voice_runtime", "name": "Voice Call Runtime", "risk": "Seif-controlled"},
+    {"id": "agent_command", "name": "Agent Command Center", "risk": "owner-controlled"},
+    {"id": "voice_runtime", "name": "Voice Call Runtime", "risk": "owner-controlled"},
     {"id": "pause_stop", "name": "Pause / Stop Authority", "risk": "Owner authority"},
-    {"id": "evidence_log", "name": "Evidence Logging", "risk": "Seif-only"},
+    {"id": "evidence_log", "name": "Evidence Logging", "risk": "owner-only"},
     {"id": "governance", "name": "Governance Decisioning", "risk": "Owner authority"},
     {"id": "python_runtime", "name": "Python Runtime Blueprint", "risk": "Internal"},
     {"id": "fastapi_backend", "name": "FastAPI Backend Blueprint", "risk": "Exportable"},
-    {"id": "telegram_bridge", "name": "Telegram Command Bridge", "risk": "Requires Seif approval"},
-    {"id": "tech_agent", "name": "Tech Agent Code Studio", "risk": "Seif-controlled"},
+    {"id": "telegram_bridge", "name": "Telegram Command Bridge", "risk": "Requires Owner approval"},
+    {"id": "tech_agent", "name": "Tech Agent Code Studio", "risk": "owner-controlled"},
     {"id": "revenue_strategy", "name": "Zero-Cost / Revenue Filter", "risk": "Strategic rule"},
 ]
 
@@ -1739,10 +1739,10 @@ def verify_seif_token(seif_token: Optional[str]):
     Production placeholder:
     - Replace with real secret/token verification.
     - Never expose tokens in frontend HTML.
-    - Bind Telegram user id and portal session to User Seif approval.
+    - Bind Telegram user id and portal session to Owner approval.
     """
     if not seif_token:
-        raise HTTPException(status_code=401, detail="Missing Seif authority token.")
+        raise HTTPException(status_code=401, detail="Missing Owner authority token.")
     return True
 
 @app.get("/health")
@@ -1766,22 +1766,22 @@ def chat(req: ChatRequest):
     if state.paused:
         return {
             "status": "paused",
-            "message": "Runtime is frozen by User Seif.",
-            "risk_review": "Governance remains controlled by User Seif.",
+            "message": "Runtime is frozen by the Owner.",
+            "risk_review": "Governance remains controlled by the Owner.",
         }
 
     if state.stopped:
         return {
             "status": "stopped",
-            "message": "Runtime is stopped by User Seif.",
-            "risk_review": "No further action until Seif resumes or resets.",
+            "message": "Runtime is stopped by the Owner.",
+            "risk_review": "No further action until Owner resumes or resets.",
         }
 
     state.actions += 1
     prompt = req.prompt.lower()
 
     if "telegram" in prompt:
-        message = "Telegram bridge is ready as a backend-compatible command layer after User Seif approves deployment."
+        message = "Telegram bridge is ready as a backend-compatible command layer after the Owner approves deployment."
     elif "backend" in prompt:
         message = "FastAPI backend is ready as the server layer for approved real deployment."
     elif "voice" in prompt:
@@ -1789,18 +1789,18 @@ def chat(req: ChatRequest):
     elif "revenue" in prompt or "zero" in prompt:
         message = "Zero-cost-first and maximum-revenue filters apply to every enhancement."
     else:
-        message = "Order received by the Seif Agent Portal backend."
+        message = "Order received by the Agent Portal backend."
 
     log("chat", req.actor, {"source": req.source, "prompt": req.prompt, "message": message})
 
     return {
         "status": "completed",
         "message": message,
-        "risk_review": "Agents do not approve governance. User Seif controls approval, rejection, or override.",
+        "risk_review": "Agents do not approve governance. The Owner controls approval, rejection, or override.",
         "commercial_filter": {
             "cost_impact": "Zero-cost-first",
             "revenue_impact": "Must create, protect, or improve value",
-            "approval": "Paid or external dependency requires User Seif approval",
+            "approval": "Paid or external dependency requires Owner approval",
         },
     }
 
@@ -1808,19 +1808,19 @@ def chat(req: ChatRequest):
 def pause(seif_token: Optional[str] = Header(None)):
     verify_seif_token(seif_token)
     state.paused = True
-    return log("pause", OWNER, {"message": "All agents frozen by User Seif."})
+    return log("pause", OWNER, {"message": "All agents frozen by the Owner."})
 
 @app.post("/resume")
 def resume(seif_token: Optional[str] = Header(None)):
     verify_seif_token(seif_token)
     state.paused = False
-    return log("resume", OWNER, {"message": "Agents resumed by User Seif."})
+    return log("resume", OWNER, {"message": "Agents resumed by the Owner."})
 
 @app.post("/stop")
 def stop(seif_token: Optional[str] = Header(None)):
     verify_seif_token(seif_token)
     state.stopped = True
-    return log("stop", OWNER, {"message": "Active run stopped by User Seif."})
+    return log("stop", OWNER, {"message": "Active run stopped by the Owner."})
 
 @app.post("/decision")
 def decision(req: DecisionRequest, seif_token: Optional[str] = Header(None)):
@@ -1831,7 +1831,7 @@ def decision(req: DecisionRequest, seif_token: Optional[str] = Header(None)):
         {
             "decision": req.decision,
             "context": req.context,
-            "principle": "Only User Seif controls governance decisions.",
+            "principle": "Only the Owner controls governance decisions.",
         },
     )
 
@@ -1843,17 +1843,17 @@ def get_events(seif_token: Optional[str] = Header(None)):
 
     const TELEGRAM_BRIDGE_CODE = `
 """
-Seif Telegram Command Bridge Blueprint
+Owner Telegram Command Bridge Blueprint
 
 Purpose:
-- Remote interaction channel for User Seif.
+- Remote interaction channel for the Owner.
 - Commands route to the same portal authority model.
-- No Telegram user receives governance authority unless explicitly paired and approved by User Seif.
+- No Telegram user receives governance authority unless explicitly paired and approved by the Owner.
 
 Zero-cost-first note:
 - Telegram bot usage is free.
 - Avoid paid automation platforms by default.
-- Use a simple approved backend bridge only when User Seif approves deployment.
+- Use a simple approved backend bridge only when the Owner approves deployment.
 
 Required environment variables:
 - TELEGRAM_BOT_TOKEN
@@ -1868,7 +1868,7 @@ import os
 import httpx
 from fastapi import FastAPI, Request, HTTPException
 
-app = FastAPI(title="Seif Telegram Command Bridge", version="1.0.0")
+app = FastAPI(title="Owner Telegram Command Bridge", version="1.0.0")
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 SEIF_TELEGRAM_USER_ID = os.environ.get("SEIF_TELEGRAM_USER_ID")
@@ -1877,7 +1877,7 @@ SEIF_AUTHORITY_TOKEN = os.environ.get("SEIF_AUTHORITY_TOKEN")
 
 COMMANDS = {
     "/status": "Return portal health status.",
-    "/execute": "Execute a Seif command.",
+    "/execute": "Execute an Owner command.",
     "/pause": "Freeze all agents.",
     "/resume": "Resume agents.",
     "/stop": "Cancel active run.",
@@ -1923,7 +1923,7 @@ async def telegram_webhook(request: Request):
     user_id = user.get("id")
 
     if not is_seif(user_id):
-        await send_telegram(chat_id, "Access denied. This command bridge is controlled by User Seif only.")
+        await send_telegram(chat_id, "Access denied. This command bridge is controlled by the Owner only.")
         return {"status": "denied"}
 
     if text == "/status":
@@ -1933,17 +1933,17 @@ async def telegram_webhook(request: Request):
 
     if text == "/pause":
         result = await portal_post("/pause")
-        await send_telegram(chat_id, "Paused by User Seif. All agents frozen.")
+        await send_telegram(chat_id, "Paused by the Owner. All agents frozen.")
         return result
 
     if text == "/resume":
         result = await portal_post("/resume")
-        await send_telegram(chat_id, "Resumed by User Seif.")
+        await send_telegram(chat_id, "Resumed by the Owner.")
         return result
 
     if text == "/stop":
         result = await portal_post("/stop")
-        await send_telegram(chat_id, "Stopped by User Seif. Active run cancelled.")
+        await send_telegram(chat_id, "Stopped by the Owner. Active run cancelled.")
         return result
 
     if text.startswith("/approve"):
@@ -1963,7 +1963,7 @@ async def telegram_webhook(request: Request):
 
     if text.startswith("/execute"):
         prompt = text.replace("/execute", "", 1).strip()
-        result = await portal_post("/chat", {"prompt": prompt, "actor": "User Seif", "source": "telegram"})
+        result = await portal_post("/chat", {"prompt": prompt, "actor": "the Owner", "source": "telegram"})
         await send_telegram(chat_id, result.get("message", "Command executed."))
         return result
 
@@ -1991,22 +1991,22 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
 
 3. Backend mode
    - FastAPI backend code is embedded as text.
-   - Copy it to main.py only after User Seif approves backend deployment.
+   - Copy it to main.py only after the Owner approves backend deployment.
    - Static OneDrive hosting alone cannot run a 24/7 Python server.
    - A live backend or approved cloud function is required for true server execution.
 
 4. Telegram Bridge mode
    - Telegram bot token must never be stored in frontend HTML.
    - Use the embedded Telegram Bridge blueprint only in an approved backend.
-   - Pair Telegram user identity to User Seif's approved Telegram user ID.
+   - Pair Telegram user identity to the Owner's approved Telegram user ID.
    - Every command must be logged.
-   - Pause, resume, stop, approve, reject, override, rollback, export, and Tech Agent workflows remain User Seif-controlled.
+   - Pause, resume, stop, approve, reject, override, rollback, export, and Tech Agent workflows remain owner-controlled.
 
 5. Tech Agent Code Studio
    - Side pop-up chatbot for minor enhancements.
    - It proposes patches, creates backups, previews changes, exports versions, and supports rollback.
    - It cannot apply real modifications silently.
-   - User Seif approves before patch application or export.
+   - the Owner approves before patch application or export.
    - Major rewrites and deletions require a plan first.
 
 6. Evidence log
@@ -2020,7 +2020,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
    - No paid hosting by default.
    - No recurring-cost tool without approval.
    - Every feature must reduce cost, increase value, create revenue potential, or improve control.
-   - Every paid or external dependency requires User Seif approval.
+   - Every paid or external dependency requires Owner approval.
 `;
 
     const state = {
@@ -2048,15 +2048,15 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
         { id: "tech", name: "Tech Agent", role: "Side pop-up code studio, minor enhancements only", state: "ready" }
       ],
       capabilities: [
-        ["Agent Command Center", "Coordinates agents, guests, instructions, and active command state.", "Seif-controlled"],
-        ["Voice Call Runtime", "Starts voice interaction, transcript capture, and speech playback.", "Seif-controlled"],
+        ["Agent Command Center", "Coordinates agents, guests, instructions, and active command state.", "owner-controlled"],
+        ["Voice Call Runtime", "Starts voice interaction, transcript capture, and speech playback.", "owner-controlled"],
         ["Pause / Stop Authority", "Freezes or cancels all portal activity immediately.", "Owner authority"],
-        ["Evidence Logging", "Records browser-level interactions after the portal is opened.", "Seif-only"],
-        ["Governance Decisioning", "Flags decisions but leaves approval to User Seif.", "Owner authority"],
+        ["Evidence Logging", "Records browser-level interactions after the portal is opened.", "owner-only"],
+        ["Governance Decisioning", "Flags decisions but leaves approval to the Owner.", "Owner authority"],
         ["Zero-Cost Policy", "Evaluates every enhancement against zero-cost-first execution.", "Strategic rule"],
         ["Maximum-Revenue Strategy", "Prioritizes value creation, monetization, conversion, and cost reduction.", "Strategic rule"],
-        ["Telegram Command Bridge", "Remote command compatibility for User Seif via approved backend bridge.", "Requires approval"],
-        ["Tech Agent Code Studio", "Side pop-up chatbot for minor enhancements, backup, preview, export, and rollback.", "Seif-controlled"],
+        ["Telegram Command Bridge", "Remote command compatibility for the Owner via approved backend bridge.", "Requires approval"],
+        ["Tech Agent Code Studio", "Side pop-up chatbot for minor enhancements, backup, preview, export, and rollback.", "owner-controlled"],
         ["Python Runtime Blueprint", "Contains embedded Python logic for backend-grade processing.", "Internal"],
         ["FastAPI Backend Blueprint", "Contains server code for approved deployment outside static hosting.", "Exportable"],
         ["Guest Participation", "Allows guests to appear in the room without owner authority.", "Controlled"],
@@ -2099,7 +2099,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
         page: state.page,
         paused: state.paused,
         stopped: state.stopped,
-        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution.",
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. owner-controlled execution.",
         details
       };
 
@@ -2143,15 +2143,15 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
     function agentAnswer(prompt) {
       const p = prompt.toLowerCase();
 
-      if (state.paused) return "Runtime is paused by User Seif. Agents are frozen until Seif resumes.";
-      if (state.stopped) return "Runtime is stopped by User Seif. No active run will continue.";
+      if (state.paused) return "Runtime is paused by the Owner. Agents are frozen until Owner resumes.";
+      if (state.stopped) return "Runtime is stopped by the Owner. No active run will continue.";
 
       if (p.includes("telegram")) {
-        return "Telegram Command Bridge is designed into the portal as a Seif-authorized remote command layer. True 24/7 receiving needs an approved backend bridge; the blueprint is embedded.";
+        return "Telegram Command Bridge is designed into the portal as an owner-authorized remote command layer. True 24/7 receiving needs an approved backend bridge; the blueprint is embedded.";
       }
 
       if (p.includes("voice") || p.includes("call")) {
-        return "Voice-call layer is active through browser speech tools where supported. The transcript and actions are logged for User Seif.";
+        return "Voice-call layer is active through browser speech tools where supported. The transcript and actions are logged for the Owner.";
       }
 
       if (p.includes("backend") || p.includes("fastapi") || p.includes("server")) {
@@ -2159,7 +2159,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       }
 
       if (p.includes("tech") || p.includes("patch") || p.includes("code")) {
-        return "Tech Agent Code Studio is available as a side pop-up. It can propose minor patches, create backups, preview changes, export versions, and support rollback only under User Seif control.";
+        return "Tech Agent Code Studio is available as a side pop-up. It can propose minor patches, create backups, preview changes, export versions, and support rollback only under the Owner control.";
       }
 
       if (p.includes("log") || p.includes("evidence")) {
@@ -2167,18 +2167,18 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       }
 
       if (p.includes("zero") || p.includes("cost") || p.includes("revenue")) {
-        return "Every feature must pass the zero-cost-first and maximum-revenue filter: avoid cost by default, protect control, increase value, and require Seif approval for paid or external dependencies.";
+        return "Every feature must pass the zero-cost-first and maximum-revenue filter: avoid cost by default, protect control, increase value, and require Owner approval for paid or external dependencies.";
       }
 
       if (p.includes("pause") || p.includes("stop")) {
-        return "Pause freezes agents, voice, timers, and execution. Stop cancels the active run and logs User Seif’s interruption.";
+        return "Pause freezes agents, voice, timers, and execution. Stop cancels the active run and logs the Owner’s interruption.";
       }
 
       if (p.includes("risk") || p.includes("governance")) {
-        return "Risk and governance decisions are controlled only by User Seif. Agents can flag and explain, but cannot approve.";
+        return "Risk and governance decisions are controlled only by the Owner. Agents can flag and explain, but cannot approve.";
       }
 
-      return "Order received. Sandy Bell, Strategy Agent, Python Builder, Evidence Auditor, and Tech Agent are aligned inside User Seif’s command frame.";
+      return "Order received. Sandy Bell, Strategy Agent, Python Builder, Evidence Auditor, and Tech Agent are aligned inside the Owner’s command frame.";
     }
 
     function executeSeifOrder() {
@@ -2194,17 +2194,17 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       logEvent("seif_order", { prompt });
 
       if (state.paused) {
-        addMessage("mainMessages", "system", "Paused by User Seif. The order is logged, but agents remain frozen.");
+        addMessage("mainMessages", "system", "Paused by the Owner. The order is logged, but agents remain frozen.");
         return;
       }
 
       if (state.stopped) {
-        addMessage("mainMessages", "system", "Stopped by User Seif. The order is logged, but no run is active.");
+        addMessage("mainMessages", "system", "Stopped by the Owner. The order is logged, but no run is active.");
         return;
       }
 
       const response = agentAnswer(prompt);
-      addMessage("mainMessages", "agent", response + "\n\nGovernance note: final approval remains with User Seif.\nCommercial note: zero-cost-first and maximum-revenue logic remain active.");
+      addMessage("mainMessages", "agent", response + "\n\nGovernance note: final approval remains with the Owner.\nCommercial note: zero-cost-first and maximum-revenue logic remain active.");
 
       if (!state.muted) speak(response);
       appendTrace("main_order", prompt, response);
@@ -2225,8 +2225,8 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       state.paused = !state.paused;
       document.body.classList.toggle("paused", state.paused);
       $("pauseBtn").textContent = state.paused ? "Resume" : "Pause";
-      $("authorityState").textContent = state.paused ? "Paused by User Seif" : "Seif authority active";
-      $("runtimeStatus").textContent = state.paused ? "Frozen by User Seif" : "Browser runtime live";
+      $("authorityState").textContent = state.paused ? "Paused by the Owner" : "Owner authority active";
+      $("runtimeStatus").textContent = state.paused ? "Frozen by the Owner" : "Browser runtime live";
       updateAgents();
 
       if (state.paused) {
@@ -2237,11 +2237,11 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       }
 
       logEvent(state.paused ? "pause" : "resume", {
-        actor: "User Seif",
+        actor: "the Owner",
         effect: state.paused ? "All agents frozen" : "Agents resumed"
       });
 
-      toast(state.paused ? "All agents frozen by User Seif." : "Agents resumed by User Seif.");
+      toast(state.paused ? "All agents frozen by the Owner." : "Agents resumed by the Owner.");
     }
 
     function stopAll() {
@@ -2256,12 +2256,12 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       speechSynthesis.cancel();
 
       $("voiceStatus").textContent = "Stopped";
-      $("runtimeStatus").textContent = "Stopped by User Seif";
-      addMessage("mainMessages", "system", "Stop command executed by User Seif. Active run cancelled.");
-      appendTrace("stop", "User Seif stopped all activity", "Runtime stopped.");
+      $("runtimeStatus").textContent = "Stopped by the Owner";
+      addMessage("mainMessages", "system", "Stop command executed by the Owner. Active run cancelled.");
+      appendTrace("stop", "the Owner stopped all activity", "Runtime stopped.");
 
       logEvent("stop", {
-        actor: "User Seif",
+        actor: "the Owner",
         effect: "Active run cancelled, voice ended, speech cancelled, Tech Agent activity frozen"
       });
 
@@ -2269,11 +2269,11 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
     }
 
     function seifDecision(decision) {
-      $("govState").textContent = `Seif ${decision}`;
+      $("govState").textContent = `Owner ${decision}`;
       logEvent("governance_decision", {
-        actor: "User Seif",
+        actor: "the Owner",
         decision,
-        principle: "Only User Seif controls governance decisions"
+        principle: "Only the Owner controls governance decisions"
       });
       toast(`Governance decision recorded: ${decision}`);
     }
@@ -2309,12 +2309,12 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       state.agents.push(guest);
       updateAgents();
       logEvent("guest_joined", guest);
-      addMessage("mainMessages", "system", `${guest.name} joined the room. Guest has no Seif authority.`);
+      addMessage("mainMessages", "system", `${guest.name} joined the room. Guest has no Owner authority.`);
     }
 
     function startVoiceCall() {
       if (state.paused) {
-        toast("Voice cannot start while User Seif has paused the portal.");
+        toast("Voice cannot start while the Owner has paused the portal.");
         logEvent("voice_blocked", { reason: "paused" });
         return;
       }
@@ -2329,7 +2329,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       $("voiceStatus").textContent = "Live";
       $("voiceTranscript").textContent = "Voice call started. Listening support depends on this browser.";
 
-      logEvent("voice_call_started", { actor: "User Seif" });
+      logEvent("voice_call_started", { actor: "the Owner" });
 
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -2389,7 +2389,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
 
       speechSynthesis.cancel();
       $("voiceStatus").textContent = "Ended";
-      logEvent("voice_call_ended", { actor: "User Seif" });
+      logEvent("voice_call_ended", { actor: "the Owner" });
       toast("Voice call ended.");
     }
 
@@ -2428,7 +2428,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       incrementAction("run_capability");
       addMessage("messages", "user", `Run capability: ${cap[0]}`);
 
-      const response = `Capability activated: ${cap[0]}\n${cap[1]}\n\nGovernance: ${cap[2]}. Final decision remains controlled by User Seif.\nCommercial filter: zero-cost-first and maximum-revenue strategy checked.`;
+      const response = `Capability activated: ${cap[0]}\n${cap[1]}\n\nGovernance: ${cap[2]}. Final decision remains controlled by the Owner.\nCommercial filter: zero-cost-first and maximum-revenue strategy checked.`;
 
       addMessage("messages", "agent", response);
       appendTrace("capability", cap[0], response);
@@ -2452,7 +2452,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
       updateConsoleChars();
 
       const response = agentAnswer(text);
-      addMessage("messages", "agent", response + "\n\nGovernance note: User Seif controls final approval.\nCommercial note: zero-cost policy and maximum-revenue strategy remain active.");
+      addMessage("messages", "agent", response + "\n\nGovernance note: the Owner controls final approval.\nCommercial note: zero-cost policy and maximum-revenue strategy remain active.");
       appendTrace("console_chat", text, response);
       logEvent("console_message", { text, response });
     }
@@ -2474,7 +2474,7 @@ SEIF AGENT PORTAL — DEPLOYMENT NOTES
 [${new Date().toLocaleTimeString()}] ${type}
 input: ${input}
 output: ${output}
-governance: controlled by User Seif
+governance: controlled by the Owner
 commercial: zero-cost-first / maximum-revenue checked
 `;
       trace.textContent += line;
@@ -2498,9 +2498,9 @@ commercial: zero-cost-first / maximum-revenue checked
     }
 
     function lockLog() {
-      logEvent("log_locked", { actor: "User Seif" });
+      logEvent("log_locked", { actor: "the Owner" });
       state.logLocked = true;
-      $("logLockState").textContent = "Locked by Seif";
+      $("logLockState").textContent = "Locked by Owner";
       toast("Evidence log locked.");
     }
 
@@ -2508,8 +2508,8 @@ commercial: zero-cost-first / maximum-revenue checked
       const answer = prompt("Type SEIF to unlock the evidence log.");
       if (answer === "SEIF") {
         state.logLocked = false;
-        $("logLockState").textContent = "Unlocked by Seif";
-        logEvent("log_unlocked", { actor: "User Seif" });
+        $("logLockState").textContent = "Unlocked by Owner";
+        logEvent("log_unlocked", { actor: "the Owner" });
         toast("Evidence log unlocked.");
       } else {
         logEvent("log_unlock_attempt", { result: "failed" });
@@ -2527,17 +2527,17 @@ commercial: zero-cost-first / maximum-revenue checked
 
       sessionStorage.removeItem("seifEvidenceLog");
       $("evidenceLog").innerHTML = "";
-      logEvent("clear_log", { actor: "User Seif" });
-      toast("Evidence log cleared by User Seif.");
+      logEvent("clear_log", { actor: "the Owner" });
+      toast("Evidence log cleared by the Owner.");
     }
 
     function exportEvidence() {
       const evidence = JSON.parse(sessionStorage.getItem("seifEvidenceLog") || "[]");
       const payload = {
-        product: "Seif Agent Portal Full Production HTML",
+        product: "Agent Portal Full Production HTML",
         exportedAt: now(),
-        owner: "User Seif",
-        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution.",
+        owner: "the Owner",
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. owner-controlled execution.",
         state: {
           paused: state.paused,
           stopped: state.stopped,
@@ -2596,7 +2596,7 @@ commercial: zero-cost-first / maximum-revenue checked
         return;
       }
 
-      logEvent("pyodide_activation_requested", { actor: "User Seif" });
+      logEvent("pyodide_activation_requested", { actor: "the Owner" });
       toast("Attempting to activate browser Python through Pyodide CDN.");
 
       try {
@@ -2627,7 +2627,7 @@ commercial: zero-cost-first / maximum-revenue checked
     function openTechAgent() {
       $("techDrawer").classList.add("open");
       $("drawerBackdrop").classList.add("show");
-      logEvent("tech_agent_opened", { actor: "User Seif" });
+      logEvent("tech_agent_opened", { actor: "the Owner" });
     }
 
     function closeTechAgent() {
@@ -2657,7 +2657,7 @@ commercial: zero-cost-first / maximum-revenue checked
       if (!text) return;
 
       if (state.paused) {
-        toast("Tech Agent is frozen while User Seif has paused the portal.");
+        toast("Tech Agent is frozen while the Owner has paused the portal.");
         return;
       }
 
@@ -2667,7 +2667,7 @@ commercial: zero-cost-first / maximum-revenue checked
       }
 
       if (state.techLocked) {
-        addTechMessage("tech", "Editing is locked by User Seif. I can answer conceptually, but I cannot stage patches.");
+        addTechMessage("tech", "Editing is locked by the Owner. I can answer conceptually, but I cannot stage patches.");
         return;
       }
 
@@ -2711,7 +2711,7 @@ commercial: zero-cost-first / maximum-revenue checked
           changeClass: "Major / restricted",
           costImpact: "Unknown until planned",
           revenueImpact: "Requires business justification",
-          approval: "Separate explicit User Seif approval required",
+          approval: "Separate explicit Owner approval required",
           message: "I will not stage this as a minor enhancement. A plan must be presented before any major rewrite or deletion."
         };
       }
@@ -2721,7 +2721,7 @@ commercial: zero-cost-first / maximum-revenue checked
           changeClass: "Integration-sensitive",
           costImpact: "Zero-cost-first, but external dependency risk exists",
           revenueImpact: "Potentially high if approved",
-          approval: "User Seif approval required before connection",
+          approval: "Owner approval required before connection",
           message: "I can design the integration, but I cannot activate or connect external services."
         };
       }
@@ -2730,7 +2730,7 @@ commercial: zero-cost-first / maximum-revenue checked
         changeClass: "Minor enhancement candidate",
         costImpact: "Zero",
         revenueImpact: "Indirect value improvement",
-        approval: "User Seif approval required before apply/export",
+        approval: "Owner approval required before apply/export",
         message: "I can prepare a safe patch preview with backup-first logic. No change is applied silently."
       };
     }
@@ -2745,7 +2745,7 @@ commercial: zero-cost-first / maximum-revenue checked
         pseudoPatch: [
           "PATCH PREVIEW ONLY — NOT APPLIED",
           "Target: Single-file portal HTML",
-          "Action: Minor enhancement requested by User Seif",
+          "Action: Minor enhancement requested by the Owner",
           `Instruction: ${text}`,
           "",
           "Planned safe method:",
@@ -2753,7 +2753,7 @@ commercial: zero-cost-first / maximum-revenue checked
           "2. Identify affected UI/component area.",
           "3. Add or adjust code without deletion.",
           "4. Show before/after preview.",
-          "5. Wait for User Seif approval.",
+          "5. Wait for Owner approval.",
           "6. Export updated HTML version.",
           "7. Keep rollback available.",
           "",
@@ -2770,9 +2770,9 @@ commercial: zero-cost-first / maximum-revenue checked
       const backup = {
         version: `v1.0.${state.backups.length + 1}`,
         createdAt: now(),
-        approvedBy: "User Seif",
+        approvedBy: "the Owner",
         reason: state.stagedPatch ? state.stagedPatch.request : "Manual backup snapshot",
-        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution.",
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. owner-controlled execution.",
         htmlSnapshotNote: "In browser static mode, the portal can export a snapshot package. It cannot silently overwrite the hosted source file.",
         rollbackAvailable: true
       };
@@ -2791,7 +2791,7 @@ commercial: zero-cost-first / maximum-revenue checked
       }
 
       const latest = state.backups[state.backups.length - 1];
-      addTechMessage("tech", `Rollback preview:\nTarget version: ${latest.version}\nCreated: ${latest.createdAt}\nReason: ${latest.reason}\n\nRollback requires User Seif approval.`);
+      addTechMessage("tech", `Rollback preview:\nTarget version: ${latest.version}\nCreated: ${latest.createdAt}\nReason: ${latest.reason}\n\nRollback requires Owner approval.`);
       logEvent("rollback_preview", latest);
     }
 
@@ -2807,9 +2807,9 @@ commercial: zero-cost-first / maximum-revenue checked
 
       state.stagedPatch.status = "approved_by_seif";
       $("patchState").textContent = "Approved";
-      addTechMessage("tech", "Approved by User Seif.\nPatch remains staged in this static demo. Export Version will produce a controlled evidence/version package.");
+      addTechMessage("tech", "Approved by the Owner.\nPatch remains staged in this static demo. Export Version will produce a controlled evidence/version package.");
       logEvent("tech_patch_approved", state.stagedPatch);
-      toast("Patch approved by User Seif.");
+      toast("Patch approved by the Owner.");
     }
 
     function rejectPatch() {
@@ -2822,15 +2822,15 @@ commercial: zero-cost-first / maximum-revenue checked
       state.stagedPatch = null;
       $("patchPreview").textContent = "Patch rejected. No amendment applied.";
       $("patchState").textContent = "Rejected";
-      addTechMessage("tech", "Patch rejected by User Seif. No amendment applied.");
+      addTechMessage("tech", "Patch rejected by the Owner. No amendment applied.");
       logEvent("tech_patch_rejected", rejected);
     }
 
     function exportStagedHtml() {
       const payload = {
-        product: "Seif Agent Portal",
+        product: "Agent Portal",
         exportedAt: now(),
-        owner: "User Seif",
+        owner: "the Owner",
         note: "This is a static export metadata package from Tech Agent Code Studio. Full HTML source is the current opened file.",
         stagedPatch: state.stagedPatch,
         backups: state.backups,
@@ -2844,9 +2844,9 @@ commercial: zero-cost-first / maximum-revenue checked
 
     function lockEditing() {
       state.techLocked = true;
-      $("techAuthorityState").textContent = "Editing locked by Seif";
-      logEvent("tech_editing_locked", { actor: "User Seif" });
-      addTechMessage("tech", "Editing locked by User Seif. Tech Agent is now advisory/read-only.");
+      $("techAuthorityState").textContent = "Editing locked by Owner";
+      logEvent("tech_editing_locked", { actor: "the Owner" });
+      addTechMessage("tech", "Editing locked by the Owner. Tech Agent is now advisory/read-only.");
       toast("Tech Agent editing locked.");
     }
 
@@ -2882,9 +2882,9 @@ commercial: zero-cost-first / maximum-revenue checked
       $("telegramBridgeCode").textContent = TELEGRAM_BRIDGE_CODE.trim();
       $("deploymentNotesCode").textContent = DEPLOYMENT_NOTES_CODE.trim();
 
-      addMessage("mainMessages", "system", "Portal loaded. User Seif controls execution, pause, stop, governance, Telegram activation, Tech Agent patching, export, and rollback.");
+      addMessage("mainMessages", "system", "Portal loaded. The Owner controls execution, pause, stop, governance, Telegram activation, Tech Agent patching, export, and rollback.");
       addMessage("messages", "system", "Second-page 16K console is ready. Evidence logging is active after page open.");
-      addTechMessage("tech", "Tech Agent Code Studio ready.\nI handle minor enhancements only through backup-first, patch-preview, Seif approval, export, and rollback.");
+      addTechMessage("tech", "Tech Agent Code Studio ready.\nI handle minor enhancements only through backup-first, patch-preview, Owner approval, export, and rollback.");
 
       loadStoredEvidence();
 
@@ -2896,7 +2896,7 @@ commercial: zero-cost-first / maximum-revenue checked
           height: screen.height,
           devicePixelRatio: window.devicePixelRatio
         },
-        doctrine: "Zero-cost policy. Maximum-revenue strategy. Seif-controlled execution."
+        doctrine: "Zero-cost policy. Maximum-revenue strategy. owner-controlled execution."
       });
     }
 
