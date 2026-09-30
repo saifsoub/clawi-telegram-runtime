@@ -1,6 +1,6 @@
-# APEX OpenClaw-Style Telegram Runtime — One-File Edition
+# OpenClaw-Style Telegram Runtime — One-File Edition
 
-This package turns your uploaded APEX bot fragments into one Telegram-ready runtime.
+This package turns your uploaded bot fragments into one Telegram-ready runtime.
 
 ## What is inside
 
