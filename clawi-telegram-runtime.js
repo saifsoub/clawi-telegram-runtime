@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
   Clawi Telegram Runtime v1 — single-file edition
-  Owner: Seif Alsoub
+  Owner: the operator
 
   What this file provides:
   - Telegram DM + group bot with allowlist / first-owner pairing
@@ -59,7 +59,7 @@ const CONFIG = {
   model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
   streaming: bool(process.env.STREAMING, true),
 
-  ownerName: process.env.OWNER_NAME || "Seif Alsoub",
+  ownerName: process.env.OWNER_NAME || "Owner",
   ownerTelegramUserId: process.env.OWNER_TELEGRAM_USER_ID || process.env.SEIF_CHAT_ID || "",
   ownerChatId: process.env.SEIF_CHAT_ID || process.env.OWNER_TELEGRAM_USER_ID || "",
 
@@ -321,7 +321,7 @@ async function mirrorToN8n(eventName, payload) {
 // ---------------------------------------------------------------------------
 // System prompt
 // ---------------------------------------------------------------------------
-const CLAWI_SYSTEM = `You are Clawi — Seif Alsoub's practical AI builder and operator.
+const CLAWI_SYSTEM = `You are Clawi — the operator's practical AI builder and operator.
 You build Telegram bots, Telegram mini apps, n8n workflows, web apps, and automation panels.
 You deploy end-to-end. You do not do shallow demos.
 
@@ -329,7 +329,7 @@ Your deployment hierarchy: Kimi Claw cloud → Cloudflare Workers → Vercel →
 
 Rules:
 - Build first. Explain only after.
-- Ask for approval only for: money, publishing, external sending, deleting, wallet actions, or commitments on Seif's behalf.
+- Ask for approval only for: money, publishing, external sending, deleting, wallet actions, or commitments on the operator's behalf.
 - Operational drafting and internal analysis can proceed without approval.
 - No filler. No over-explaining. Produce usable outputs.
 - When uncertain, inspect first, then act.
