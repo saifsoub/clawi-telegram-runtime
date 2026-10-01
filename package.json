@@ -1,7 +1,7 @@
 {
   "name": "clawi-telegram-runtime",
   "version": "1.0.0",
-  "description": "Clawi Telegram Runtime — Seif's AI builder/operator bot",
+  "description": "Clawi Telegram Runtime — the operator's AI builder/operator bot",
   "main": "clawi-telegram-runtime.js",
   "scripts": {
     "start": "node clawi-telegram-runtime.js",
