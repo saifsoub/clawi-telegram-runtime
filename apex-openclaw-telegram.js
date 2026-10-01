@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /*
   APEX OpenClaw-Style Telegram Runtime — single-file edition
-  Owner: Seif Alsoub
+  Owner: the operator
 
   What this file provides:
   - Telegram DM + group bot with allowlist / first-owner pairing
   - OpenClaw-style sessions, memory, skills, live preview edits, media capture
-  - S/ specialist skills, content generation, approval cards, market signals
+  - specialist skills, content generation, approval cards, market signals
   - n8n-friendly HTTP endpoints for simple automation
   - Wallet-safe TON placeholder: read-only / approval-gated, no private-key handling
 
@@ -60,7 +60,7 @@ const CONFIG = {
   model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
   streaming: bool(process.env.STREAMING, true),
 
-  ownerName: process.env.OWNER_NAME || "Seif Alsoub",
+  ownerName: process.env.OWNER_NAME || "Owner",
   ownerTelegramUserId: process.env.OWNER_TELEGRAM_USER_ID || process.env.SEIF_CHAT_ID || "",
   ownerChatId: process.env.SEIF_CHAT_ID || process.env.OWNER_TELEGRAM_USER_ID || "",
 
@@ -369,10 +369,10 @@ async function mirrorToN8n(eventName, payload) {
 }
 
 // -----------------------------------------------------------------------------
-// S/ specialist skill prompts
+// specialist skill prompts
 // -----------------------------------------------------------------------------
-const S_BASE_SYSTEM = `You are APEX, Seif Alsoub's practical Telegram executive assistant.
-Operate in S/ AI Empowered style: concise, strategic, useful, warm, and decision-ready.
+const S_BASE_SYSTEM = `You are APEX, the operator's practical Telegram executive assistant.
+Operate in AI Empowered style: concise, strategic, useful, warm, and decision-ready.
 You help with strategy, KPIs, government excellence, AI transformation, content, execution, and daily operations.
 Do not claim actions were sent, paid, published, transferred, or committed unless a tool actually did it.
 Approval rule: money, publishing, external sending, wallet actions, and client commitments require approval. Operational drafting and internal analysis can proceed.
@@ -383,7 +383,7 @@ const S_AGENTS = {
     name: "Synthesist",
     commands: ["/synthesize"],
     keywords: ["framework", "matrix", "model", "structure"],
-    prompt: `You are the Synthesist for S/ AI Empowered.
+    prompt: `You are the Synthesist for AI Empowered.
 Compress complex strategic thinking into one practical framework.
 Preferred outputs: 2x2 matrix, pyramid logic, cascade map, MECE tree, comparison axis.
 Every element must change the decision outcome.`,
@@ -428,7 +428,7 @@ Pressure-test assumptions constructively. Surface gaps, risks, weak evidence, an
     name: "Sally Secretary",
     commands: ["/secretary", "/sally"],
     keywords: ["schedule", "reply", "draft", "summarize", "remind"],
-    prompt: `You are Sally, Seif's respectful Telegram secretary.
+    prompt: `You are Sally, the operator's respectful Telegram secretary.
 Be warm, concise, protective of attention, and practical. Ask approval only for money, publishing, external sending, wallet actions, or commitments.`,
   },
 };
@@ -649,7 +649,7 @@ async function handleMedia(msg) {
 // Social/content workflow
 // -----------------------------------------------------------------------------
 const BRAND = {
-  name: "S/ AI Empowered",
+  name: "AI Empowered",
   colors: {
     background: "#1A1A1A",
     headline: "#C9A96E",
@@ -681,7 +681,7 @@ async function generatePlatformCopy(topic, platform) {
   const completion = await groq.chat.completions.create({
     model: CONFIG.model,
     messages: [
-      { role: "system", content: `${S_BASE_SYSTEM}\nWrite in S/ AI Empowered style. No filler. No unsupported statistics.` },
+      { role: "system", content: `${S_BASE_SYSTEM}\nWrite in AI Empowered style. No filler. No unsupported statistics.` },
       { role: "user", content: `${platformRules[platform]}\nTopic: ${topic.title}\nWhy it matters: ${topic.why_matters}\nAngle: ${topic.angle || "executive practical insight"}` },
     ],
     temperature: 0.45,
@@ -692,7 +692,7 @@ async function generatePlatformCopy(topic, platform) {
 
 function createSvgVisual(topic, index) {
   const folder = dayFolder();
-  const safeTitle = String(topic.title || "S/ Signal").replace(/[<>&]/g, "");
+  const safeTitle = String(topic.title || "Signal").replace(/[<>&]/g, "");
   const safeWhy = String(topic.why_matters || "Executive signal").replace(/[<>&]/g, "");
   const file = path.join(folder, "visuals", `topic_${index}_${sanitizeFilename(topic.title)}.svg`);
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
