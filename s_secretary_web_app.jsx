@@ -30,8 +30,8 @@ import {
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
 const DEFAULT_STATE = {
-  ownerName: "Seif Alsoub",
-  botName: "S/Secretary",
+  ownerName: "Owner",
+  botName: "Secretary",
   telegramHandle: "@your_bot",
   ownerId: "pair on first /start",
   groqModel: "llama-3.3-70b-versatile",
@@ -50,9 +50,9 @@ const DEFAULT_STATE = {
   approvalPublish: true,
   approvalWallet: true,
   selectedModule: "Knowledge",
-  memoryDraft: "S/Secretary should be concise, useful, warm, practical, and only ask approval for money, publishing, external sending, or commitments.",
+  memoryDraft: "Secretary should be concise, useful, warm, practical, and only ask approval for money, publishing, external sending, or commitments.",
   memories: [
-    "Use S/Secretary name across Telegram and web app.",
+    "Use Secretary name across Telegram and web app.",
     "Prefer practical buttons and visual controls over slash-only instructions.",
     "Keep approvals only for money, publishing, external sending, or commitments.",
   ],
@@ -62,7 +62,7 @@ const DEFAULT_STATE = {
     { title: "Connect n8n webhook bridge", status: "Optional", due: "After bot replies" },
   ],
   logs: [
-    "S/Secretary web control app loaded.",
+    "Secretary web control app loaded.",
     "Private mode enabled.",
     "OpenClaw-style modules mapped into visual controls.",
   ],
@@ -217,7 +217,7 @@ export default function SSecretaryWebApp() {
   });
   const [activeTab, setActiveTab] = useState("Control");
   const [copied, setCopied] = useState("");
-  const [taskDraft, setTaskDraft] = useState("Prepare Telegram-ready S/Secretary launch test");
+  const [taskDraft, setTaskDraft] = useState("Prepare Telegram-ready Secretary launch test");
 
   useEffect(() => {
     localStorage.setItem("s_secretary_app_state", JSON.stringify(state));
@@ -233,7 +233,7 @@ export default function SSecretaryWebApp() {
 
   const n8nPayload = useMemo(() => JSON.stringify({
     source: "telegram",
-    bot: "S/Secretary",
+    bot: "Secretary",
     event: "incoming_message",
     approval_required_for: ["money", "publishing", "external_sending", "commitments", "wallet_movement"],
     respond_when: {
@@ -295,7 +295,7 @@ export default function SSecretaryWebApp() {
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-2xl font-black tracking-tight md:text-3xl">S/Secretary</h1>
+                <h1 className="text-2xl font-black tracking-tight md:text-3xl">Secretary</h1>
                 <Pill active>Telegram-ready</Pill>
                 <Pill>Visual control app</Pill>
               </div>
@@ -389,7 +389,7 @@ export default function SSecretaryWebApp() {
                       <Toggle checked={state.privateMode} onChange={(v) => set({ privateMode: v })} label="Private assistant mode" helper="Only paired/allowed users can control the assistant." />
                       <Toggle checked={state.autoPair} onChange={(v) => set({ autoPair: v })} label="Auto-pair first private user" helper="Simple launch path: first /start becomes the owner." />
                       <Toggle checked={state.groupMode} onChange={(v) => set({ groupMode: v })} label="Telegram group mode" helper="Works in groups after allowlist or pairing setup." />
-                      <Toggle checked={state.requireMention} onChange={(v) => set({ requireMention: v })} label="Require mention in groups" helper="Prevents noisy group replies unless S/Secretary is addressed." />
+                      <Toggle checked={state.requireMention} onChange={(v) => set({ requireMention: v })} label="Require mention in groups" helper="Prevents noisy group replies unless Secretary is addressed." />
                     </div>
 
                     <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.02] p-5">
@@ -490,7 +490,7 @@ export default function SSecretaryWebApp() {
                   <div className="rounded-[2rem] border border-white/10 bg-black/20 p-5">
                     <h3 className="text-lg font-black">Workflow shape</h3>
                     <div className="mt-4 space-y-3 text-sm text-slate-300">
-                      {["Telegram Trigger", "S/Secretary Classifier", "Module Router", "Approval Check", "Reply or Queue", "Audit Log"].map((step, i) => (
+                      {["Telegram Trigger", "Secretary Classifier", "Module Router", "Approval Check", "Reply or Queue", "Audit Log"].map((step, i) => (
                         <div key={step} className="flex items-center gap-3 rounded-2xl bg-white/[0.04] p-3">
                           <span className="flex h-7 w-7 items-center justify-center rounded-full bg-amber-300/15 text-xs font-black text-amber-200">{i + 1}</span>
                           <span>{step}</span>
@@ -509,7 +509,7 @@ export default function SSecretaryWebApp() {
                       value={state.memoryDraft}
                       onChange={(e) => set({ memoryDraft: e.target.value })}
                       className="mt-4 min-h-[150px] w-full rounded-3xl border border-white/10 bg-slate-950/80 p-4 text-sm text-slate-100 outline-none ring-amber-300/0 transition placeholder:text-slate-600 focus:border-amber-300/30 focus:ring-4 focus:ring-amber-300/10"
-                      placeholder="Write a memory or rule for S/Secretary..."
+                      placeholder="Write a memory or rule for Secretary..."
                     />
                     <div className="mt-3 flex justify-end">
                       <Button onClick={addMemory}><Save className="h-4 w-4" /> Save memory</Button>
@@ -580,7 +580,7 @@ export default function SSecretaryWebApp() {
                 </div>
                 <div>
                   <p className="font-black">Telegram Mini Control</p>
-                  <p className="text-xs text-slate-500">How S/Secretary should feel inside Telegram</p>
+                  <p className="text-xs text-slate-500">How Secretary should feel inside Telegram</p>
                 </div>
               </div>
             </div>
@@ -591,7 +591,7 @@ export default function SSecretaryWebApp() {
                   <div className="flex items-center gap-3">
                     <div className="h-9 w-9 rounded-2xl bg-gradient-to-br from-amber-300 to-violet-500" />
                     <div>
-                      <p className="text-sm font-black">S/Secretary</p>
+                      <p className="text-sm font-black">Secretary</p>
                       <p className="text-xs text-emerald-300">online</p>
                     </div>
                   </div>
@@ -640,7 +640,7 @@ function TelegramPreview({ state, activeModule }) {
             <Bot className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-sm font-black">S/Secretary</p>
+            <p className="text-sm font-black">Secretary</p>
             <p className="text-xs text-slate-500">Telegram preview</p>
           </div>
         </div>
@@ -652,7 +652,7 @@ function TelegramPreview({ state, activeModule }) {
           <div className="flex items-start gap-3">
             <Icon className="mt-1 h-5 w-5 shrink-0 text-amber-200" />
             <div>
-              <p className="font-bold">Good morning, Mr Seif.</p>
+              <p className="font-bold">Good morning.</p>
               <p className="mt-1 text-slate-300">I’ll focus on <span className="font-semibold text-amber-100">{activeModule.name}</span>, keep it practical, and only request approval for money, publishing, external sending, commitments, or wallet movement.</p>
             </div>
           </div>
